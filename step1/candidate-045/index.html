@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Token Trough</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <div class="page-glow page-glow-left" aria-hidden="true"></div>
+    <div class="page-glow page-glow-right" aria-hidden="true"></div>
+
+    <main class="app-shell">
+      <header class="hero">
+        <p class="eyebrow">VENTURE-BACKED PROBABILITY ENGINE</p>
+        <h1>Token Trough</h1>
+        <p class="tagline">
+          Spend prompt tokens. Win prompt tokens. Pretend the graph means
+          product-market fit.
+        </p>
+
+        <section class="scoreboard" aria-label="Game stats">
+          <article class="stat-card">
+            <span class="stat-label">Wallet</span>
+            <strong class="stat-value" id="token-balance">0</strong>
+            <span class="stat-note">tokens left to burn</span>
+          </article>
+          <article class="stat-card">
+            <span class="stat-label">Spins</span>
+            <strong class="stat-value" id="spin-count">0</strong>
+            <span class="stat-note">experiments run</span>
+          </article>
+          <article class="stat-card">
+            <span class="stat-label">Best Win</span>
+            <strong class="stat-value" id="best-win">0</strong>
+            <span class="stat-note">peak delusion</span>
+          </article>
+          <article class="stat-card">
+            <span class="stat-label">Confidence</span>
+            <strong class="stat-value" id="confidence-score">0%</strong>
+            <span class="stat-note">self-reported</span>
+          </article>
+        </section>
+      </header>
+
+      <section class="machine-panel" aria-labelledby="machine-title">
+        <div class="machine-head">
+          <div>
+            <p class="panel-kicker">Inference Casino</p>
+            <h2 id="machine-title">Spin The Hype Cycle</h2>
+          </div>
+          <div class="cost-chip">
+            <span>Spin Cost</span>
+            <strong id="spin-cost">15 tokens</strong>
+          </div>
+        </div>
+
+        <div class="machine-body">
+          <section class="reels-panel" aria-label="Slot reels">
+            <div class="reels">
+              <div class="reel-window">
+                <article class="reel-card" id="reel-0">
+                  <span class="reel-name">TOKEN</span>
+                  <span class="reel-copy">micropayment theater</span>
+                </article>
+              </div>
+              <div class="reel-window">
+                <article class="reel-card" id="reel-1">
+                  <span class="reel-name">GPU</span>
+                  <span class="reel-copy">someone else's cloud bill</span>
+                </article>
+              </div>
+              <div class="reel-window">
+                <article class="reel-card" id="reel-2">
+                  <span class="reel-name">PROMPT</span>
+                  <span class="reel-copy">word salad leverage</span>
+                </article>
+              </div>
+            </div>
+
+            <div class="controls">
+              <button id="spin-button" class="spin-button" type="button">
+                Burn Tokens
+              </button>
+              <button id="reset-button" class="ghost-button" type="button">
+                Reset Wallet
+              </button>
+            </div>
+
+            <p class="status-line" id="status-line" aria-live="polite">
+              Deposit complete. The machine is ready to monetize your optimism.
+            </p>
+          </section>
+
+          <aside class="payout-panel" aria-labelledby="payout-title">
+            <div class="panel-block">
+              <h3 id="payout-title">Payout Logic</h3>
+              <ul class="payout-list">
+                <li><span>Triple TOKEN</span><strong>+160</strong></li>
+                <li><span>Triple GPU</span><strong>+120</strong></li>
+                <li><span>Any other triple</span><strong>+70</strong></li>
+                <li><span>Any matching pair</span><strong>+24</strong></li>
+                <li><span>TOKEN + GPU + PROMPT</span><strong>+45</strong></li>
+                <li><span>Everything else</span><strong>+0</strong></li>
+              </ul>
+            </div>
+
+            <div class="panel-block">
+              <h3>Terms Of Service</h3>
+              <p>
+                Tokens are not currency, not equity, and not even especially
+                useful. They are mostly here so the machine can call losses
+                "inference costs."
+              </p>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="history-panel" aria-labelledby="history-title">
+        <div class="history-head">
+          <div>
+            <p class="panel-kicker">Live Ledger</p>
+            <h2 id="history-title">Recent Damage</h2>
+          </div>
+          <p class="history-caption">
+            Stored locally in your browser, like every overconfident prototype.
+          </p>
+        </div>
+        <ol id="history-list" class="history-list"></ol>
+      </section>
+    </main>
+  </body>
+</html>
