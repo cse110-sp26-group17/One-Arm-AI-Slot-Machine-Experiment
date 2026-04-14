@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Token Drainer 3000</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <div class="bg-orb orb-left" aria-hidden="true"></div>
+    <div class="bg-orb orb-right" aria-hidden="true"></div>
+
+    <main class="machine" aria-label="AI satire slot machine">
+      <header class="hero">
+        <p class="hero-kicker">One-Arm AI Slot Machine</p>
+        <h1>Token Drainer 3000</h1>
+        <p class="hero-subtext">
+          Spend tokens to spin. Win tokens if your AI startup survives another
+          demo day.
+        </p>
+      </header>
+
+      <section class="stats" aria-label="Game stats">
+        <article class="stat-card">
+          <h2>Wallet</h2>
+          <p id="tokens" class="stat-value">0</p>
+        </article>
+        <article class="stat-card">
+          <h2>Total Spent</h2>
+          <p id="spent" class="stat-value">0</p>
+        </article>
+        <article class="stat-card">
+          <h2>Total Won</h2>
+          <p id="won" class="stat-value">0</p>
+        </article>
+        <article class="stat-card">
+          <h2>Spins</h2>
+          <p id="spins" class="stat-value">0</p>
+        </article>
+      </section>
+
+      <section class="slot-panel" aria-label="Slot reels and controls">
+        <div class="reel-bank" role="group" aria-label="Slot machine reels">
+          <div class="reel" id="reel-0" aria-live="off">🤖</div>
+          <div class="reel" id="reel-1" aria-live="off">🪙</div>
+          <div class="reel" id="reel-2" aria-live="off">📉</div>
+        </div>
+
+        <div class="controls">
+          <button id="spinBtn" class="btn btn-primary" type="button">
+            Spin (-<span id="spinCost">5</span> tokens)
+          </button>
+          <button id="topUpBtn" class="btn btn-secondary" type="button">
+            Pitch VCs (+20)
+          </button>
+          <button id="resetBtn" class="btn btn-ghost" type="button">
+            Reset
+          </button>
+        </div>
+
+        <p id="status" class="status" aria-live="polite">
+          Wallet loaded. Time to monetize vibes.
+        </p>
+      </section>
+
+      <section class="paytable" aria-label="Payout rules">
+        <h2>Payout Lore</h2>
+        <ul>
+          <li><strong>3x 🤖 Stable Model</strong>: +80 tokens</li>
+          <li><strong>3x 🧠 AGI Hype</strong>: +50 tokens</li>
+          <li><strong>3x 🪙 Tokens</strong>: +30 tokens</li>
+          <li><strong>Any pair</strong>: +8 to +15 tokens</li>
+          <li><strong>🧾 + 🪙 + 🧯 combo</strong>: +22 tokens</li>
+          <li><strong>3x 🦄 Hallucination</strong>: -6 tokens</li>
+        </ul>
+      </section>
+    </main>
+  </body>
+</html>
