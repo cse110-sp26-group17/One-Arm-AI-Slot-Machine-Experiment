@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Token Slot: Alignment Tax</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="hero">
+        <p class="kicker">A Responsible AI Finance Simulator*</p>
+        <h1>Token Slot: The Alignment Tax</h1>
+        <p class="subtitle">
+          Every spin burns inference tokens. Sometimes the model pays you back.
+          Mostly it gives you confidence and invoices.
+        </p>
+      </header>
+
+      <section class="stats" aria-label="Token stats">
+        <article class="stat-card">
+          <h2>Wallet</h2>
+          <p id="wallet" class="stat-value">0</p>
+          <p class="stat-note">prompt tokens</p>
+        </article>
+        <article class="stat-card">
+          <h2>Spent</h2>
+          <p id="spent" class="stat-value">0</p>
+          <p class="stat-note">because context windows are expensive</p>
+        </article>
+        <article class="stat-card">
+          <h2>Won</h2>
+          <p id="won" class="stat-value">0</p>
+          <p class="stat-note">unplanned model behavior</p>
+        </article>
+        <article class="stat-card">
+          <h2>Biggest Win</h2>
+          <p id="biggest" class="stat-value">0</p>
+          <p class="stat-note">rare, like perfect benchmarks</p>
+        </article>
+      </section>
+
+      <section class="machine" aria-label="Slot machine">
+        <div class="machine-top">
+          <p class="machine-label">Cost per spin: <strong id="spinCost">15</strong> tokens</p>
+          <label class="voice-toggle" for="voiceToggle">
+            <input type="checkbox" id="voiceToggle" />
+            Snark narrator
+          </label>
+        </div>
+
+        <div class="reel-grid" role="img" aria-label="Three slot reels">
+          <div class="reel" id="reelA">TOKEN</div>
+          <div class="reel" id="reelB">GPU</div>
+          <div class="reel" id="reelC">PROMPT</div>
+        </div>
+
+        <p id="outcome" class="outcome" aria-live="polite">
+          Press SPIN and trade certainty for compute.
+        </p>
+
+        <div class="controls">
+          <button id="spinBtn" class="primary">Spin (-15)</button>
+          <button id="autoBtn">Auto x5</button>
+          <button id="fundBtn">Beg VC (+50)</button>
+          <button id="resetBtn">Reset Economy</button>
+        </div>
+      </section>
+
+      <section class="ledger" aria-label="Recent spin log">
+        <h2>Ledger</h2>
+        <ul id="eventLog"></ul>
+      </section>
+
+      <footer class="fine-print">
+        <p>*Not financial advice. State is saved in your browser.</p>
+      </footer>
+    </main>
+  </body>
+</html>

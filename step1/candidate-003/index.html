@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Token Tumbler 3000</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bungee&family=Space+Grotesk:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="noise"></div>
+    <main class="app-shell">
+      <header class="app-header">
+        <p class="eyebrow">Neural-Nonsense Arcade</p>
+        <h1>Token Tumbler 3000</h1>
+        <p class="subtitle">
+          Spend tokens to ask the machine for "intelligence."<br />
+          Win tokens when it accidentally does math correctly.
+        </p>
+      </header>
+
+      <section class="machine" aria-label="slot machine">
+        <div class="status-row">
+          <div class="balance-card">
+            <span class="label">Wallet</span>
+            <span id="balance" class="value">0</span>
+            <span class="suffix">tokens</span>
+          </div>
+          <div class="cost-card">
+            <span class="label">Cost / Spin</span>
+            <span id="cost" class="value">10</span>
+            <span class="suffix">tokens</span>
+          </div>
+        </div>
+
+        <div class="reel-frame" role="group" aria-label="reels">
+          <div class="reel" id="reel-0" aria-live="polite">🤖</div>
+          <div class="reel" id="reel-1" aria-live="polite">🤖</div>
+          <div class="reel" id="reel-2" aria-live="polite">🤖</div>
+        </div>
+
+        <div class="controls">
+          <button id="spinBtn" class="spin-btn" type="button">Burn Tokens</button>
+          <button id="refillBtn" class="refill-btn" type="button">Beg VC For Grant</button>
+          <button id="voiceBtn" class="voice-btn" type="button">Narrator: Off</button>
+        </div>
+
+        <output id="message" class="message" aria-live="assertive">
+          Welcome. The model is overconfident and under-trained.
+        </output>
+
+        <ul class="payouts" aria-label="payout table">
+          <li><span>Triple 🧠</span><strong>+120</strong></li>
+          <li><span>Any Triple Match</span><strong>+50</strong></li>
+          <li><span>Two 💸</span><strong>+20</strong></li>
+          <li><span>🧠 + 🔌 + 📉</span><strong>+35</strong></li>
+        </ul>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
