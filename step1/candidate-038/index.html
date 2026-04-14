@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Prompt Casino - Token Grinder</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bungee&family=DM+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="bg-noise" aria-hidden="true"></div>
+
+    <main class="app">
+      <header class="hero">
+        <p class="eyebrow">SATIRICAL TOKEN ECONOMY SIMULATOR</p>
+        <h1>Prompt Casino</h1>
+        <p class="subtitle">
+          Spend tokens. Win tokens. Watch a confident AI improvise your financial ruin.
+        </p>
+      </header>
+
+      <section class="stats" aria-label="Game stats">
+        <article class="stat-card">
+          <p>Wallet</p>
+          <strong id="token-balance">120</strong>
+          <span>tokens</span>
+        </article>
+        <article class="stat-card">
+          <p>Total Won</p>
+          <strong id="total-won">0</strong>
+          <span>tokens</span>
+        </article>
+        <article class="stat-card">
+          <p>Spins</p>
+          <strong id="spin-count">0</strong>
+          <span>attempts</span>
+        </article>
+        <article class="stat-card">
+          <p>Best Win</p>
+          <strong id="best-win">0</strong>
+          <span>tokens</span>
+        </article>
+      </section>
+
+      <section class="machine" aria-label="Slot machine">
+        <div class="machine-top">
+          <h2>Model Output Reels</h2>
+          <p id="confidence-readout">AI confidence: 97% sure this will work.</p>
+        </div>
+
+        <div class="reels" role="group" aria-label="Slot reels">
+          <div class="reel" id="reel-0">
+            <span class="symbol" data-symbol>🤖</span>
+            <span class="symbol-name" data-name>Regret Bot</span>
+          </div>
+          <div class="reel" id="reel-1">
+            <span class="symbol" data-symbol>🪙</span>
+            <span class="symbol-name" data-name>Token Cache</span>
+          </div>
+          <div class="reel" id="reel-2">
+            <span class="symbol" data-symbol>404</span>
+            <span class="symbol-name" data-name>Not Found</span>
+          </div>
+        </div>
+
+        <div class="controls">
+          <label for="bet-range">Spin Cost: <strong id="bet-display">15</strong> tokens</label>
+          <input type="range" id="bet-range" min="5" max="40" step="5" value="15" />
+
+          <div class="buttons">
+            <button id="spin-btn" class="primary">Spin Prompt</button>
+            <button id="reset-btn" class="ghost">Reset Wallet</button>
+          </div>
+        </div>
+
+        <p id="status" class="status" aria-live="polite">
+          Pull the lever and let the algorithm gaslight you.
+        </p>
+      </section>
+
+      <footer class="footnote">
+        <p>
+          Uses vanilla HTML/CSS/JS + localStorage, Web Audio API, and Vibration API when available.
+        </p>
+      </footer>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>

@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AI Token Trough</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <div class="background-bloom background-bloom-left" aria-hidden="true"></div>
+    <div class="background-bloom background-bloom-right" aria-hidden="true"></div>
+
+    <main class="app-shell">
+      <section class="hero">
+        <p class="eyebrow">Vanilla HTML, CSS, JavaScript, and browser APIs</p>
+        <h1>AI Token Trough</h1>
+        <p class="subtitle">
+          Burn synthetic tokens, chase absurd jackpots, and let a smug little slot
+          machine roast the hype cycle while you do it.
+        </p>
+        <div class="hero-tags" aria-label="App features">
+          <span>localStorage save</span>
+          <span>Web Animations API</span>
+          <span>Web Audio API</span>
+          <span>Responsive layout</span>
+        </div>
+      </section>
+
+      <section class="machine-panel">
+        <div class="status-strip">
+          <article class="stat-card">
+            <span class="stat-label">Wallet</span>
+            <strong class="stat-value" id="tokenBalance">120</strong>
+            <span class="stat-foot">tokens</span>
+          </article>
+          <article class="stat-card">
+            <span class="stat-label">Bet</span>
+            <strong class="stat-value" id="currentBet">10</strong>
+            <span class="stat-foot">per spin</span>
+          </article>
+          <article class="stat-card">
+            <span class="stat-label">Best Run</span>
+            <strong class="stat-value" id="bestBalance">120</strong>
+            <span class="stat-foot">peak wallet</span>
+          </article>
+          <article class="stat-card">
+            <span class="stat-label">Spins</span>
+            <strong class="stat-value" id="spinCount">0</strong>
+            <span class="stat-foot">total damage</span>
+          </article>
+        </div>
+
+        <div class="machine">
+          <div class="machine-topper">
+            <p class="topper-copy">Prompt tokens in. Delusion tokens out.</p>
+            <div class="jackpot-pill">JACKPOT: 10x bet</div>
+          </div>
+
+          <div class="machine-stage" aria-live="polite">
+            <div class="payline" aria-hidden="true"></div>
+
+            <div class="reel-window">
+              <div class="symbol-card bot" id="reel0">
+                <span class="symbol-chip">BOT</span>
+                <strong class="symbol-name">BOT</strong>
+                <span class="symbol-note">confident nonsense</span>
+              </div>
+            </div>
+
+            <div class="reel-window">
+              <div class="symbol-card gpu" id="reel1">
+                <span class="symbol-chip">GPU</span>
+                <strong class="symbol-name">GPU</strong>
+                <span class="symbol-note">heat-to-profit engine</span>
+              </div>
+            </div>
+
+            <div class="reel-window">
+              <div class="symbol-card mint" id="reel2">
+                <span class="symbol-chip">MINT</span>
+                <strong class="symbol-name">MINT</strong>
+                <span class="symbol-note">token printer fantasy</span>
+              </div>
+            </div>
+          </div>
+
+          <section class="controls">
+            <div class="bet-panel">
+              <p class="control-label">Choose your burn rate</p>
+              <div class="bet-buttons" role="group" aria-label="Bet sizes">
+                <button class="bet-button" data-bet="5" type="button">5</button>
+                <button class="bet-button is-active" data-bet="10" type="button">10</button>
+                <button class="bet-button" data-bet="20" type="button">20</button>
+                <button class="bet-button" data-bet="40" type="button">40</button>
+              </div>
+            </div>
+
+            <div class="action-panel">
+              <button class="spin-button" id="spinButton" type="button">Burn Tokens</button>
+              <button class="secondary-button" id="nudgeButton" type="button">
+                Panic Pivot
+              </button>
+              <button class="secondary-button" id="soundButton" type="button">
+                Sound: On
+              </button>
+            </div>
+          </section>
+
+          <p class="machine-copy" id="roundMessage">
+            The machine is calibrated for disruption, not dignity.
+          </p>
+        </div>
+      </section>
+
+      <section class="info-grid">
+        <article class="info-card meter-card">
+          <div class="card-heading">
+            <h2>Hype Meter</h2>
+            <span id="hypeLabel">Warm deck</span>
+          </div>
+          <div class="meter-track" aria-hidden="true">
+            <div class="meter-fill" id="hypeFill"></div>
+          </div>
+          <p class="card-copy" id="meterCopy">
+            Mild investor optimism with traces of spreadsheet perfume.
+          </p>
+        </article>
+
+        <article class="info-card">
+          <div class="card-heading">
+            <h2>Recent Damage</h2>
+            <span>Live feed</span>
+          </div>
+          <ul class="event-log" id="eventLog" aria-live="polite"></ul>
+        </article>
+
+        <article class="info-card">
+          <div class="card-heading">
+            <h2>Pay Table</h2>
+            <span>Because chaos needs rules</span>
+          </div>
+          <ul class="pay-table">
+            <li><strong>Three MINT</strong><span>10x your bet</span></li>
+            <li><strong>Three VC</strong><span>8x your bet</span></li>
+            <li><strong>Three GPU</strong><span>6x your bet</span></li>
+            <li><strong>Three BOT or HYPE</strong><span>5x your bet</span></li>
+            <li><strong>Three 404</strong><span>4x your bet</span></li>
+            <li><strong>Any pair</strong><span>2x your bet</span></li>
+            <li><strong>BOT VC BOT</strong><span>7x your bet</span></li>
+          </ul>
+        </article>
+      </section>
+    </main>
+
+    <dialog id="bailoutDialog">
+      <form class="dialog-card" method="dialog">
+        <p class="dialog-eyebrow">Runway depleted</p>
+        <h2>You are out of tokens.</h2>
+        <p>
+          A venture capitalist has appeared, carrying 80 emergency tokens and a
+          46-slide deck about "AI adjacency."
+        </p>
+        <menu class="dialog-actions">
+          <button class="secondary-button" type="submit" value="cancel">
+            Let me reflect
+          </button>
+          <button class="spin-button" id="acceptBailout" type="submit" value="accept">
+            Take the bailout
+          </button>
+        </menu>
+      </form>
+    </dialog>
+  </body>
+</html>
