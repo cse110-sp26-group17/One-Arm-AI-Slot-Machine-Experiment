@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Token Grinder 9000</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="hero">
+        <p class="chip">Prompt Casino</p>
+        <h1>Token Grinder 9000</h1>
+        <p class="subtitle">
+          Spend tokens asking AI for miracles. Win tokens when the nonsense happens to be useful.
+        </p>
+      </header>
+
+      <section class="stats" aria-label="Game stats">
+        <article class="stat-card">
+          <p class="stat-label">Balance</p>
+          <p class="stat-value"><span id="balance">0</span> TOK</p>
+        </article>
+        <article class="stat-card">
+          <p class="stat-label">Spent</p>
+          <p class="stat-value"><span id="spent">0</span> TOK</p>
+        </article>
+        <article class="stat-card">
+          <p class="stat-label">Won</p>
+          <p class="stat-value"><span id="won">0</span> TOK</p>
+        </article>
+        <article class="stat-card">
+          <p class="stat-label">Spins</p>
+          <p class="stat-value"><span id="spins">0</span></p>
+        </article>
+      </section>
+
+      <section class="machine" aria-label="Slot machine">
+        <div class="machine-top">
+          <p class="machine-title">Inference Lane</p>
+          <p class="machine-note">Three reels. Infinite confidence.</p>
+        </div>
+        <div class="reel-row" role="group" aria-label="Slot reels">
+          <div class="reel" id="reel-1" aria-live="polite">BOOT</div>
+          <div class="reel" id="reel-2" aria-live="polite">BOOT</div>
+          <div class="reel" id="reel-3" aria-live="polite">BOOT</div>
+        </div>
+      </section>
+
+      <section class="controls" aria-label="Game controls">
+        <label for="bet-select">Spin Cost</label>
+        <select id="bet-select" aria-label="Select spin cost">
+          <option value="50">50 TOK</option>
+          <option value="100" selected>100 TOK</option>
+          <option value="250">250 TOK</option>
+          <option value="500">500 TOK</option>
+        </select>
+
+        <button id="spin-btn" class="action-btn">Spin</button>
+        <button id="auto-btn" class="alt-btn">Auto x5</button>
+        <button id="copy-btn" class="alt-btn">Copy Session</button>
+        <button id="reset-btn" class="danger-btn">Reset Economy</button>
+
+        <label class="voice-toggle" for="voice-toggle">
+          <input type="checkbox" id="voice-toggle" />
+          Roast me out loud
+        </label>
+      </section>
+
+      <section class="status-wrap">
+        <p id="status-message" role="status" aria-live="polite">
+          Insert confidence. Press spin.
+        </p>
+      </section>
+
+      <section class="log-panel" aria-label="Recent machine commentary">
+        <div class="log-header">
+          <h2>AI Roast Feed</h2>
+          <p>Latest spin reactions.</p>
+        </div>
+        <ul id="log-list"></ul>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>

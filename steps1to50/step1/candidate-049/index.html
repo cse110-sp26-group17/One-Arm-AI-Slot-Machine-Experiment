@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Token Slots</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app">
+      <header class="header">
+        <p class="eyebrow">Prompt Casino</p>
+        <h1>AI Token Slots</h1>
+        <p class="subtitle">Win tokens. Burn tokens. Mock AI pricing forever.</p>
+      </header>
+
+      <section class="panel status-panel" aria-label="Token stats">
+        <div class="stat">
+          <span class="label">Balance</span>
+          <strong id="balance">0</strong>
+        </div>
+        <div class="stat">
+          <span class="label">Spent</span>
+          <strong id="spent">0</strong>
+        </div>
+        <div class="stat">
+          <span class="label">Won</span>
+          <strong id="won">0</strong>
+        </div>
+        <div class="stat">
+          <span class="label">High Balance</span>
+          <strong id="high-balance">0</strong>
+        </div>
+      </section>
+
+      <section class="panel machine-panel">
+        <div class="reels" aria-label="Slot reels">
+          <div class="reel" id="reel-1" role="img" aria-live="polite">🤖</div>
+          <div class="reel" id="reel-2" role="img" aria-live="polite">🪙</div>
+          <div class="reel" id="reel-3" role="img" aria-live="polite">💸</div>
+        </div>
+
+        <div class="controls">
+          <label for="bet">Bet Tokens</label>
+          <input id="bet" type="range" min="10" max="250" step="10" value="50" />
+          <output id="bet-output" for="bet">50</output>
+          <div class="button-row">
+            <button id="spin-btn" type="button">Spin</button>
+            <button id="max-btn" type="button">Max Bet Spin</button>
+            <button id="reset-btn" type="button">Hard Reset</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel spend-panel">
+        <h2>Spend Tokens on Dubious AI Upgrades</h2>
+        <div class="shop">
+          <button class="shop-item" data-cost="60" data-boost="1">
+            Buy "Prompt Engineer" (+1 lucky spin)<br />
+            <small>Cost: 60 tokens</small>
+          </button>
+          <button class="shop-item" data-cost="140" data-boost="2">
+            Extend Context Window (+2 lucky spins)<br />
+            <small>Cost: 140 tokens</small>
+          </button>
+          <button class="shop-item" data-cost="300" data-boost="5">
+            Enterprise AI Plan (+5 lucky spins)<br />
+            <small>Cost: 300 tokens</small>
+          </button>
+          <button id="share-btn" type="button" class="shop-item alt">
+            Copy Brag Text to Clipboard
+          </button>
+        </div>
+      </section>
+
+      <section class="panel log-panel">
+        <h2>Casino Feed</h2>
+        <p id="boost-pill" class="boost-pill">Lucky Spins: 0</p>
+        <p id="message">Welcome. Please gamble responsibly and sarcastically.</p>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
