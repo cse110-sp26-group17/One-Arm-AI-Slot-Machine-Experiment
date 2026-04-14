@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Token Slot Machine</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="app" aria-live="polite">
+    <header class="hero">
+      <p class="eyebrow">Automated Confidence Casino</p>
+      <h1>AI Token Slot Machine</h1>
+      <p class="tagline">Spend tokens to spin. Win tokens when the model finally says something useful.</p>
+    </header>
+
+    <section class="stats" aria-label="Game stats">
+      <article class="stat-card">
+        <span class="label">Token Balance</span>
+        <strong id="tokenBalance">0</strong>
+      </article>
+      <article class="stat-card">
+        <span class="label">Total Won</span>
+        <strong id="totalWon">0</strong>
+      </article>
+      <article class="stat-card">
+        <span class="label">Total Spent</span>
+        <strong id="totalSpent">0</strong>
+      </article>
+      <article class="stat-card">
+        <span class="label">Spins</span>
+        <strong id="spinCount">0</strong>
+      </article>
+    </section>
+
+    <section class="machine" aria-label="Slot machine">
+      <div class="reels" role="group" aria-label="Slot reels">
+        <div class="reel-window"><div class="reel-symbol" id="reel0">🤖</div></div>
+        <div class="reel-window"><div class="reel-symbol" id="reel1">🤖</div></div>
+        <div class="reel-window"><div class="reel-symbol" id="reel2">🤖</div></div>
+      </div>
+
+      <div class="controls">
+        <label for="betSelect">Bet Per Spin</label>
+        <select id="betSelect">
+          <option value="10">10 tokens</option>
+          <option value="25">25 tokens</option>
+          <option value="50" selected>50 tokens</option>
+          <option value="100">100 tokens</option>
+          <option value="200">200 tokens</option>
+        </select>
+
+        <div class="buttons">
+          <button id="spinButton" class="primary">Spin For Better Answers</button>
+          <button id="resetButton" class="secondary">Reset Simulation</button>
+          <button id="voiceButton" class="secondary" type="button">Enable AI Trash Talk</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="result-panel">
+      <p id="resultMessage">Boot sequence complete. Your startup grant is loaded.</p>
+      <p id="aiRoast">AI says: "I am 99.99% sure this is not gambling."</p>
+    </section>
+
+    <section class="paytable" aria-label="Payout rules">
+      <h2>Payouts</h2>
+      <ul>
+        <li>3 matching symbols: 4x to 20x your bet</li>
+        <li>2 matching symbols: 2x your bet (pity payout)</li>
+        <li>No match: your tokens become "training cost"</li>
+      </ul>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
