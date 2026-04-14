@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>LLM Slot Machine</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bungee&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="app">
+    <header class="topbar">
+      <h1>Prompt & Pull</h1>
+      <p class="tagline">Where every spin is definitely a responsible use of inference budget.</p>
+    </header>
+
+    <section class="status" aria-live="polite">
+      <div class="token-box">
+        <span class="label">Your Tokens</span>
+        <strong id="tokenCount">100</strong>
+      </div>
+      <div class="cost-box">
+        <span class="label">Spin Cost</span>
+        <strong id="spinCost">10</strong>
+      </div>
+    </section>
+
+    <section class="slot" aria-label="AI Slot Machine">
+      <div class="reels" role="group" aria-label="Slot reels">
+        <div class="reel" id="reel1">🤖</div>
+        <div class="reel" id="reel2">🧠</div>
+        <div class="reel" id="reel3">💾</div>
+      </div>
+      <p id="message" class="message">Press spin. Ignore your accountant.</p>
+    </section>
+
+    <section class="controls">
+      <button id="spinBtn" class="spin-btn">Spin Tokens</button>
+      <button id="refillBtn" class="refill-btn">Beg For VC Funding (+50)</button>
+    </section>
+
+    <section class="payouts">
+      <h2>Payouts</h2>
+      <ul>
+        <li>3 matching symbols: <strong>+60</strong></li>
+        <li>2 matching symbols: <strong>+20</strong></li>
+        <li>Any 🔥: <strong>-5</strong> (servers are melting)</li>
+        <li>No match: <strong>+0</strong> (pure thought leadership)</li>
+      </ul>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
