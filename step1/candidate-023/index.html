@@ -1,0 +1,62 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tokenized AI Slot Machine</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="app">
+    <header>
+      <h1>AI Token Grinder 3000</h1>
+      <p class="subtitle">Feed the model. Maybe it hallucinates you a jackpot.</p>
+    </header>
+
+    <section class="status-card">
+      <div class="stat">
+        <span class="label">Your Tokens</span>
+        <span id="tokens" class="value">100</span>
+      </div>
+      <div class="stat">
+        <span class="label">Current Bet</span>
+        <span id="betValue" class="value">10</span>
+      </div>
+      <div class="stat">
+        <span class="label">Last Payout</span>
+        <span id="lastPayout" class="value">0</span>
+      </div>
+    </section>
+
+    <section class="machine" aria-label="Slot machine">
+      <div id="reel1" class="reel" aria-live="polite">🤖</div>
+      <div id="reel2" class="reel" aria-live="polite">⚡</div>
+      <div id="reel3" class="reel" aria-live="polite">🧠</div>
+    </section>
+
+    <section class="controls">
+      <label for="betRange">Bet Tokens</label>
+      <input id="betRange" type="range" min="1" max="25" value="10" />
+      <div class="buttons">
+        <button id="spinButton">Spin</button>
+        <button id="resetButton" class="secondary">Reset Bankroll</button>
+      </div>
+    </section>
+
+    <section class="message-wrap" aria-live="polite">
+      <p id="message" class="message">Welcome to the only casino where the house runs on GPUs.</p>
+    </section>
+
+    <section class="rules">
+      <h2>Payout Meme Logic</h2>
+      <ul>
+        <li>3 of a kind: <strong>8x bet</strong></li>
+        <li>2 of a kind: <strong>2x bet</strong></li>
+        <li>Any 🎯 gives +1 token bonus (precision mode)</li>
+      </ul>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

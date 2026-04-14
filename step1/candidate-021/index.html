@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Prompt & Plunder Slots</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app">
+      <header class="hero">
+        <p class="badge">Totally Human Casino</p>
+        <h1>Prompt & Plunder</h1>
+        <p class="subtitle">
+          Win tokens from the Algorithm. Spend them on fake AI upgrades that do absolutely nothing.
+        </p>
+      </header>
+
+      <section class="status-card" aria-live="polite">
+        <div>
+          <p class="label">Token Vault</p>
+          <p id="tokens" class="value">100</p>
+        </div>
+        <div>
+          <p class="label">Spin Cost</p>
+          <p id="spin-cost" class="value">5</p>
+        </div>
+        <div>
+          <p class="label">Last Win</p>
+          <p id="last-win" class="value">0</p>
+        </div>
+      </section>
+
+      <section class="machine" aria-label="Slot machine">
+        <div class="reels" id="reels">
+          <div class="reel" id="reel-1">??</div>
+          <div class="reel" id="reel-2">??</div>
+          <div class="reel" id="reel-3">??</div>
+        </div>
+        <button id="spin-btn" class="spin-btn" type="button">Spin For Tokens</button>
+      </section>
+
+      <section class="store">
+        <h2>AI Upgrade Store</h2>
+        <p class="subtitle small">All purchases are emotionally expensive and technically useless.</p>
+        <div class="store-grid" id="store-grid"></div>
+      </section>
+
+      <section class="feed" aria-live="polite">
+        <h2>Roast Feed</h2>
+        <p id="message">Welcome to the casino where your data has better odds than you.</p>
+      </section>
+    </main>
+
+    <template id="item-template">
+      <article class="item-card">
+        <h3 class="item-name"></h3>
+        <p class="item-desc"></p>
+        <div class="item-footer">
+          <span class="item-price"></span>
+          <button class="buy-btn" type="button">Buy</button>
+        </div>
+      </article>
+    </template>
+
+    <script src="script.js"></script>
+  </body>
+</html>

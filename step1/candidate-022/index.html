@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tokenized Delusion Slots</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app">
+      <header class="hero">
+        <p class="badge">Unregulated AI Casino</p>
+        <h1>Tokenized Delusion</h1>
+        <p class="subtitle">
+          Win prompt tokens. Spend prompt tokens. Pretend the upgrades matter.
+        </p>
+      </header>
+
+      <section class="status-card" aria-live="polite">
+        <div>
+          <p class="label">Tokens</p>
+          <p id="tokens" class="value">120</p>
+        </div>
+        <div>
+          <p class="label">Spin Cost</p>
+          <p id="spin-cost" class="value">8</p>
+        </div>
+        <div>
+          <p class="label">Last Win</p>
+          <p id="last-win" class="value">0</p>
+        </div>
+        <div>
+          <p class="label">Spent In Store</p>
+          <p id="spent" class="value">0</p>
+        </div>
+      </section>
+
+      <section class="machine" aria-label="Slot machine">
+        <div class="reels" id="reels">
+          <div class="reel">BOOT</div>
+          <div class="reel">GPT</div>
+          <div class="reel">LAG</div>
+        </div>
+        <div class="controls">
+          <button id="spin-btn" class="spin-btn" type="button">Spin For Tokens</button>
+          <button id="read-btn" class="alt-btn" type="button">Read Roast</button>
+          <button id="reset-btn" class="alt-btn danger" type="button">Reset Wallet</button>
+        </div>
+      </section>
+
+      <section class="store">
+        <h2>AI Upgrade Store</h2>
+        <p class="subtitle small">
+          Everything below is scientifically priced and functionally pointless.
+        </p>
+        <div class="store-grid" id="store-grid"></div>
+      </section>
+
+      <section class="feed" aria-live="polite">
+        <h2>Roast Feed</h2>
+        <p id="message">The house always wins, then publishes a benchmark.</p>
+      </section>
+    </main>
+
+    <template id="item-template">
+      <article class="item-card">
+        <h3 class="item-name"></h3>
+        <p class="item-desc"></p>
+        <div class="item-footer">
+          <span class="item-price"></span>
+          <button class="buy-btn" type="button">Buy</button>
+        </div>
+      </article>
+    </template>
+
+    <script src="script.js"></script>
+  </body>
+</html>

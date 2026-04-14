@@ -1,0 +1,174 @@
+﻿:root {
+  --bg: #08141a;
+  --card: #112a33;
+  --accent: #ffd166;
+  --text: #ecf4f8;
+  --muted: #9db3bf;
+  --good: #37d67a;
+  --bad: #ff5f56;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+  color: var(--text);
+  background:
+    radial-gradient(circle at 20% 20%, #183f4d 0%, transparent 40%),
+    radial-gradient(circle at 80% 0%, #1f2d52 0%, transparent 35%),
+    var(--bg);
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+}
+
+.app {
+  width: min(760px, 100%);
+  background: color-mix(in oklab, var(--card), black 8%);
+  border: 1px solid color-mix(in oklab, var(--accent), black 70%);
+  border-radius: 16px;
+  padding: 1.2rem;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+}
+
+h1 {
+  margin: 0;
+  font-size: clamp(1.5rem, 2.3vw, 2.2rem);
+}
+
+.subtitle {
+  margin: 0.35rem 0 1rem;
+  color: var(--muted);
+}
+
+.status-card {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.6rem;
+}
+
+.stat {
+  background: #0d2028;
+  border-radius: 10px;
+  padding: 0.65rem;
+  border: 1px solid #27414d;
+}
+
+.label {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.value {
+  font-size: 1.35rem;
+  font-weight: 700;
+}
+
+.machine {
+  margin: 1rem 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.8rem;
+}
+
+.reel {
+  background: #091820;
+  border: 2px solid #355f70;
+  border-radius: 12px;
+  min-height: 104px;
+  display: grid;
+  place-items: center;
+  font-size: clamp(2.2rem, 7vw, 3.4rem);
+  transition: transform 160ms ease, border-color 160ms ease;
+}
+
+.reel.spinning {
+  transform: translateY(-2px) scale(1.01);
+  border-color: var(--accent);
+}
+
+.controls {
+  display: grid;
+  gap: 0.6rem;
+}
+
+input[type="range"] {
+  width: 100%;
+}
+
+.buttons {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+button {
+  border: 0;
+  cursor: pointer;
+  background: var(--accent);
+  color: #111;
+  padding: 0.6rem 1rem;
+  border-radius: 9px;
+  font-weight: 700;
+}
+
+button:hover {
+  filter: brightness(1.06);
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+button.secondary {
+  background: #2d4d5a;
+  color: #f0f8fb;
+}
+
+.message-wrap {
+  margin-top: 0.9rem;
+  padding: 0.7rem;
+  border-radius: 10px;
+  border: 1px dashed #3a6271;
+  background: #0d232c;
+}
+
+.message {
+  margin: 0;
+}
+
+.message.good {
+  color: var(--good);
+}
+
+.message.bad {
+  color: var(--bad);
+}
+
+.rules {
+  margin-top: 1rem;
+  color: var(--muted);
+}
+
+.rules h2 {
+  margin: 0 0 0.5rem;
+  color: var(--text);
+  font-size: 1rem;
+}
+
+.rules ul {
+  margin: 0;
+  padding-left: 1.2rem;
+}
+
+@media (max-width: 620px) {
+  .status-card {
+    grid-template-columns: 1fr;
+  }
+}
