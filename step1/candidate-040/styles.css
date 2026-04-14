@@ -1,0 +1,232 @@
+:root {
+  --bg-1: #fff6e0;
+  --bg-2: #ffe1bf;
+  --ink: #1f2328;
+  --accent: #f35d29;
+  --accent-2: #0f9d93;
+  --card: rgba(255, 255, 255, 0.8);
+  --card-border: rgba(31, 35, 40, 0.12);
+  --good: #0f9d93;
+  --bad: #c33a2a;
+  --shadow: 0 16px 45px rgba(59, 36, 24, 0.2);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  font-family: "Trebuchet MS", "Avenir Next", "Segoe UI", sans-serif;
+  color: var(--ink);
+  background:
+    radial-gradient(circle at 20% 15%, rgba(243, 93, 41, 0.2), transparent 35%),
+    radial-gradient(circle at 85% 80%, rgba(15, 157, 147, 0.22), transparent 40%),
+    repeating-linear-gradient(
+      -26deg,
+      rgba(255, 255, 255, 0.35) 0,
+      rgba(255, 255, 255, 0.35) 8px,
+      rgba(255, 255, 255, 0) 8px,
+      rgba(255, 255, 255, 0) 16px
+    ),
+    linear-gradient(135deg, var(--bg-1), var(--bg-2));
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+
+.app-shell {
+  width: min(980px, 100%);
+}
+
+.machine {
+  border: 1px solid var(--card-border);
+  border-radius: 24px;
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.65));
+  backdrop-filter: blur(4px);
+  box-shadow: var(--shadow);
+  padding: 22px;
+}
+
+.kicker {
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+h1 {
+  margin: 0.35rem 0 0.5rem;
+  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+  letter-spacing: 0.02em;
+  font-size: clamp(2rem, 4vw, 3.1rem);
+}
+
+.subtitle {
+  margin: 0;
+  max-width: 52ch;
+  font-size: clamp(0.92rem, 2.2vw, 1.06rem);
+}
+
+.stats-grid {
+  margin-top: 18px;
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.stat-card {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 14px;
+  padding: 10px 12px;
+}
+
+.stat-card h2 {
+  margin: 0;
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  opacity: 0.75;
+}
+
+.stat-value {
+  margin: 0.45rem 0 0.2rem;
+  font-size: clamp(1.1rem, 2.9vw, 1.6rem);
+  font-weight: 800;
+}
+
+.stat-label {
+  margin: 0;
+  font-size: 0.75rem;
+  opacity: 0.7;
+}
+
+.bet-controls {
+  display: grid;
+  grid-template-columns: 32px 1fr 32px;
+  gap: 8px;
+  align-items: center;
+}
+
+.reels {
+  margin-top: 18px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.reel {
+  min-height: 86px;
+  border-radius: 14px;
+  border: 2px solid rgba(31, 35, 40, 0.12);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(248, 240, 225, 0.92));
+  display: grid;
+  place-items: center;
+  text-align: center;
+  font-family: "Courier New", Courier, monospace;
+  font-weight: 700;
+  font-size: clamp(0.9rem, 2.3vw, 1.15rem);
+  padding: 8px;
+}
+
+.reel.spinning {
+  animation: reelPulse 140ms linear infinite;
+}
+
+@keyframes reelPulse {
+  from {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-2px);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+.controls {
+  margin-top: 18px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+button {
+  font: inherit;
+  border: 0;
+  border-radius: 12px;
+  padding: 11px 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 140ms ease, filter 140ms ease;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  filter: grayscale(0.4);
+  opacity: 0.55;
+}
+
+button:not(:disabled):active {
+  transform: translateY(1px);
+}
+
+.main-btn {
+  background: linear-gradient(145deg, #ff7b31, #ef4f20);
+  color: #fff;
+}
+
+.alt-btn {
+  background: linear-gradient(145deg, #1ab3a6, #0d8a81);
+  color: #fff;
+}
+
+.ghost-btn {
+  background: #fff;
+  border: 1px solid var(--card-border);
+}
+
+.tiny-btn {
+  background: #fff;
+  border: 1px solid var(--card-border);
+  padding: 4px 0;
+}
+
+.status {
+  margin: 14px 0 0;
+  padding: 11px 12px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.84);
+  border: 1px solid var(--card-border);
+  font-weight: 600;
+  min-height: 48px;
+}
+
+.status.win {
+  color: var(--good);
+}
+
+.status.lose {
+  color: var(--bad);
+}
+
+@media (max-width: 800px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .controls {
+    grid-template-columns: 1fr;
+  }
+}

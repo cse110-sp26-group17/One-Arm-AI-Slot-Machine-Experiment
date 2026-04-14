@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Token Tumbler 9000</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="app-shell">
+    <section class="machine">
+      <p class="kicker">AI Casino Division</p>
+      <h1>Token Tumbler 9000</h1>
+      <p class="subtitle">Spin to win tokens. Feed those tokens right back into the machine.</p>
+
+      <div class="stats-grid">
+        <article class="stat-card">
+          <h2>Wallet</h2>
+          <p id="balance" class="stat-value">0</p>
+          <p class="stat-label">tokens</p>
+        </article>
+        <article class="stat-card">
+          <h2>Bet</h2>
+          <div class="bet-controls">
+            <button id="bet-down" class="tiny-btn" type="button" aria-label="Lower bet">-</button>
+            <p id="bet" class="stat-value">0</p>
+            <button id="bet-up" class="tiny-btn" type="button" aria-label="Raise bet">+</button>
+          </div>
+          <p class="stat-label">per spin</p>
+        </article>
+        <article class="stat-card">
+          <h2>Record</h2>
+          <p id="best-win" class="stat-value">0</p>
+          <p class="stat-label">best single win</p>
+        </article>
+        <article class="stat-card">
+          <h2>Lifetime</h2>
+          <p id="spins" class="stat-value">0</p>
+          <p class="stat-label">total spins</p>
+        </article>
+      </div>
+
+      <div class="reels" role="group" aria-label="Slot machine reels">
+        <div class="reel" id="reel-0">PROMPT</div>
+        <div class="reel" id="reel-1">PROMPT</div>
+        <div class="reel" id="reel-2">PROMPT</div>
+      </div>
+
+      <div class="controls">
+        <button id="spin-btn" class="main-btn" type="button">Spin (-0 tokens)</button>
+        <button id="prediction-btn" class="alt-btn" type="button">Buy AI prediction (-35 tokens)</button>
+        <button id="reset-btn" class="ghost-btn" type="button">Reset wallet</button>
+      </div>
+
+      <p id="status" class="status" role="status" aria-live="polite">
+        Welcome to the only casino where the house is a language model.
+      </p>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
