@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Token Tugbandit</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="scene"></div>
+    <main class="app-shell">
+      <section class="hero-card">
+        <p class="eyebrow">Vanilla HTML + CSS + JS</p>
+        <h1>Token Tugbandit</h1>
+        <p class="hero-copy">
+          Burn prompt tokens, chase synthetic glory, and let a tiny slot machine
+          explain modern AI economics with uncomfortable accuracy.
+        </p>
+        <div class="hero-stats" aria-label="Machine summary">
+          <div class="stat-chip">
+            <span class="stat-chip__label">Spin cost</span>
+            <strong id="spinCostDisplay">7 tokens</strong>
+          </div>
+          <div class="stat-chip">
+            <span class="stat-chip__label">Best bankroll</span>
+            <strong id="bestBalanceDisplay">0</strong>
+          </div>
+          <div class="stat-chip">
+            <span class="stat-chip__label">Emergency bailouts</span>
+            <strong id="bailoutsDisplay">0</strong>
+          </div>
+        </div>
+      </section>
+
+      <section class="machine-card" aria-labelledby="machineTitle">
+        <div class="machine-topbar">
+          <div>
+            <p class="machine-topbar__label">Active product</p>
+            <h2 id="machineTitle">One-Armed Promptit</h2>
+          </div>
+          <div class="balance-badge">
+            <span>Wallet</span>
+            <strong id="balanceDisplay">0</strong>
+          </div>
+        </div>
+
+        <div class="runway-panel" aria-label="Token runway">
+          <div class="runway-meter">
+            <div class="runway-meter__fill" id="runwayFill"></div>
+          </div>
+          <div class="runway-copy">
+            <span id="runwayLabel">Runway stable</span>
+            <strong id="spinsDisplay">0 spins</strong>
+          </div>
+        </div>
+
+        <div class="reel-frame" aria-label="Slot machine reels">
+          <div class="reel-window">
+            <article class="reel" id="reel0">
+              <span class="reel__icon" id="reelIcon0">?</span>
+              <span class="reel__name" id="reelName0">Loading</span>
+            </article>
+            <article class="reel" id="reel1">
+              <span class="reel__icon" id="reelIcon1">?</span>
+              <span class="reel__name" id="reelName1">Loading</span>
+            </article>
+            <article class="reel" id="reel2">
+              <span class="reel__icon" id="reelIcon2">?</span>
+              <span class="reel__name" id="reelName2">Loading</span>
+            </article>
+          </div>
+          <div class="machine-glow"></div>
+        </div>
+
+        <div class="controls">
+          <button class="spin-button" id="spinButton" type="button">
+            Spend Tokens
+          </button>
+          <button class="secondary-button" id="bailoutButton" type="button">
+            Beg for Seed Round
+          </button>
+          <button class="ghost-button" id="resetButton" type="button">
+            Reset Timeline
+          </button>
+        </div>
+
+        <section class="message-board" aria-live="polite">
+          <p class="message-board__title">Investor Relations</p>
+          <p class="message-board__body" id="messageDisplay">
+            Boot sequence complete. The reels are ready to monetize your hope.
+          </p>
+          <p class="message-board__meta" id="lastPayoutDisplay">
+            Last payout: 0 tokens
+          </p>
+        </section>
+      </section>
+
+      <section class="ledger-card">
+        <div class="ledger-card__header">
+          <div>
+            <p class="eyebrow">Payout Logic</p>
+            <h2>Meme Portfolio</h2>
+          </div>
+          <p class="ledger-card__copy">
+            Three of a kind pays the listed jackpot. Two of a kind earns a pity
+            bonus because engagement is engagement.
+          </p>
+        </div>
+
+        <div class="payout-grid" id="payoutGrid"></div>
+
+        <div class="combo-card">
+          <h3>Special Combo</h3>
+          <p>
+            Land <strong>GPU + Prompt + Token</strong> in any order and the
+            machine calls it “platform synergy” for a 28 token bonus.
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>

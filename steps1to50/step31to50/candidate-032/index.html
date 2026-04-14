@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Token Tugger 3000</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <div class="ambient ambient-left" aria-hidden="true"></div>
+    <div class="ambient ambient-right" aria-hidden="true"></div>
+
+    <main class="app-shell">
+      <section class="hero-panel">
+        <p class="eyebrow">Vanilla Web Slot Machine</p>
+        <h1>Token Tugger 3000</h1>
+        <p class="hero-copy">
+          Spend tokens to feed the hype machine. Match enough AI buzzwords and
+          it rewards you with the same fake economy it invented five seconds
+          ago.
+        </p>
+
+        <div class="status-grid" aria-label="game status">
+          <article class="status-card">
+            <span class="status-label">Token Wallet</span>
+            <strong id="tokenCount" class="status-value">0</strong>
+            <span class="status-note">Stored locally, like all serious wealth.</span>
+          </article>
+          <article class="status-card">
+            <span class="status-label">Spin Cost</span>
+            <strong id="spinCost" class="status-value">3</strong>
+            <span class="status-note">Prompt engineering fee included.</span>
+          </article>
+          <article class="status-card">
+            <span class="status-label">Jackpot</span>
+            <strong class="status-value">27</strong>
+            <span class="status-note">Three perfect buzzwords. Investors cry.</span>
+          </article>
+        </div>
+      </section>
+
+      <section class="machine-panel" aria-labelledby="slotTitle">
+        <div class="machine-header">
+          <div>
+            <p class="machine-kicker">Live model evaluation</p>
+            <h2 id="slotTitle">Spin the Vibe-Based Revenue Engine</h2>
+          </div>
+          <button id="resetButton" class="ghost-button" type="button">
+            Reset Wallet
+          </button>
+        </div>
+
+        <div class="slot-machine">
+          <div class="marquee" aria-hidden="true">
+            <span>prompt jackpot</span>
+            <span>hallucination tax</span>
+            <span>GPU tears</span>
+            <span>vibe-coded riches</span>
+          </div>
+
+          <div class="reel-window" aria-label="slot reels">
+            <article class="reel" data-reel="0">
+              <span class="reel-icon" id="reelIcon0">&#129302;</span>
+              <span class="reel-label" id="reelLabel0">Loading...</span>
+            </article>
+            <article class="reel" data-reel="1">
+              <span class="reel-icon" id="reelIcon1">&#129504;</span>
+              <span class="reel-label" id="reelLabel1">Loading...</span>
+            </article>
+            <article class="reel" data-reel="2">
+              <span class="reel-icon" id="reelIcon2">&#128184;</span>
+              <span class="reel-label" id="reelLabel2">Loading...</span>
+            </article>
+          </div>
+
+          <div class="control-row">
+            <button id="spinButton" class="spin-button" type="button">
+              Spend 3 Tokens
+            </button>
+            <p class="control-note">
+              Pull once and pretend it counts as strategy.
+            </p>
+          </div>
+        </div>
+
+        <div class="result-panel">
+          <p id="message" class="message" aria-live="polite">
+            Your wallet is ready. The machine is already judging your prompt.
+          </p>
+
+          <div class="stats-row">
+            <article class="mini-card">
+              <span class="mini-label">Last Payout</span>
+              <strong id="lastPayout">0</strong>
+            </article>
+            <article class="mini-card">
+              <span class="mini-label">Mood</span>
+              <strong id="machineMood">Smug</strong>
+            </article>
+            <article class="mini-card">
+              <span class="mini-label">Best Combo</span>
+              <strong id="bestCombo">None yet</strong>
+            </article>
+          </div>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

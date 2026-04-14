@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>One-Arm AI Slot Machine</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="backdrop" aria-hidden="true"></div>
+
+    <main class="app-shell">
+      <section class="hero">
+        <p class="eyebrow">ONE-ARM AI SLOT MACHINE</p>
+        <h1>Turn hype into tokens.</h1>
+        <p class="lead">
+          Spend prompt credits, yank the lever, and find out whether your fake startup
+          shipped AGI or just another expensive autocomplete demo.
+        </p>
+
+        <div class="hero-stats" aria-label="Game statistics">
+          <article class="stat-card wallet-card" id="walletCard">
+            <span class="stat-label">Wallet</span>
+            <strong class="stat-value" id="balanceValue">0</strong>
+            <span class="stat-unit">tokens</span>
+          </article>
+          <article class="stat-card">
+            <span class="stat-label">Best win</span>
+            <strong class="stat-value" id="bestWinValue">0</strong>
+            <span class="stat-unit">tokens</span>
+          </article>
+          <article class="stat-card">
+            <span class="stat-label">Spin cost</span>
+            <strong class="stat-value" id="spinCostValue">15</strong>
+            <span class="stat-unit">tokens</span>
+          </article>
+        </div>
+      </section>
+
+      <section class="machine-panel" aria-labelledby="machineTitle">
+        <div class="machine-head">
+          <div>
+            <p class="eyebrow machine-eyebrow">INFERENCE CASINO</p>
+            <h2 id="machineTitle">Enterprise-grade token extraction</h2>
+          </div>
+          <p class="status-line" id="statusLine" aria-live="polite">
+            System booted. Fresh venture capital has been converted into arcade credits.
+          </p>
+        </div>
+
+        <div class="reel-board" role="img" aria-label="Three slot machine reels with AI-themed symbols">
+          <div class="reel-window">
+            <div class="symbol-chip token" id="reel0">TOKEN</div>
+          </div>
+          <div class="reel-window">
+            <div class="symbol-chip prompt" id="reel1">PROMPT</div>
+          </div>
+          <div class="reel-window">
+            <div class="symbol-chip gpu" id="reel2">GPU</div>
+          </div>
+        </div>
+
+        <div class="control-row">
+          <button class="primary-button" id="spinButton" type="button">Spend 15 tokens</button>
+          <button class="secondary-button" id="boostButton" type="button">
+            Buy Buzzword Boost (25)
+          </button>
+          <button class="ghost-button" id="resetButton" type="button">Reset economy</button>
+        </div>
+
+        <div class="machine-footer">
+          <section class="boost-panel" aria-label="Boost status">
+            <div class="boost-copy">
+              <span class="boost-title">Buzzword Boost</span>
+              <p id="boostDescription">
+                Spend 25 tokens now. Your next winning spin gets doubled because pricing pages
+                still run the world.
+              </p>
+            </div>
+            <div class="boost-meter" aria-hidden="true">
+              <div class="boost-fill" id="boostFill"></div>
+            </div>
+          </section>
+
+          <section class="round-panel" aria-label="Round statistics">
+            <p>Spins: <strong id="spinCountValue">0</strong></p>
+            <p>Last round: <strong id="roundDeltaValue">0</strong> tokens</p>
+          </section>
+        </div>
+      </section>
+
+      <section class="legend-panel" aria-labelledby="legendTitle">
+        <div class="panel-heading">
+          <div>
+            <p class="eyebrow">PAYOUT TABLE</p>
+            <h2 id="legendTitle">What the machine thinks counts as innovation</h2>
+          </div>
+          <p class="panel-note">Three of a kind pays biggest. Some mixed disasters fine you extra.</p>
+        </div>
+        <div class="legend-grid" id="legendGrid"></div>
+      </section>
+
+      <section class="log-panel" aria-labelledby="logTitle">
+        <div class="panel-heading">
+          <div>
+            <p class="eyebrow">AUDIT LOG</p>
+            <h2 id="logTitle">Every spin gets a sarcastic postmortem</h2>
+          </div>
+          <p class="panel-note">Persisted locally so your browser can remember past poor decisions.</p>
+        </div>
+        <ol class="message-log" id="messageLog"></ol>
+      </section>
+    </main>
+
+    <noscript>
+      <p class="noscript-warning">
+        This machine runs on plain JavaScript. Without it, the only thing spinning is the marketing.
+      </p>
+    </noscript>
+
+    <script src="script.js"></script>
+  </body>
+</html>
