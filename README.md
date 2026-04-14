@@ -23,22 +23,10 @@ One-Arm-AI-Slot-Machine-Experiment/
 │   ├── original-prompt.txt
 │
 ├── steps(1-50)/ 
-│   ├── 1-5/
+│   ├── 1/
 │   │   ├── README.md
-│   │   └── files/
-│   │
-│   ├── 6-10/
-│   │   ├── README.md
-│   │   └── files/
-│   │
-│   ├── 11-15/
-│   │   ├── README.md
-│   │   └── files/
-│   │
-│   └── 16-20/
-│       ├── README.md
-│       └── files/
-│
+│   │   └── files/(code+stats)
+│   
 └── shared/
     ├── assets/
     └── utils/
@@ -49,7 +37,7 @@ One-Arm-AI-Slot-Machine-Experiment/
 ## How to Use
 
 * Each folder inside `steps/` is a **work chunk** (e.g. 1–5)
-*  one person per folder, 5 prompts each person
+*   5 prompts each person, one folder per prompt
 * Work amd put data only inside your assigned folder
 * Add notes or instructions in that folder’s `README.md`
 
