@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Token Burner 3000</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bungee&family=Space+Mono:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="hero">
+        <p class="eyebrow">One-Arm AI Slot Machine</p>
+        <h1>Token Burner 3000</h1>
+        <p class="subtitle">
+          Congratulations, founder. Spend fake AI tokens to spin, win fake AI
+          tokens to keep spinning, and call it sustainable growth.
+        </p>
+      </header>
+
+      <section class="stats" aria-label="Token economy stats">
+        <article>
+          <h2>Wallet</h2>
+          <p id="tokensValue">0</p>
+        </article>
+        <article>
+          <h2>Total Burned</h2>
+          <p id="spentValue">0</p>
+        </article>
+        <article>
+          <h2>Total Won</h2>
+          <p id="wonValue">0</p>
+        </article>
+      </section>
+
+      <section class="machine" aria-label="Slot machine">
+        <div class="reels" role="group" aria-label="Slot reels">
+          <div class="reel" id="reel0" data-symbol="Bot" aria-live="off">
+            <span class="icon">🤖</span>
+          </div>
+          <div class="reel" id="reel1" data-symbol="Brain" aria-live="off">
+            <span class="icon">🧠</span>
+          </div>
+          <div class="reel" id="reel2" data-symbol="Token" aria-live="off">
+            <span class="icon">🪙</span>
+          </div>
+        </div>
+
+        <div class="controls">
+          <div class="bet" aria-label="Bet controls">
+            <button id="betDown" type="button" aria-label="Decrease bet">
+              -
+            </button>
+            <p>Spin Cost: <strong id="betValue">0</strong> tokens</p>
+            <button id="betUp" type="button" aria-label="Increase bet">
+              +
+            </button>
+          </div>
+
+          <button id="spinButton" type="button" class="primary">
+            Spin and Burn Tokens
+          </button>
+          <button id="grantButton" type="button" class="secondary">
+            Collect Daily VC Funding (+25)
+          </button>
+        </div>
+
+        <p id="status" class="status" aria-live="polite"></p>
+      </section>
+
+      <section class="payouts" aria-label="Payout guide">
+        <h2>Payout Lore</h2>
+        <ul>
+          <li>3 matching symbols: symbol multiplier pays out.</li>
+          <li>Any pair: 2x your spin cost.</li>
+          <li>Exact combo 🤖 + 🧠 + 🪙: 4x "synergy" bonus.</li>
+          <li>3x 🪄 Hallucination: 0 payout, unlimited confidence.</li>
+        </ul>
+      </section>
+
+      <section class="feed" aria-label="Spin history">
+        <h2>Investor Update Feed</h2>
+        <ul id="historyList"></ul>
+      </section>
+    </main>
+  </body>
+</html>

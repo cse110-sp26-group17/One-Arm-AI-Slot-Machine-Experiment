@@ -1,0 +1,259 @@
+:root {
+  --bg-top: #ffe9c9;
+  --bg-bottom: #9bd9ff;
+  --ink: #2b1f16;
+  --panel: rgba(255, 252, 246, 0.86);
+  --accent: #ff5f2e;
+  --accent-alt: #07a3ff;
+  --good: #0c8c52;
+  --bad: #a02525;
+  --ring: #ffd45a;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Space Mono", "Consolas", monospace;
+  color: var(--ink);
+  background:
+    radial-gradient(circle at 15% 15%, rgba(255, 135, 70, 0.32) 0 20%, transparent 22%),
+    radial-gradient(circle at 80% 20%, rgba(7, 163, 255, 0.22) 0 18%, transparent 20%),
+    linear-gradient(150deg, var(--bg-top), var(--bg-bottom));
+  padding: 1.2rem;
+}
+
+.app-shell {
+  width: min(940px, 100%);
+  margin: 0 auto;
+  display: grid;
+  gap: 1rem;
+}
+
+.hero,
+.stats,
+.machine,
+.payouts,
+.feed {
+  background: var(--panel);
+  border: 3px solid #fff;
+  border-radius: 20px;
+  padding: 1rem;
+  box-shadow: 0 8px 30px rgba(43, 31, 22, 0.14);
+}
+
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 0.75rem;
+  margin: 0;
+}
+
+h1,
+h2 {
+  font-family: "Bungee", "Impact", sans-serif;
+  margin: 0;
+  line-height: 1.1;
+}
+
+h1 {
+  font-size: clamp(1.8rem, 5vw, 3rem);
+  margin-top: 0.3rem;
+}
+
+.subtitle {
+  margin: 0.7rem 0 0;
+  max-width: 66ch;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.8rem;
+}
+
+.stats article {
+  background: #fffaf2;
+  border: 2px solid #fff;
+  border-radius: 14px;
+  padding: 0.7rem;
+}
+
+.stats h2 {
+  font-size: 0.95rem;
+}
+
+.stats p {
+  font-size: clamp(1.2rem, 4vw, 2rem);
+  font-weight: 700;
+  margin: 0.4rem 0 0;
+}
+
+.machine {
+  display: grid;
+  gap: 1rem;
+}
+
+.reels {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.6rem;
+}
+
+.reel {
+  min-height: 114px;
+  border-radius: 16px;
+  background: linear-gradient(180deg, #fff, #ffeecf);
+  border: 3px solid #ffd89a;
+  display: grid;
+  place-items: center;
+  position: relative;
+  overflow: hidden;
+  transition: transform 170ms ease;
+}
+
+.reel::after {
+  content: attr(data-symbol);
+  position: absolute;
+  bottom: 0.45rem;
+  font-size: 0.65rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  opacity: 0.75;
+}
+
+.reel .icon {
+  font-size: clamp(2rem, 9vw, 3.3rem);
+  display: inline-block;
+  filter: drop-shadow(0 3px 0 rgba(0, 0, 0, 0.12));
+}
+
+.reel.spinning .icon {
+  animation: tumble 160ms steps(3) infinite;
+}
+
+.reel.stop-flash {
+  box-shadow: 0 0 0 4px var(--ring) inset;
+}
+
+@keyframes tumble {
+  from {
+    transform: translateY(-2px) rotate(-5deg);
+  }
+  to {
+    transform: translateY(2px) rotate(5deg);
+  }
+}
+
+.controls {
+  display: grid;
+  gap: 0.6rem;
+}
+
+.bet {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.7rem;
+  background: #fffaf2;
+  padding: 0.6rem;
+  border-radius: 12px;
+  border: 2px solid #ffe5bb;
+}
+
+.bet p {
+  margin: 0;
+  text-align: center;
+}
+
+button {
+  appearance: none;
+  border: 0;
+  border-radius: 12px;
+  padding: 0.8rem 1rem;
+  font-family: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 140ms ease, filter 140ms ease;
+}
+
+button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  filter: brightness(1.05);
+}
+
+button:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+#betDown,
+#betUp {
+  min-width: 2.6rem;
+  font-size: 1.2rem;
+  padding: 0.55rem 0.8rem;
+  background: #ffe4ae;
+}
+
+.primary {
+  background: linear-gradient(90deg, var(--accent), #ff8d3a);
+  color: #fff;
+}
+
+.secondary {
+  background: linear-gradient(90deg, var(--accent-alt), #44c9ff);
+  color: #fff;
+}
+
+.status {
+  margin: 0;
+  background: #fffaf2;
+  padding: 0.8rem;
+  border-radius: 12px;
+  border: 2px solid #ffe5bb;
+  font-weight: 700;
+}
+
+.status.good {
+  color: var(--good);
+}
+
+.status.bad {
+  color: var(--bad);
+}
+
+.payouts ul,
+.feed ul {
+  margin: 0.6rem 0 0;
+  padding-left: 1rem;
+}
+
+.feed li {
+  margin-bottom: 0.35rem;
+}
+
+@media (max-width: 720px) {
+  body {
+    padding: 0.75rem;
+  }
+
+  .stats {
+    grid-template-columns: 1fr;
+  }
+
+  .reel {
+    min-height: 92px;
+  }
+
+  .bet {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
