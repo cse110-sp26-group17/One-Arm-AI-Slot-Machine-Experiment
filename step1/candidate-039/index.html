@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Token Treadmill 9000</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="app">
+      <header class="hero reveal">
+        <p class="kicker">AI-Certified Fun* (*not actually certified)</p>
+        <h1>Token Treadmill 9000</h1>
+        <p class="subtitle">
+          Spend tokens. Win tokens. Blame the model either way.
+        </p>
+      </header>
+
+      <section class="panel status reveal" aria-label="Game status">
+        <div class="stat">
+          <span class="label">Tokens</span>
+          <strong id="tokenBalance">0</strong>
+        </div>
+        <div class="stat">
+          <span class="label">Bet</span>
+          <strong id="betAmount">0</strong>
+        </div>
+        <div class="stat">
+          <span class="label">Spin Streak</span>
+          <strong id="spinCount">0</strong>
+        </div>
+        <div class="stat">
+          <span class="label">Win Rate</span>
+          <strong id="winRate">0%</strong>
+        </div>
+      </section>
+
+      <section class="panel machine reveal" aria-label="Slot machine">
+        <div class="reels" role="img" aria-label="Three-slot machine reels">
+          <div class="reel" data-reel="0"><span>TOKEN</span></div>
+          <div class="reel" data-reel="1"><span>BOT</span></div>
+          <div class="reel" data-reel="2"><span>PROMPT</span></div>
+        </div>
+        <p id="message" class="message" aria-live="polite"></p>
+      </section>
+
+      <section class="panel controls reveal" aria-label="Controls">
+        <div class="bets">
+          <button id="decreaseBet" type="button">- Bet</button>
+          <button id="increaseBet" type="button">+ Bet</button>
+        </div>
+        <div class="primary-controls">
+          <button id="spinBtn" type="button" class="spin-button">Spin for Tokens</button>
+          <button id="dailyGrant" type="button">Claim Daily Freebie</button>
+          <button id="resetBtn" type="button" class="danger">Factory Reset Wallet</button>
+        </div>
+      </section>
+
+      <section class="panel shop reveal" aria-label="AI upgrade shop">
+        <h2>Questionable AI Upgrades</h2>
+        <div class="shop-items">
+          <button class="shop-item" data-item="excuse_pack" type="button">
+            <span>Fine-Tuned Excuse Pack</span>
+            <small>Cost: 20 tokens | Effect: 0% accountability</small>
+          </button>
+          <button class="shop-item" data-item="gpu_overclock" type="button">
+            <span>GPU Overclock</span>
+            <small>Cost: 45 tokens | Effect: +50% winnings for 3 spins</small>
+          </button>
+          <button class="shop-item" data-item="insurance" type="button">
+            <span>Hallucination Insurance</span>
+            <small>Cost: 35 tokens | Effect: next loss refunds your bet</small>
+          </button>
+        </div>
+        <p id="activeBuffs" class="buffs">No active upgrades.</p>
+      </section>
+
+      <section class="panel log reveal" aria-label="Recent outcomes">
+        <h2>Audit Log</h2>
+        <ul id="eventLog"></ul>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
