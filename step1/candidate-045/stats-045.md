@@ -6,7 +6,6 @@
 | Model + version string 	| GPT-5.3-Codex     |
 | Wall-clock time (s)   	| 13m 56s |
 | Files produced            | 3: index.html, script.js, styles.css | 
-| Tokens 
 | Lines of code	            | 1,099 | 
 | Runs in browser?	        | yes |
 | App Quality Notes	        | 3 - no emojis, only words, but visually, it looks very clean |
