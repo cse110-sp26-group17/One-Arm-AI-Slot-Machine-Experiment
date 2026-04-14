@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Token Burner 3000</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bungee&family=Chivo:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="app">
+      <header class="hero">
+        <p class="eyebrow">Human-Approved Gambling Device</p>
+        <h1>Token Burner 3000</h1>
+        <p class="subtitle">
+          Spend tokens so AI can be confidently wrong. Win tokens when humans bail it out.
+        </p>
+      </header>
+
+      <section class="stats" aria-label="Token statistics">
+        <article class="stat-card">
+          <p class="stat-title">Token Balance</p>
+          <p class="stat-value" id="tokensValue">0</p>
+        </article>
+        <article class="stat-card">
+          <p class="stat-title">Total Spent</p>
+          <p class="stat-value" id="spentValue">0</p>
+        </article>
+        <article class="stat-card">
+          <p class="stat-title">Total Won</p>
+          <p class="stat-value" id="wonValue">0</p>
+        </article>
+      </section>
+
+      <section class="machine" aria-label="Slot machine">
+        <div class="machine-top">
+          <p class="machine-label">Model Confidence: 1000%</p>
+          <p class="machine-label" id="spinsValue">Spins: 0</p>
+        </div>
+
+        <div class="reels" role="img" aria-label="Three slot reels">
+          <div class="reel" data-reel="0">
+            <span class="symbol">🤖</span>
+            <span class="label">AI Clone</span>
+          </div>
+          <div class="reel" data-reel="1">
+            <span class="symbol">🪙</span>
+            <span class="label">Token</span>
+          </div>
+          <div class="reel" data-reel="2">
+            <span class="symbol">🧠</span>
+            <span class="label">Human Brain</span>
+          </div>
+        </div>
+
+        <p class="status" id="status" role="status" aria-live="polite">
+          Insert tokens and test how expensive artificial confidence can be.
+        </p>
+      </section>
+
+      <section class="controls" aria-label="Machine controls">
+        <button id="spinBtn" class="btn spin-btn">Spend 10 Tokens</button>
+        <button id="bonusBtn" class="btn bonus-btn">Claim Human Bonus</button>
+        <button id="resetBtn" class="btn ghost-btn">Reset Run</button>
+      </section>
+
+      <section class="feed-panel" aria-label="Recent game events">
+        <h2>Audit Log</h2>
+        <ul id="feed" class="feed"></ul>
+      </section>
+    </main>
+
+    <noscript>
+      <p class="no-script">JavaScript is required. AI refused to play fair without it.</p>
+    </noscript>
+
+    <script src="script.js"></script>
+  </body>
+</html>

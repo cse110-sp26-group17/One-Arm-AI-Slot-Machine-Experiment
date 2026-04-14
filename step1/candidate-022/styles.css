@@ -1,0 +1,254 @@
+:root {
+  --bg: #08130f;
+  --panel: #10231d;
+  --panel-hi: #17342c;
+  --line: #2f6656;
+  --ink: #ecfff8;
+  --muted: #a5c7bc;
+  --gold: #f8c537;
+  --mint: #44e3aa;
+  --hot: #ff6b57;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  padding: 1rem;
+  color: var(--ink);
+  font-family: "Lucida Console", "Courier New", monospace;
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(circle at 20% 10%, #1d3f35 0%, transparent 45%),
+    radial-gradient(circle at 80% 20%, #2d6844 0%, transparent 35%),
+    linear-gradient(165deg, #091510 0%, var(--bg) 60%);
+}
+
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}
+
+.app {
+  width: min(980px, 100%);
+  display: grid;
+  gap: 1rem;
+}
+
+.hero,
+.status-card,
+.machine,
+.store,
+.feed {
+  padding: 1rem;
+  border-radius: 18px;
+  border: 1px solid var(--line);
+  background: linear-gradient(160deg, var(--panel), var(--panel-hi));
+  box-shadow: 0 10px 26px rgb(0 0 0 / 34%);
+}
+
+.hero {
+  display: grid;
+  gap: 0.45rem;
+}
+
+h1 {
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  letter-spacing: 0.03em;
+}
+
+.badge {
+  width: fit-content;
+  border-radius: 999px;
+  padding: 0.2rem 0.7rem;
+  color: #342100;
+  font-weight: 700;
+  font-size: 0.8rem;
+  background: linear-gradient(120deg, var(--gold), #ffe48d);
+}
+
+.subtitle {
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+.subtitle.small {
+  font-size: 0.93rem;
+}
+
+.status-card {
+  display: grid;
+  gap: 0.8rem;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.label {
+  color: var(--muted);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.value {
+  font-size: clamp(1rem, 2.8vw, 1.7rem);
+  font-weight: 700;
+}
+
+.machine {
+  display: grid;
+  gap: 1rem;
+}
+
+.reels {
+  display: grid;
+  gap: 0.7rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.reel {
+  min-height: 105px;
+  border-radius: 13px;
+  border: 1px solid #2d5e4f;
+  background: linear-gradient(180deg, #0a1714, #0d1d19);
+  display: grid;
+  place-items: center;
+  font-size: clamp(1.35rem, 4.8vw, 2.4rem);
+  font-weight: 700;
+}
+
+.reel.rolling {
+  animation: glitch 110ms linear infinite;
+}
+
+@keyframes glitch {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+}
+
+.spin-btn,
+.buy-btn,
+.alt-btn {
+  border: 0;
+  border-radius: 999px;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 700;
+  padding: 0.68rem 1rem;
+}
+
+.spin-btn {
+  color: #302100;
+  min-width: 220px;
+  background: linear-gradient(120deg, var(--gold), #f7e082);
+}
+
+.alt-btn {
+  color: #d5fbee;
+  border: 1px solid #36735d;
+  background: #163229;
+}
+
+.alt-btn.danger {
+  color: #ffd8d3;
+  border-color: #9d4337;
+  background: #4a1c17;
+}
+
+.store {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.store-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 0.8rem;
+}
+
+.item-card {
+  display: grid;
+  gap: 0.5rem;
+  padding: 0.8rem;
+  border-radius: 12px;
+  border: 1px solid #295a4c;
+  background: #112620;
+}
+
+.item-desc {
+  color: var(--muted);
+  font-size: 0.9rem;
+  min-height: 2.65rem;
+}
+
+.item-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.item-price {
+  color: var(--mint);
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.buy-btn {
+  color: #341412;
+  background: linear-gradient(120deg, var(--hot), #ffad9f);
+}
+
+.feed {
+  display: grid;
+  gap: 0.7rem;
+}
+
+#message {
+  color: #f7e7b0;
+  line-height: 1.45;
+  min-height: 2.5em;
+}
+
+button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+@media (max-width: 760px) {
+  .status-card {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 520px) {
+  .status-card {
+    grid-template-columns: 1fr;
+  }
+
+  .reel {
+    min-height: 84px;
+  }
+
+  .spin-btn {
+    min-width: 100%;
+  }
+}

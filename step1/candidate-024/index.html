@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Token Grinder</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app">
+      <header class="app__header">
+        <h1>AI Token Grinder</h1>
+        <p class="tagline">Win tokens, burn tokens, pretend your prompts are strategy.</p>
+      </header>
+
+      <section class="status" aria-live="polite">
+        <div class="pill">
+          <span>Wallet</span>
+          <strong id="wallet">1000</strong>
+        </div>
+        <div class="pill">
+          <span>Spin Cost</span>
+          <strong id="spinCost">25</strong>
+        </div>
+        <div class="pill">
+          <span>Best Win</span>
+          <strong id="bestWin">0</strong>
+        </div>
+      </section>
+
+      <section class="machine" aria-label="Slot machine">
+        <div class="reels" id="reels">
+          <div class="reel" data-reel="0">??</div>
+          <div class="reel" data-reel="1">??</div>
+          <div class="reel" data-reel="2">??</div>
+        </div>
+        <p id="resultLine" class="result">Press spin and sacrifice your token budget.</p>
+      </section>
+
+      <section class="controls">
+        <div class="bet-controls">
+          <button id="betDown" type="button">-</button>
+          <label for="bet">Bet</label>
+          <input id="bet" type="range" min="10" max="150" step="5" value="25" />
+          <button id="betUp" type="button">+</button>
+        </div>
+
+        <div class="action-controls">
+          <button id="spinBtn" class="spin">Spin</button>
+          <button id="dailyBtn" type="button">Claim Daily Prompt Pack</button>
+          <button id="resetBtn" type="button">Reset Wallet</button>
+        </div>
+      </section>
+
+      <section class="stats">
+        <h2>Prompt Analytics</h2>
+        <ul>
+          <li>Total spins: <span id="totalSpins">0</span></li>
+          <li>Total tokens spent: <span id="totalSpent">0</span></li>
+          <li>Total tokens won: <span id="totalWon">0</span></li>
+          <li>Model ego score: <span id="egoScore">0</span>%</li>
+        </ul>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>

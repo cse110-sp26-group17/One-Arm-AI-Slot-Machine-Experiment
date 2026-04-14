@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Prompt Casino</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Chivo+Mono:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="top-bar">
+        <div>
+          <p class="eyebrow">Neural House of Chance</p>
+          <h1>Prompt Casino</h1>
+        </div>
+        <button id="reset-btn" class="ghost-btn" type="button">Reset Save</button>
+      </header>
+
+      <section class="ledger" aria-label="Token ledger">
+        <article class="metric">
+          <p class="label">Tokens</p>
+          <p id="tokens" class="value">0</p>
+        </article>
+        <article class="metric">
+          <p class="label">Spin Cost</p>
+          <p class="value">5</p>
+        </article>
+        <article class="metric">
+          <p class="label">Best Streak</p>
+          <p id="best-streak" class="value">0</p>
+        </article>
+      </section>
+
+      <section class="machine" aria-label="Slot machine">
+        <div class="reel-window">
+          <div class="reel" id="reel-1" aria-live="polite">🤖</div>
+          <div class="reel" id="reel-2" aria-live="polite">🤖</div>
+          <div class="reel" id="reel-3" aria-live="polite">🤖</div>
+        </div>
+        <p id="result-line" class="result-line">
+          Insert confidence and press SPIN.
+        </p>
+      </section>
+
+      <section class="controls" aria-label="Slot controls">
+        <button id="spin-btn" class="spin-btn" type="button">Spin (-5 tokens)</button>
+        <button id="autospin-btn" class="ghost-btn" type="button">Auto Spin x5</button>
+        <label class="toggle">
+          <input id="announcer-toggle" type="checkbox" />
+          <span>Roast Announcer</span>
+        </label>
+      </section>
+
+      <section class="log-zone">
+        <h2>Recent Model Evaluations</h2>
+        <ul id="event-log" class="event-log" aria-live="polite"></ul>
+      </section>
+    </main>
+
+    <script src="./app.js"></script>
+  </body>
+</html>

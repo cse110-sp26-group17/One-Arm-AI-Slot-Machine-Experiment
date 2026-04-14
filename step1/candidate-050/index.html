@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Prompt & Pray Slots</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app">
+      <header class="title-wrap">
+        <p class="eyebrow">Silicon Valley Certified</p>
+        <h1>Prompt &amp; Pray Slots</h1>
+        <p class="subtitle">
+          Win fake AI tokens. Spend them before the next hype cycle crashes.
+        </p>
+      </header>
+
+      <section class="status-panel card" aria-label="Balance and controls">
+        <div class="stat">
+          <span class="label">Token Balance</span>
+          <strong id="token-balance">0</strong>
+        </div>
+        <div class="stat">
+          <span class="label">Current Bet</span>
+          <strong id="bet-amount">10</strong>
+        </div>
+        <div class="bet-controls" role="group" aria-label="Bet controls">
+          <button id="bet-down" class="btn subtle" type="button">-5</button>
+          <button id="bet-up" class="btn subtle" type="button">+5</button>
+          <button id="spin-btn" class="btn primary" type="button">Spin</button>
+        </div>
+      </section>
+
+      <section class="machine card" aria-label="Slot machine reels">
+        <div class="machine-top">Enterprise AI Fortune Engine v0.0.1-beta</div>
+        <div class="reels" id="reels">
+          <div class="reel" id="reel-1" aria-live="polite">🤖</div>
+          <div class="reel" id="reel-2" aria-live="polite">🧠</div>
+          <div class="reel" id="reel-3" aria-live="polite">🪙</div>
+        </div>
+        <p id="message" class="message">
+          Place your bet and ask the algorithm for mercy.
+        </p>
+      </section>
+
+      <section class="shop card" aria-label="Token shop">
+        <h2>Spend Tokens on Totally Necessary AI Upgrades</h2>
+        <div class="shop-grid">
+          <article class="shop-item">
+            <h3>Prompt Polisher</h3>
+            <p>Cost: 15 tokens. Adds luck to your next spin.</p>
+            <button class="btn shop-btn" data-item="polisher" type="button">Buy</button>
+            <small id="polisher-count">Owned: 0</small>
+          </article>
+
+          <article class="shop-item">
+            <h3>Hallucination Insurance</h3>
+            <p>Cost: 30 tokens. Refunds half your bet on one loss.</p>
+            <button class="btn shop-btn" data-item="insurance" type="button">Buy</button>
+            <small id="insurance-count">Owned: 0</small>
+          </article>
+
+          <article class="shop-item">
+            <h3>Hype Multiplier</h3>
+            <p>Cost: 50 tokens. Doubles your next win.</p>
+            <button class="btn shop-btn" data-item="multiplier" type="button">Buy</button>
+            <small id="multiplier-count">Owned: 0</small>
+          </article>
+        </div>
+      </section>
+
+      <section class="rules card" aria-label="Payout table">
+        <h2>Payout Table</h2>
+        <ul>
+          <li>3x 🤖 = bet × 8</li>
+          <li>3x 🧠 = bet × 6</li>
+          <li>3x 🪙 = bet × 5</li>
+          <li>3x 🔥 = bet × 4</li>
+          <li>3x 🐞 = bet × 3</li>
+          <li>Any other 3-match = bet × 2</li>
+        </ul>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>

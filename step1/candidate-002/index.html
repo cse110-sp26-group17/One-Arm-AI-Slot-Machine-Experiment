@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Prompt & Pull: AI Slot Machine</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <main class="app-shell">
+    <header class="banner">
+      <p class="eyebrow">Cloud Casino Presents</p>
+      <h1>Prompt & Pull</h1>
+      <p class="subtitle">Feed tokens to the machine. Maybe it hallucinates a jackpot.</p>
+    </header>
+
+    <section class="hud">
+      <div class="stat-card">
+        <span class="stat-label">Wallet</span>
+        <strong id="walletValue">0</strong>
+        <span class="unit">tokens</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-label">Bet</span>
+        <div class="bet-row">
+          <button id="betDown" class="mini-btn" type="button" aria-label="Decrease bet">-</button>
+          <strong id="betValue">5</strong>
+          <button id="betUp" class="mini-btn" type="button" aria-label="Increase bet">+</button>
+        </div>
+        <span class="unit">tokens/spin</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-label">Profit</span>
+        <strong id="profitValue">0</strong>
+        <span class="unit">lifetime</span>
+      </div>
+    </section>
+
+    <section class="machine">
+      <div class="reels" aria-label="Slot machine reels">
+        <article class="reel" id="reel0" role="img" aria-label="First reel symbol">🤖</article>
+        <article class="reel" id="reel1" role="img" aria-label="Second reel symbol">🤖</article>
+        <article class="reel" id="reel2" role="img" aria-label="Third reel symbol">🤖</article>
+      </div>
+
+      <button id="spinBtn" class="spin-btn" type="button">Spend Tokens & Pull</button>
+      <p id="statusLine" class="status-line" aria-live="polite">Welcome to the inference economy.</p>
+    </section>
+
+    <section class="stats-panel">
+      <h2>Telemetry</h2>
+      <ul>
+        <li>Total Spins: <strong id="spinsValue">0</strong></li>
+        <li>Total Spent: <strong id="spentValue">0</strong> tokens</li>
+        <li>Total Won: <strong id="wonValue">0</strong> tokens</li>
+      </ul>
+    </section>
+
+    <section class="log-panel">
+      <h2>Model Output</h2>
+      <ul id="eventLog" class="event-log" aria-live="polite"></ul>
+    </section>
+  </main>
+
+  <script src="./script.js"></script>
+</body>
+</html>

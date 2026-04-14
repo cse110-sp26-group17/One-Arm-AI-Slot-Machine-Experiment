@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Token Tornado 9000</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="app">
+    <header class="topbar">
+      <h1>Token Tornado 9000</h1>
+      <p>Spend tokens. Win tokens. Pretend it is "inference efficiency."</p>
+    </header>
+
+    <section class="status" aria-live="polite">
+      <div class="status-card">
+        <span class="label">Your Tokens</span>
+        <strong id="tokens">0</strong>
+      </div>
+      <div class="status-card">
+        <span class="label">Spin Cost</span>
+        <strong id="cost">25</strong>
+      </div>
+      <div class="status-card">
+        <span class="label">Profit</span>
+        <strong id="profit">0</strong>
+      </div>
+    </section>
+
+    <section class="machine" aria-label="Slot machine">
+      <div class="reels" id="reels">
+        <div class="reel" id="reel-0">🤖</div>
+        <div class="reel" id="reel-1">🧠</div>
+        <div class="reel" id="reel-2">💸</div>
+      </div>
+      <p id="result" class="result">Click SPIN to feed the model.</p>
+    </section>
+
+    <section class="controls">
+      <button id="spinBtn" class="spin-btn">SPIN (BURN TOKENS)</button>
+      <button id="resetBtn" class="reset-btn">Reset Wallet</button>
+    </section>
+
+    <section class="feed">
+      <h2>Model Excuses Feed</h2>
+      <ul id="feedList"></ul>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
