@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Token Burner 9000</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="marquee">
+        <p class="eyebrow">SILICON VALLEY'S LEAST ACCURATE CASINO</p>
+        <h1>Token Burner 9000</h1>
+        <p class="subhead">
+          Feed the machine your prompt budget. Maybe it pays out. Maybe it hallucinates.
+        </p>
+      </section>
+
+      <section class="hud" aria-label="Token and game stats">
+        <div class="stat-card">
+          <span class="stat-label">Your Tokens</span>
+          <strong id="tokenCount">0</strong>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label">Spins</span>
+          <strong id="spinCount">0</strong>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label">Lifetime Winnings</span>
+          <strong id="winningsCount">0</strong>
+        </div>
+      </section>
+
+      <section class="machine">
+        <div class="reel-window" aria-live="polite">
+          <div class="reel" id="reel0">...</div>
+          <div class="reel" id="reel1">...</div>
+          <div class="reel" id="reel2">...</div>
+        </div>
+
+        <div class="controls">
+          <label for="betSelect">Spend per spin</label>
+          <select id="betSelect">
+            <option value="5">5 Tokens</option>
+            <option value="10" selected>10 Tokens</option>
+            <option value="25">25 Tokens</option>
+          </select>
+          <button id="spinButton" class="primary">Burn Tokens</button>
+          <button id="autoButton" class="secondary">Auto-Burn x5</button>
+          <button id="roastButton" class="secondary">AI Excuse</button>
+          <button id="resetButton" class="ghost">Reset Wallet</button>
+        </div>
+
+        <p id="statusMessage" class="status">
+          You walk into the AI casino with confidence and no documentation.
+        </p>
+      </section>
+
+      <section class="bottom-grid">
+        <article class="panel payout">
+          <h2>Payout Rules</h2>
+          <ul>
+            <li>3x TOKEN => 12x your spend</li>
+            <li>3x GPU MELTDOWN => 8x your spend</li>
+            <li>3x FACT CHECK => 7x your spend</li>
+            <li>Any 2x TOKEN => 3x your spend</li>
+            <li>TOKEN + FACT CHECK + AUDIT => 5x your spend</li>
+          </ul>
+        </article>
+
+        <article class="panel log">
+          <h2>Recent Runs</h2>
+          <ul id="eventLog" aria-live="polite"></ul>
+        </article>
+      </section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>

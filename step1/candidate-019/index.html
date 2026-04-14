@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Token Grinder 3000</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <main class="app-shell">
+    <section class="machine" aria-label="AI satire slot machine">
+      <header class="title-wrap">
+        <p class="kicker">Prompt Casino Presents</p>
+        <h1>Token Grinder 3000</h1>
+        <p class="subtitle">Spend tokens asking AI to do basic tasks. Win tokens when the robot finally guesses right.</p>
+      </header>
+
+      <section class="economy" aria-label="token economy stats">
+        <article class="stat bank">
+          <h2>Token Bank</h2>
+          <p id="token-bank" class="value">0</p>
+        </article>
+        <article class="stat cost">
+          <h2>Spin Cost</h2>
+          <p id="spin-cost" class="value">5</p>
+        </article>
+        <article class="stat session">
+          <h2>Session Net</h2>
+          <p id="session-net" class="value">0</p>
+        </article>
+      </section>
+
+      <section class="reels-wrap" aria-live="polite">
+        <div class="reel" id="reel-1">BOOT</div>
+        <div class="reel" id="reel-2">MODEL</div>
+        <div class="reel" id="reel-3">TOKENS</div>
+      </section>
+
+      <section class="controls">
+        <button id="spin-btn" class="primary">Spin (-5 tokens)</button>
+        <button id="voice-btn" class="ghost" aria-pressed="false">Announcer: Off</button>
+        <button id="mute-btn" class="ghost" aria-pressed="false">SFX: On</button>
+        <button id="reset-btn" class="ghost danger">Reset Wallet</button>
+      </section>
+
+      <p id="status-line" class="status-line" role="status">Insert confidence. Pull lever.</p>
+
+      <section class="ledger">
+        <h2>AI Wallet Ledger</h2>
+        <ul id="feed" class="feed" aria-label="recent outcomes"></ul>
+      </section>
+    </section>
+  </main>
+
+  <script src="./app.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prompt and Plunder</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bungee&family=Space+Mono:wght@400;700&display=swap"
+      rel="stylesheet"
+    >
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="hero">
+        <p class="kicker">AI-CERTIFIED SLOT EXPERIMENT</p>
+        <h1>Prompt and Plunder</h1>
+        <p class="subtitle">
+          Pay tokens to spin. Win tokens if the machine hallucinates in your favor.
+        </p>
+      </header>
+
+      <section class="stats" aria-label="Player statistics">
+        <article class="stat-card">
+          <p class="stat-label">Wallet</p>
+          <p class="stat-value" id="tokens">120</p>
+        </article>
+        <article class="stat-card">
+          <p class="stat-label">Spins</p>
+          <p class="stat-value" id="spins">0</p>
+        </article>
+        <article class="stat-card">
+          <p class="stat-label">Best Wallet</p>
+          <p class="stat-value" id="best">120</p>
+        </article>
+      </section>
+
+      <section class="machine" aria-label="Slot machine">
+        <div class="reel-wrap" role="status" aria-live="polite" aria-atomic="true">
+          <div class="reel" id="reel-1">CACHE</div>
+          <div class="reel" id="reel-2">TOKEN</div>
+          <div class="reel" id="reel-3">LAG</div>
+        </div>
+
+        <div class="control-wrap">
+          <label for="bet">Bet tokens per spin</label>
+          <div class="bet-row">
+            <input id="bet" type="range" min="5" max="50" step="5" value="10">
+            <output id="bet-value" for="bet">10</output>
+          </div>
+          <div class="button-row">
+            <button type="button" id="spin-btn" class="btn btn-primary">Spin (Space)</button>
+            <button type="button" id="reset-btn" class="btn btn-secondary">Reset Wallet</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="commentary" aria-label="Round commentary">
+        <h2>Model Commentary</h2>
+        <p id="message">
+          Ready to spend tokens? Press spin and hope the machine does not rate limit you.
+        </p>
+        <ul id="history" aria-label="Recent rounds"></ul>
+      </section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Token Slot Machine</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="machine">
+      <header class="panel hero">
+        <p class="eyebrow">Silicon Valley Certified Arcade</p>
+        <h1>AI Token Slot Machine</h1>
+        <p class="subtitle">
+          Spend prompt tokens, win prompt tokens, and watch the model stay very
+          confident about absolutely everything.
+        </p>
+      </header>
+
+      <section class="panel status-grid">
+        <article class="stat-card">
+          <p class="stat-label">Token Balance</p>
+          <p class="stat-value" id="tokenBalance">0</p>
+        </article>
+        <article class="stat-card">
+          <p class="stat-label">Total Spins</p>
+          <p class="stat-value" id="totalSpins">0</p>
+        </article>
+        <article class="stat-card">
+          <p class="stat-label">Wins</p>
+          <p class="stat-value" id="totalWins">0</p>
+        </article>
+        <article class="stat-card">
+          <p class="stat-label">Biggest Win</p>
+          <p class="stat-value" id="biggestWin">0</p>
+        </article>
+      </section>
+
+      <section class="panel controls">
+        <div class="bet-block">
+          <p class="control-title">Choose Your Bet</p>
+          <div class="bet-buttons" id="betButtons">
+            <button type="button" data-bet="5">5 Tokens</button>
+            <button type="button" data-bet="10" class="is-active">10 Tokens</button>
+            <button type="button" data-bet="25">25 Tokens</button>
+          </div>
+        </div>
+        <div class="action-buttons">
+          <button type="button" id="spinButton" class="spin">Spin and Spend 10</button>
+          <button type="button" id="muteButton">Sound On</button>
+          <button type="button" id="resetButton">Reset Progress</button>
+        </div>
+      </section>
+
+      <section class="panel slot-panel" aria-live="polite">
+        <div class="reels" id="reels">
+          <div class="reel-window"><span class="reel-symbol" id="reel0">BOOTING...</span></div>
+          <div class="reel-window"><span class="reel-symbol" id="reel1">BOOTING...</span></div>
+          <div class="reel-window"><span class="reel-symbol" id="reel2">BOOTING...</span></div>
+        </div>
+        <p class="result-line" id="resultLine">
+          Insert tokens and spin. The AI has no idea what happens next.
+        </p>
+      </section>
+
+      <section class="panel payout-panel">
+        <h2>Payout Multipliers</h2>
+        <div class="payout-grid">
+          <p><strong>3x Token Printer</strong>: Bet x 8</p>
+          <p><strong>3x Hotfix Friday</strong>: Bet x 6</p>
+          <p><strong>3x Hallucination</strong>: Bet x 5</p>
+          <p><strong>Any 2 matching symbols</strong>: Bet x 2</p>
+          <p><strong>1x Token Printer</strong>: Bet back + 1</p>
+        </div>
+      </section>
+
+      <section class="panel feed-panel">
+        <h2>AI Commentary Feed</h2>
+        <ul id="feedList" class="feed-list"></ul>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
