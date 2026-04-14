@@ -1,5 +1,18 @@
 # One-Arm-AI-Slot-Machine-Experiment
 
+## Overview
+A team-bonding warm-up and science experiment measuring the consistency and variation of AI coding assistants when given identical prompts.
+
+## Setup
+
+### Model & Tool
+- **Tool:** OpenAI Codex (via [VS Code / Standalone / etc.])
+- **Model:** GPT-5.3-Codex
+- **All 50 baseline runs use this exact model. No switching.**
+
+### The Frozen Prompt
+See `prompts/original-prompt.txt` — use this text exactly, verbatim, every time.
+
 # Project Structure
 
 ```
