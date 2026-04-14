@@ -8,5 +8,5 @@
 | Files produced            | 3: index.html, app.js, styles.css | 
 | Lines of code	            | 699 | 
 | Runs in browser?	        | yes |
-| App Quality Notes	        | 1-3 sentences or bullets qualitative |
-| Code Quality Notes        | 1-3 sentences or bullets qualitative | 
+| App Quality Notes	        | 5 - straight forward, but small amount of tokens, can only spin once |
+| Code Quality Notes        | 5 | 

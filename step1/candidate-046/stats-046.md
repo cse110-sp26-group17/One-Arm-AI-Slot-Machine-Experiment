@@ -8,5 +8,5 @@
 | Files produced            | 3: index.html, script.js, styles.css | 
 | Lines of code	            | 809 | 
 | Runs in browser?	        | yes |
-| App Quality Notes	        | 1-3 sentences or bullets qualitative |
-| Code Quality Notes        | 1-3 sentences or bullets qualitative | 
+| App Quality Notes	        | 4 - "Claim human bonus" is confusing, but colorful |
+| Code Quality Notes        | 5 | 
