@@ -1,0 +1,488 @@
+:root {
+  --cream-100: #fff9ee;
+  --cream-200: #fce8c4;
+  --gold-300: #ffc859;
+  --gold-500: #ff9f1c;
+  --coral-400: #ff5d4d;
+  --ink-900: #2b1f12;
+  --teal-400: #00a896;
+  --teal-500: #058b7d;
+  --card: rgba(255, 249, 238, 0.92);
+  --shadow: 0 12px 30px rgba(70, 39, 9, 0.22);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Space Mono", "Courier New", monospace;
+  color: var(--ink-900);
+  background:
+    radial-gradient(circle at 18% 12%, #ffdb8f 0 30%, transparent 50%),
+    radial-gradient(circle at 86% 86%, #ffc4a0 0 20%, transparent 45%),
+    linear-gradient(145deg, #ffefd0 0%, #ffd9ab 45%, #ffc283 100%);
+  overflow-x: hidden;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    -45deg,
+    rgba(255, 255, 255, 0.2) 0,
+    rgba(255, 255, 255, 0.2) 2px,
+    transparent 2px,
+    transparent 14px
+  );
+  pointer-events: none;
+  z-index: -1;
+}
+
+.background-layer {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: -2;
+}
+
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(2px);
+  opacity: 0.5;
+}
+
+.blob-a {
+  width: 360px;
+  height: 360px;
+  background: rgba(255, 157, 77, 0.42);
+  top: -100px;
+  left: -80px;
+  animation: driftA 18s ease-in-out infinite;
+}
+
+.blob-b {
+  width: 400px;
+  height: 400px;
+  background: rgba(0, 168, 150, 0.32);
+  bottom: -140px;
+  right: -120px;
+  animation: driftB 22s ease-in-out infinite;
+}
+
+.blob-c {
+  width: 240px;
+  height: 240px;
+  background: rgba(255, 93, 77, 0.28);
+  right: 32%;
+  top: 24%;
+  animation: driftC 26s ease-in-out infinite;
+}
+
+.app-shell {
+  width: min(1000px, calc(100% - 2rem));
+  margin: 1.5rem auto 2.5rem;
+  display: grid;
+  gap: 1rem;
+}
+
+.hero {
+  padding: 1rem 1.2rem 0.2rem;
+}
+
+.eyebrow {
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 0.74rem;
+  color: #71400e;
+  font-weight: 700;
+}
+
+h1 {
+  margin: 0.35rem 0 0.35rem;
+  font-family: "Bungee", Impact, fantasy;
+  line-height: 1.1;
+  font-size: clamp(1.7rem, 4.8vw, 3.1rem);
+  letter-spacing: 0.02em;
+  color: #3f2409;
+}
+
+.subtitle {
+  margin: 0;
+  font-size: clamp(0.94rem, 1.7vw, 1.06rem);
+  color: #5d3412;
+}
+
+.hud {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.panel {
+  background: var(--card);
+  border: 2px solid rgba(255, 255, 255, 0.65);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  padding: 0.85rem 0.9rem;
+}
+
+.panel-label {
+  margin: 0;
+  color: #70421a;
+  font-size: 0.76rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.panel-value {
+  margin: 0.18rem 0 0;
+  font-size: clamp(1.15rem, 3vw, 1.7rem);
+  font-family: "Bungee", Impact, fantasy;
+  letter-spacing: 0.03em;
+  color: #2f1f11;
+}
+
+.machine {
+  background: var(--card);
+  border: 3px solid rgba(255, 255, 255, 0.7);
+  border-radius: 22px;
+  box-shadow: var(--shadow);
+  padding: 1rem;
+  position: relative;
+}
+
+.machine-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.75rem;
+}
+
+.machine-label {
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.76rem;
+  color: #70421a;
+  font-weight: 700;
+}
+
+.status-line {
+  margin: 0;
+  font-size: 0.92rem;
+  color: #543114;
+  text-align: right;
+}
+
+.reel-frame {
+  margin-top: 0.8rem;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.reel {
+  min-height: 170px;
+  border-radius: 18px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(255, 238, 202, 0.84)),
+    repeating-linear-gradient(
+      0deg,
+      rgba(255, 170, 86, 0.16) 0 8px,
+      rgba(255, 238, 202, 0.26) 8px 16px
+    );
+  border: 2px solid rgba(255, 180, 110, 0.75);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  text-align: center;
+  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.65);
+}
+
+.symbol-icon {
+  font-size: clamp(2rem, 5vw, 2.9rem);
+  line-height: 1;
+}
+
+.symbol-name {
+  padding: 0 0.4rem;
+  font-weight: 700;
+  font-size: clamp(0.75rem, 2vw, 0.95rem);
+}
+
+.reel.is-spinning {
+  animation: reelJitter 0.23s linear infinite;
+}
+
+.controls {
+  margin-top: 0.95rem;
+  display: grid;
+  gap: 0.75rem;
+}
+
+.bet-control {
+  color: #543114;
+  font-size: 0.95rem;
+}
+
+input[type="range"] {
+  width: 100%;
+  accent-color: var(--teal-500);
+}
+
+.button-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+}
+
+.btn {
+  appearance: none;
+  border: none;
+  border-radius: 12px;
+  font-family: inherit;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  padding: 0.68rem 0.88rem;
+  cursor: pointer;
+  transition: transform 120ms ease, filter 120ms ease, opacity 120ms ease;
+}
+
+.btn:hover:not(:disabled) {
+  transform: translateY(-1px);
+  filter: brightness(1.04);
+}
+
+.btn:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background: linear-gradient(145deg, var(--teal-400), #00796f);
+  color: #f6fffe;
+}
+
+.btn-secondary {
+  background: linear-gradient(145deg, var(--gold-500), #ef7f1a);
+  color: #2b1609;
+}
+
+.btn-ghost {
+  background: linear-gradient(145deg, #fff8e9, #ffe8c1);
+  color: #3a2512;
+  border: 1px solid rgba(255, 178, 88, 0.64);
+}
+
+.btn-danger {
+  background: linear-gradient(145deg, #ff7c6f, var(--coral-400));
+  color: #fff4f3;
+}
+
+.log {
+  background: var(--card);
+  border: 3px solid rgba(255, 255, 255, 0.7);
+  border-radius: 20px;
+  box-shadow: var(--shadow);
+  padding: 0.95rem 1rem;
+}
+
+.log-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.8rem;
+}
+
+.log h2 {
+  margin: 0;
+  font-family: "Bungee", Impact, fantasy;
+  font-size: clamp(1.05rem, 2.6vw, 1.5rem);
+  color: #3c240f;
+}
+
+.log-head p {
+  margin: 0;
+  font-size: 0.84rem;
+  color: #6f4218;
+}
+
+#eventLog {
+  list-style: none;
+  margin: 0.8rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 0.5rem;
+}
+
+#eventLog li {
+  border-radius: 10px;
+  padding: 0.52rem 0.65rem;
+  font-size: 0.85rem;
+  border-left: 5px solid #8c6a47;
+  background: rgba(255, 255, 255, 0.55);
+}
+
+#eventLog li.win {
+  border-left-color: #0f9b74;
+}
+
+#eventLog li.loss {
+  border-left-color: #d3483a;
+}
+
+#eventLog li.hype {
+  border-left-color: #f1901c;
+}
+
+#eventLog .time {
+  font-weight: 700;
+  margin-right: 0.35rem;
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(14px);
+  animation: revealIn 0.68s ease forwards;
+}
+
+.hero.reveal {
+  animation-delay: 40ms;
+}
+
+.hud.reveal {
+  animation-delay: 120ms;
+}
+
+.machine.reveal {
+  animation-delay: 190ms;
+}
+
+.log.reveal {
+  animation-delay: 270ms;
+}
+
+@keyframes revealIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes reelJitter {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  25% {
+    transform: translateY(-4px);
+  }
+  75% {
+    transform: translateY(4px);
+  }
+}
+
+@keyframes driftA {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(36px, 24px);
+  }
+}
+
+@keyframes driftB {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(-34px, -28px);
+  }
+}
+
+@keyframes driftC {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(-18px, 32px);
+  }
+}
+
+@media (max-width: 860px) {
+  .hud {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 680px) {
+  .app-shell {
+    width: min(1000px, calc(100% - 1rem));
+    margin-top: 1rem;
+  }
+
+  .machine-head {
+    display: grid;
+  }
+
+  .status-line {
+    text-align: left;
+  }
+
+  .reel-frame {
+    gap: 0.55rem;
+  }
+
+  .reel {
+    min-height: 146px;
+  }
+
+  .button-row .btn {
+    flex: 1 1 46%;
+  }
+}
+
+@media (max-width: 460px) {
+  .hud {
+    grid-template-columns: 1fr;
+  }
+
+  .reel-frame {
+    grid-template-columns: 1fr;
+  }
+
+  .button-row .btn {
+    flex-basis: 100%;
+  }
+
+  .reel {
+    min-height: 124px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+  }
+}
