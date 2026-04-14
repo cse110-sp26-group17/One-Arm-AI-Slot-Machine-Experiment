@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Prompt & Profit Slots</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bangers&family=Space+Grotesk:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app" aria-live="polite">
+      <header class="header">
+        <p class="eyebrow">Casino as a Service</p>
+        <h1>Prompt & Profit Slots</h1>
+        <p class="sub">
+          Win synthetic tokens. Spend them immediately. Pretend this is sustainable.
+        </p>
+      </header>
+
+      <section class="stats" aria-label="Token stats">
+        <article class="stat-card">
+          <h2>Wallet</h2>
+          <p><span id="tokenCount">100</span> <span class="unit">TOK</span></p>
+        </article>
+        <article class="stat-card">
+          <h2>Spin Cost</h2>
+          <p><span id="spinCost">10</span> <span class="unit">TOK</span></p>
+        </article>
+        <article class="stat-card">
+          <h2>Last Payout</h2>
+          <p><span id="lastPayout">0</span> <span class="unit">TOK</span></p>
+        </article>
+      </section>
+
+      <section class="machine" aria-label="Slot machine">
+        <div class="reels" id="reels">
+          <div class="reel" id="reel0" role="img" aria-label="Reel 1">🤖</div>
+          <div class="reel" id="reel1" role="img" aria-label="Reel 2">🧠</div>
+          <div class="reel" id="reel2" role="img" aria-label="Reel 3">🔥</div>
+        </div>
+
+        <div class="actions">
+          <button id="spinBtn" type="button">Spin Prompt</button>
+          <button id="resetBtn" type="button" class="alt">New Bubble</button>
+        </div>
+
+        <p id="message" class="message">Boot complete. Your AI startup has runway for 10 spins.</p>
+      </section>
+
+      <footer class="footer">
+        <small>
+          Tip: every spin burns tokens. Matching symbols gives you fake confidence and more tokens.
+        </small>
+      </footer>
+    </main>
+
+    <script src="app.js" defer></script>
+  </body>
+</html>
