@@ -7,11 +7,9 @@
 | Run ID | `candidate-037` |
 | Timestamp | `2026-04-14T20:18:00Z` |
 | Model + version string | `gpt-5.3 (Codex VS Code extension)` |
-| Input tokens | `unknown` |
-| Output tokens | `unknown` |
+
 | Total tokens | `22k` |
-| Wall-clock time (s) | `~20s` |
-| Tool-reported time (s) | `Not exposed in Codex extension` |
+| Wall-clock time (s) | `3m 20s` |
 | Files produced | `3: index.html, styles.css, script.js` |
 | Lines of code | `~1492` |
 | Runs in browser? | `yes` |
