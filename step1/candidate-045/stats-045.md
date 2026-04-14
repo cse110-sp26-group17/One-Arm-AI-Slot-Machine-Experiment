@@ -2,7 +2,7 @@
 | Field                    	| Notes| 
 |---------------------------|---------|
 | Run ID	                | candidate-047     |
-| Timestamp	                | 2026/13/04 12:48  |
+| Timestamp	                | 2026-04-14T12:48:00  |
 | Model + version string 	| GPT-5.3-Codex     |
 | Wall-clock time (s)   	| 13m 56s |
 | Files produced            | 3: index.html, script.js, styles.css | 
