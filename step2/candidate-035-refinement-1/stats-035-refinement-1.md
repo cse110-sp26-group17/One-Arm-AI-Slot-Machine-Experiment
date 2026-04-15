@@ -1,7 +1,7 @@
 
 | Field                  | Notes                                                                                                            |
 | ---------------------- | ---------------------------------------------------------------------------------------------------------------- |
-| Run ID                 | candidate-034-refinement-1                                                                                       |
+| Run ID                 | candidate-035-refinement-1                                                                                       |
 | Timestamp              | 2026-04-14T19:12:00-8:00                                                                                         |
 | Model + version string | GPT-5.3-Codex                                                                                                    |
 | Input tokens           | 103,779                                                                                                          |
@@ -11,8 +11,9 @@
 | Files produced         | 3: index.html, script.js, styles.css                                                                             |
 | New Lines of code      | 844                                                                                                              |
 | Runs in browser?       | yes                                                                                                              |
-| App Quality Notes      | The app runs well. It has a different feature of the runway to track progress.                                   |
-| Code Quality Notes     | The code seems a mix of the two before, having if statements for special cases and having more code for visuals. |
+| App Quality Notes      | The app runs well. It has a different feature of the runway to track progress. Button to choose your bet, daily vc,
+biggest win, perk multiplier, amount won, biggest win, payout rules, nice special effect for each spin|
+| Code Quality Notes     | The code seems a mix of the two before, having if statements for special cases and having more code for visuals. Clean and easy to understand with good variables names. |
 
 
 ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆
