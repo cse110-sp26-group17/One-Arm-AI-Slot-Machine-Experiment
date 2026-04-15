@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Token Grinder 3000</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Chango&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="app-shell">
+    <section class="hero-card">
+      <p class="eyebrow">Totally Sustainable AI Economy</p>
+      <h1>Token Grinder 3000</h1>
+      <p class="subtitle">
+        Win premium AI tokens, then immediately spend them on suspiciously expensive spins.
+      </p>
+
+      <div class="status-strip" aria-live="polite">
+        <div class="status-pill">
+          <span class="status-label">Wallet</span>
+          <strong id="tokenCount">120</strong>
+          <span class="status-unit">tokens</span>
+        </div>
+        <div class="status-pill">
+          <span class="status-label">Spin Cost</span>
+          <strong id="spinCost">15</strong>
+          <span class="status-unit">tokens</span>
+        </div>
+        <div class="status-pill">
+          <span class="status-label">Jackpot</span>
+          <strong>200</strong>
+          <span class="status-unit">tokens</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="machine-card" aria-labelledby="machineTitle">
+      <div class="machine-topper">
+        <h2 id="machineTitle">Neural Slot Inference Engine</h2>
+        <p>Three reels. Infinite hype. Zero enterprise guarantees.</p>
+      </div>
+
+      <div class="reels" role="img" aria-label="Slot machine reels">
+        <div class="reel-frame"><div class="reel" id="reel0">🤖</div></div>
+        <div class="reel-frame"><div class="reel" id="reel1">🪙</div></div>
+        <div class="reel-frame"><div class="reel" id="reel2">🔥</div></div>
+      </div>
+
+      <div class="controls">
+        <button id="spinButton" class="spin-button" type="button">Spend 15 Tokens</button>
+        <button id="resetButton" class="secondary-button" type="button">Emergency VC Funding</button>
+      </div>
+
+      <p id="message" class="message" aria-live="polite">
+        Press spin and hope the algorithm respects your subscription tier.
+      </p>
+
+      <div class="legend">
+        <div class="legend-item"><span>🤖🤖🤖</span><strong>200</strong><small>Full singularity payout</small></div>
+        <div class="legend-item"><span>🪙🪙🪙</span><strong>120</strong><small>Rare token liquidity event</small></div>
+        <div class="legend-item"><span>🔥🔥🔥</span><strong>90</strong><small>Viral AI demo moment</small></div>
+        <div class="legend-item"><span>✨✨✨</span><strong>70</strong><small>Prompt engineer aura bonus</small></div>
+        <div class="legend-item"><span>Any pair</span><strong>25</strong><small>Enough for one more bad decision</small></div>
+      </div>
+    </section>
+
+    <section class="feed-card">
+      <div class="feed-header">
+        <h2>Market Commentary</h2>
+        <p>Live analysis from the Institute of Made-Up AI Finance</p>
+      </div>
+      <ul id="eventFeed" class="event-feed" aria-live="polite"></ul>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

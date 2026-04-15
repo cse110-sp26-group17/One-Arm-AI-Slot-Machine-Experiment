@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Token Burn Casino</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bungee:wght@400&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="app-shell">
+    <section class="hero-card">
+      <p class="eyebrow">AI TOKEN EXTRACTION SIMULATOR</p>
+      <h1>Token Burn Casino</h1>
+      <p class="hero-copy">
+        Spin the reels, win synthetic clout, and immediately spend it on premium
+        model feelings. A totally rational economy.
+      </p>
+      <div class="status-row">
+        <div class="pill">
+          <span class="pill-label">Wallet</span>
+          <strong id="tokenBalance">120</strong>
+          <span class="pill-unit">tokens</span>
+        </div>
+        <div class="pill">
+          <span class="pill-label">Spin Cost</span>
+          <strong>15</strong>
+          <span class="pill-unit">tokens</span>
+        </div>
+        <div class="pill">
+          <span class="pill-label">Mood</span>
+          <strong id="aiMood">confident</strong>
+          <span class="pill-unit">for now</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="machine-panel">
+      <div class="machine-top">
+        <div>
+          <p class="mini-label">Current promotion</p>
+          <h2>Jackpot unlocks one free hallucination review</h2>
+        </div>
+        <button id="resetButton" class="secondary-button" type="button">Reset Wallet</button>
+      </div>
+
+      <div class="marquee" aria-live="polite">
+        <span id="marqueeText">Welcome back, valued prompt investor.</span>
+      </div>
+
+      <div class="machine-body">
+        <div class="reels" aria-label="Slot machine reels">
+          <div class="reel" id="reel0">🤖</div>
+          <div class="reel" id="reel1">🪙</div>
+          <div class="reel" id="reel2">🔥</div>
+        </div>
+
+        <aside class="payout-card">
+          <p class="mini-label">Payout table</p>
+          <ul>
+            <li>3x `🪙` = +90 tokens</li>
+            <li>3x `🤖` = +60 tokens</li>
+            <li>3x `🧠` = +45 tokens</li>
+            <li>Any pair = +12 tokens</li>
+            <li>`🔥 💸 🔥` = “venture funding” +30</li>
+          </ul>
+        </aside>
+      </div>
+
+      <div class="actions">
+        <button id="spinButton" class="primary-button" type="button">Spin For 15 Tokens</button>
+        <button id="cashoutButton" class="ghost-button" type="button">Waste Winnings</button>
+      </div>
+
+      <section class="feed-grid">
+        <article class="feed-card">
+          <p class="mini-label">Result</p>
+          <p id="resultText" class="result-text">Pull the lever and let the machine evaluate your business model.</p>
+        </article>
+        <article class="feed-card">
+          <p class="mini-label">Purchase Log</p>
+          <p id="spendText" class="result-text">No optional AI upsells have been accepted yet.</p>
+        </article>
+      </section>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
