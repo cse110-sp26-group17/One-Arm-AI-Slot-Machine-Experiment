@@ -6,7 +6,7 @@
 | Model + version string | GPT-5.3-Codex                                                                                                    |
 | Input tokens           | 103,779                                                                                                          |
 | Output tokens          | 28,351                                                                                                           |
-| Total tokens           | 132,130                                                                                                          |
+| Total tokens           |Token usage: total=132,765 input=111,456 (+ 2,300,160 cached) output=21,309                                                                                  |
 | Wall-clock time (s)    | 8m 49s                                                                                                           |
 | Files produced         | 3: index.html, script.js, styles.css                                                                             |
 | New Lines of code      | 844                                                                                                              |
