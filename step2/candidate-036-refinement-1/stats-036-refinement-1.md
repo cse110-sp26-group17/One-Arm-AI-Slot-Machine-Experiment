@@ -4,7 +4,7 @@
 
 | Field | Notes |
 | --- | --- |
-| Run ID | `candidate-037` |
+| Run ID | `candidate-037-refinement-1` |
 | Timestamp | `2026-04-14T20:18:00Z` |
 | Model + version string | `gpt-5.3 (Codex VS Code extension)` |
 

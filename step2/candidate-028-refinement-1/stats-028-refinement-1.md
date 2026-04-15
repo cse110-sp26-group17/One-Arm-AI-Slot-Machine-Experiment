@@ -1,6 +1,6 @@
 | Field                    	| Notes| 
 |---------------------------|---------|
-| Run ID	                | candidate-028     |
+| Run ID	                | candidate-028-refinement-1 |
 | Timestamp	                | 2026-04-14T14:50:20  |
 | Model + version string 	| GPT-5.3-Codex     |
 | Input Tokens              | 9,302   |
