@@ -11,8 +11,8 @@
 | Files produced         | 3: app.js, index.html, styles.css                                          |
 | Lines of code          | 792                                                                        |
 | Runs in browser?       | yes                                                                        |
-| App Quality Notes      | 5 - vibration effects, win effects, pretty interface, payout table, emojis |
-| Code Quality Notes     | 5 - easy to follow, extensive                                              |
+| App Quality Notes      | 5 - vibration effects, win effects, pretty interface, payout table, emojis with background glow, streak heat, win streak, lucky charge, added bet size button, includes your biggest win, payout rules |
+| Code Quality Notes     | 5 - easy to follow, extensive, functions are clean and easy to understand                                             |
 |                        |                                                                            |
 
 
