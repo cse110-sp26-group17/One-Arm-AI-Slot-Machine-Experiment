@@ -11,5 +11,5 @@
 | Files produced            | 3: index.html, script.js, styles.css | 
 | Lines of code	            | 1066 | 
 | Runs in browser?	        | yes |
-| App Quality Notes	        | N/A |
-| Code Quality Notes        | N/A | 
+| App Quality Notes	        | 5 - good ui and nice design, with purchases and emojis that make it look better |
+| Code Quality Notes        | 4 - code is chunked into neat sections, variables have clear names,  no comments for explanations though | 

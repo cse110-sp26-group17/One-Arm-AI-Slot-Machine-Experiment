@@ -5,21 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="A vanilla HTML, CSS, and JavaScript slot machine that roasts AI hype while you win and burn tokens."
+      content="Premium-feeling arcade slot machine demo with transparent odds, responsible controls, and fast interactions."
     />
-    <title>Prompt & Circumstance Casino</title>
+    <title>Arcade Slot Lab</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
     <div class="noise" aria-hidden="true"></div>
-    <main class="machine">
+    <div class="screen-flash" id="screen-flash" aria-hidden="true"></div>
+    <main class="machine" id="machine-root">
       <header class="hero">
-        <p class="hero__eyebrow">Prompt & Circumstance Casino</p>
-        <h1>Spin the model. Burn the tokens. Blame the hype cycle.</h1>
+        <p class="hero__eyebrow">Arcade Slot Lab</p>
+        <h1>Cinematic Spins With Clear Rules.</h1>
         <p class="hero__lede">
-          This machine accepts prompt tokens, investor optimism, and poor impulse
-          control. Payouts are issued in the same fictional units AI companies
-          keep putting on pitch decks.
+          High-energy reel action, instant controls, transparent payouts, and full session tracking.
+          Designed to feel premium without hiding risk.
         </p>
       </header>
 
@@ -27,45 +27,43 @@
         <article class="stat">
           <span class="stat__label">Balance</span>
           <strong class="stat__value" id="balance">0</strong>
-          <span class="stat__meta">tokens left to light on fire</span>
+          <span class="stat__meta">VC credits available</span>
         </article>
         <article class="stat">
           <span class="stat__label">Bet</span>
           <strong class="stat__value" id="bet-display">0</strong>
-          <span class="stat__meta">spent every spin</span>
+          <span class="stat__meta">per spin</span>
         </article>
         <article class="stat">
-          <span class="stat__label">Best Hit</span>
+          <span class="stat__label">Perk Multiplier</span>
+          <strong class="stat__value" id="perk-multiplier">x1.00</strong>
+          <span class="stat__meta">win streak and machine boost</span>
+        </article>
+        <article class="stat">
+          <span class="stat__label">Best Win</span>
           <strong class="stat__value" id="best-win">0</strong>
-          <span class="stat__meta">largest token miracle</span>
-        </article>
-        <article class="stat">
-          <span class="stat__label">Seed Rounds</span>
-          <strong class="stat__value" id="seed-rounds">0</strong>
-          <span class="stat__meta">times VC rescued your bankroll</span>
+          <span class="stat__meta" id="best-win-label">No showcase yet</span>
         </article>
       </section>
 
       <section class="ticker" aria-hidden="true">
         <div class="ticker__track">
-          <span>HOUSE EDGE TRAINED ON SLIDE DECKS</span>
-          <span>ALL WINNINGS PAYABLE IN IMAGINARY TOKENS</span>
-          <span>RATE LIMITS ARE A FEATURE, NOT A BUG</span>
-          <span>NO MODELS WERE ALIGNED DURING GAMEPLAY</span>
-          <span>AGENTS MAY SPEND YOUR RENT MONEY AUTONOMOUSLY</span>
-          <span>HOUSE EDGE TRAINED ON SLIDE DECKS</span>
-          <span>ALL WINNINGS PAYABLE IN IMAGINARY TOKENS</span>
-          <span>RATE LIMITS ARE A FEATURE, NOT A BUG</span>
-          <span>NO MODELS WERE ALIGNED DURING GAMEPLAY</span>
-          <span>AGENTS MAY SPEND YOUR RENT MONEY AUTONOMOUSLY</span>
+          <span>ALL ODDS AND PAYOUT RULES ARE SHOWN BELOW</span>
+          <span>AUTO-SPIN HAS AN INSTANT STOP BUTTON</span>
+          <span>SESSION LOG TRACKS WINS, LOSSES, NET, AND SPEND</span>
+          <span>DAILY VC CLAIM RESETS EVERY 24 HOURS</span>
+          <span>ALL ODDS AND PAYOUT RULES ARE SHOWN BELOW</span>
+          <span>AUTO-SPIN HAS AN INSTANT STOP BUTTON</span>
+          <span>SESSION LOG TRACKS WINS, LOSSES, NET, AND SPEND</span>
+          <span>DAILY VC CLAIM RESETS EVERY 24 HOURS</span>
         </div>
       </section>
 
       <section class="cabinet">
-        <div class="cabinet__frame">
+        <div class="cabinet__frame" id="cabinet-frame">
           <div class="status-strip">
-            <span id="status-pill" class="status-pill">Model idle</span>
-            <span class="status-strip__hint">House disclaimer: confidence exceeds accuracy.</span>
+            <span id="status-pill" class="status-pill">Machine idle</span>
+            <span class="status-strip__hint" id="machine-name">Neon Mirage</span>
           </div>
 
           <div class="reels" id="reels" aria-live="polite">
@@ -73,82 +71,112 @@
               <div class="reel__shine"></div>
               <div class="symbol-card">
                 <span class="symbol-card__slot">Reel 1</span>
-                <strong class="symbol-card__label">TOKEN</strong>
-                <span class="symbol-card__sub">warm context straight from the furnace</span>
+                <strong class="symbol-card__label">GEM</strong>
+                <span class="symbol-card__sub">starter luck</span>
               </div>
             </article>
             <article class="reel" data-reel="1">
               <div class="reel__shine"></div>
               <div class="symbol-card">
                 <span class="symbol-card__slot">Reel 2</span>
-                <strong class="symbol-card__label">GPU</strong>
-                <span class="symbol-card__sub">the smell of premium compute</span>
+                <strong class="symbol-card__label">COIN</strong>
+                <span class="symbol-card__sub">classic payout fuel</span>
               </div>
             </article>
             <article class="reel" data-reel="2">
               <div class="reel__shine"></div>
               <div class="symbol-card">
                 <span class="symbol-card__slot">Reel 3</span>
-                <strong class="symbol-card__label">FAKE</strong>
-                <span class="symbol-card__sub">confident answers from nowhere</span>
+                <strong class="symbol-card__label">STAR</strong>
+                <span class="symbol-card__sub">rare highlight</span>
               </div>
             </article>
           </div>
 
           <div class="result-panel">
             <div class="result-panel__copy">
-              <p class="result-panel__label">Machine Commentary</p>
-              <h2 id="headline">Welcome to the token grinder.</h2>
+              <p class="result-panel__label">Spin Report</p>
+              <h2 id="headline">Welcome to Arcade Slot Lab.</h2>
               <p id="subheadline">
-                Press spin to exchange hard-won tokens for a statistically
-                decorated insult.
+                Press spin for a fast cinematic round. Losses and gains are always tracked.
               </p>
             </div>
             <div class="result-panel__badge" id="net-badge">Net 0</div>
           </div>
+
+          <section class="showcase" id="showcase" aria-live="polite">
+            <p class="showcase__label">Biggest Win Showcase</p>
+            <h3 id="showcase-title">No record win yet</h3>
+            <p id="showcase-detail">Hit a huge combo to trigger fireworks and multiplier popups.</p>
+          </section>
         </div>
 
         <aside class="controls" aria-label="Game controls">
           <div class="controls__section">
+            <p class="controls__label">Machine Carousel</p>
+            <div class="carousel">
+              <button class="ghost-button ghost-button--small" id="prev-machine" type="button">Previous</button>
+              <span id="carousel-name" class="carousel__name">Neon Mirage</span>
+              <button class="ghost-button ghost-button--small" id="next-machine" type="button">Next</button>
+            </div>
+          </div>
+
+          <div class="controls__section">
             <p class="controls__label">Choose your bet</p>
             <div class="chip-grid" id="chip-grid">
-              <button class="chip is-active" type="button" data-bet="10">10</button>
-              <button class="chip" type="button" data-bet="25">25</button>
-              <button class="chip" type="button" data-bet="50">50</button>
-              <button class="chip" type="button" data-bet="100">100</button>
+              <button class="chip" type="button" data-bet="25">25 VC</button>
+              <button class="chip" type="button" data-bet="50">50 VC</button>
+              <button class="chip is-active" type="button" data-bet="100">100 VC</button>
+              <button class="chip" type="button" data-bet="250">250 VC</button>
             </div>
           </div>
 
           <div class="controls__section controls__section--actions">
-            <button class="spin-button" id="spin-button" type="button">
-              Spin For Inference
-            </button>
-            <button class="ghost-button" id="seed-button" type="button">
-              Beg VC For More Tokens
-            </button>
-            <button class="ghost-button ghost-button--small" id="heckle-button" type="button">
-              Heckler Voice: On
-            </button>
+            <button class="spin-button" id="spin-button" type="button">Spin</button>
+            <button class="spin-button spin-button--alt" id="autospin-button" type="button">Start Auto-Spin</button>
+            <button class="ghost-button" id="stop-autospin-button" type="button">Stop Auto-Spin</button>
+            <button class="ghost-button" id="daily-button" type="button">Claim Daily VC</button>
+            <p class="daily-timer" id="daily-timer">Daily claim ready.</p>
           </div>
 
           <div class="controls__section">
-            <p class="controls__label">House tips</p>
+            <p class="controls__label">Payout Rules</p>
+            <ul class="tips" id="payout-rules">
+              <li>3 matching symbols: base x6 to x14 (depends on symbol rarity).</li>
+              <li>Special combo line: base x5.</li>
+              <li>2 matching symbols: base x2.2.</li>
+              <li>Perk multiplier applies to winning payouts only.</li>
+              <li>Current machine bonus is shown in the status strip.</li>
+            </ul>
+          </div>
+
+          <div class="controls__section">
+            <p class="controls__label">Responsible Play</p>
             <ul class="tips">
-              <li>Each spin burns your selected bet immediately.</li>
-              <li>Three matching reels pay the biggest pile of fake money.</li>
-              <li>Two matches still pay, because AI demos love grading on a curve.</li>
-              <li>When broke, the machine suggests venture capital instead of restraint.</li>
+              <li>All losses are logged; nothing is hidden.</li>
+              <li>Use Stop Auto-Spin instantly at any time.</li>
+              <li>Take breaks between long sessions.</li>
             </ul>
           </div>
         </aside>
       </section>
 
-      <section class="history-panel">
-        <div>
-          <p class="history-panel__label">Audit Trail</p>
-          <h2>Recent machine propaganda</h2>
-        </div>
-        <ul class="history" id="history"></ul>
+      <section class="history-grid">
+        <section class="history-panel">
+          <div>
+            <p class="history-panel__label">Session Log</p>
+            <h2>Wins, losses, and net</h2>
+          </div>
+          <ul class="history" id="history"></ul>
+        </section>
+
+        <section class="history-panel">
+          <div>
+            <p class="history-panel__label">Win Log</p>
+            <h2>Gains only</h2>
+          </div>
+          <ul class="history" id="win-history"></ul>
+        </section>
       </section>
     </main>
 

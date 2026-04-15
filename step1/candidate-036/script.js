@@ -1,97 +1,86 @@
-const STORAGE_KEY = "prompt-circumstance-casino-state";
-const STARTING_BALANCE = 240;
-const SEED_ROUND_GRANT = 140;
-const MAX_HISTORY = 8;
+const STORAGE_KEY = "arcade-slot-lab-state";
+const STARTING_BALANCE = 2400;
+const DAILY_GRANT = 350;
+const DAILY_COOLDOWN_MS = 24 * 60 * 60 * 1000;
+const BET_OPTIONS = [25, 50, 100, 250];
+const MAX_HISTORY = 12;
+const MAX_WIN_HISTORY = 12;
 const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const numberFormatter = new Intl.NumberFormat("en-US");
 
 const SYMBOLS = [
-  {
-    key: "TOKEN",
-    label: "TOKEN",
-    sub: "warm context straight from the furnace",
-    weight: 18,
-    triple: 8,
-  },
-  {
-    key: "GPU",
-    label: "GPU",
-    sub: "premium compute with a side of heat death",
-    weight: 12,
-    triple: 12,
-  },
-  {
-    key: "PROMPT",
-    label: "PROMPT",
-    sub: "polite spellcasting for autocomplete",
-    weight: 15,
-    triple: 7,
-  },
-  {
-    key: "BOT",
-    label: "BOT",
-    sub: "an agent with way too much confidence",
-    weight: 10,
-    triple: 10,
-  },
-  {
-    key: "HYPE",
-    label: "HYPE",
-    sub: "valuation first, product eventually",
-    weight: 9,
-    triple: 11,
-  },
-  {
-    key: "FAKE",
-    label: "FAKE",
-    sub: "confident answers from nowhere",
-    weight: 14,
-    triple: 6,
-  },
-  {
-    key: "LAG",
-    label: "LAG",
-    sub: "please hold while the cluster coughs",
-    weight: 11,
-    triple: 5,
-  },
-  {
-    key: "SEED",
-    label: "SEED",
-    sub: "venture fuel for the next keynote",
-    weight: 8,
-    triple: 9,
-  },
+  { key: "GEM", label: "GEM", sub: "shiny classic jackpot fuel", weight: 14, triple: 10 },
+  { key: "COIN", label: "COIN", sub: "steady payout currency", weight: 18, triple: 8 },
+  { key: "STAR", label: "STAR", sub: "rare premium flash", weight: 9, triple: 14 },
+  { key: "BELL", label: "BELL", sub: "arcade bell ring", weight: 12, triple: 11 },
+  { key: "ROCKET", label: "ROCKET", sub: "high-voltage momentum", weight: 10, triple: 12 },
+  { key: "CHERRY", label: "CHERRY", sub: "vintage machine charm", weight: 16, triple: 7 },
+  { key: "DIAMOND", label: "DIAMOND", sub: "ultra rare hit", weight: 7, triple: 16 },
+  { key: "CROWN", label: "CROWN", sub: "top-tier prestige spin", weight: 8, triple: 15 },
 ];
 
 const SPECIAL_COMBOS = {
-  "GPU|PROMPT|TOKEN": {
+  "COIN|GEM|STAR": {
     multiplier: 5,
-    headline: "Product-market-ish fit",
-    detail: "You assembled compute, prompt hacks, and just enough tokens to call it a platform.",
+    headline: "Treasure line",
+    detail: "Core symbol trio aligned for a premium combo payout.",
   },
-  "BOT|FAKE|PROMPT": {
-    multiplier: 4,
-    headline: "Autonomous slideshow",
-    detail: "The machine built an agent demo that mostly works if nobody asks follow-up questions.",
+  "BELL|CHERRY|ROCKET": {
+    multiplier: 5,
+    headline: "Arcade rush",
+    detail: "Old-school charm and speed merged into a combo hit.",
   },
-  "HYPE|SEED|TOKEN": {
-    multiplier: 6,
-    headline: "Series A energy",
-    detail: "You turned jargon into runway. Finance departments hate this one trick.",
+  "CROWN|DIAMOND|STAR": {
+    multiplier: 5,
+    headline: "Royal flare",
+    detail: "Rare symbols aligned in the spotlight lane.",
   },
 };
+
+const MACHINES = [
+  {
+    name: "Neon Mirage",
+    status: "Fast reels, balanced payouts",
+    machineBonus: 0.08,
+    speedBonus: 0,
+    accentClass: "theme-neon",
+  },
+  {
+    name: "Solar Vault",
+    status: "Slightly slower reels, stronger perk bonus",
+    machineBonus: 0.14,
+    speedBonus: 80,
+    accentClass: "theme-solar",
+  },
+  {
+    name: "Frost Pulse",
+    status: "Snappiest reel timing with moderate bonus",
+    machineBonus: 0.1,
+    speedBonus: -70,
+    accentClass: "theme-frost",
+  },
+];
 
 const state = loadState();
 
 const elements = {
+  root: document.querySelector("#machine-root"),
+  cabinetFrame: document.querySelector("#cabinet-frame"),
+  screenFlash: document.querySelector("#screen-flash"),
   balance: document.querySelector("#balance"),
   betDisplay: document.querySelector("#bet-display"),
+  perkMultiplier: document.querySelector("#perk-multiplier"),
   bestWin: document.querySelector("#best-win"),
-  seedRounds: document.querySelector("#seed-rounds"),
+  bestWinLabel: document.querySelector("#best-win-label"),
   spinButton: document.querySelector("#spin-button"),
-  seedButton: document.querySelector("#seed-button"),
-  heckleButton: document.querySelector("#heckle-button"),
+  autoSpinButton: document.querySelector("#autospin-button"),
+  stopAutoSpinButton: document.querySelector("#stop-autospin-button"),
+  dailyButton: document.querySelector("#daily-button"),
+  dailyTimer: document.querySelector("#daily-timer"),
+  prevMachine: document.querySelector("#prev-machine"),
+  nextMachine: document.querySelector("#next-machine"),
+  machineName: document.querySelector("#machine-name"),
+  carouselName: document.querySelector("#carousel-name"),
   chipGrid: document.querySelector("#chip-grid"),
   reels: Array.from(document.querySelectorAll(".reel")),
   headline: document.querySelector("#headline"),
@@ -99,19 +88,27 @@ const elements = {
   statusPill: document.querySelector("#status-pill"),
   netBadge: document.querySelector("#net-badge"),
   history: document.querySelector("#history"),
+  winHistory: document.querySelector("#win-history"),
   burstLayer: document.querySelector("#burst-layer"),
   liveRegion: document.querySelector("#live-region"),
+  showcase: document.querySelector("#showcase"),
+  showcaseTitle: document.querySelector("#showcase-title"),
+  showcaseDetail: document.querySelector("#showcase-detail"),
 };
 
+let autoSpinTimer = null;
+let dailyTimerInterval = null;
 let audioContext;
 
 render();
 syncControls();
+applyMachineTheme();
+updateDailyClaimUI();
+startDailyTicker();
 
 elements.chipGrid.addEventListener("click", (event) => {
   const target = event.target.closest("[data-bet]");
-
-  if (!target || state.spinning) {
+  if (!target || state.spinning || state.autospinActive) {
     return;
   }
 
@@ -121,148 +118,443 @@ elements.chipGrid.addEventListener("click", (event) => {
 });
 
 elements.spinButton.addEventListener("click", () => {
-  spin();
+  spin("manual");
 });
 
-elements.seedButton.addEventListener("click", () => {
-  requestSeedRound();
-});
-
-elements.heckleButton.addEventListener("click", () => {
-  state.hecklerEnabled = !state.hecklerEnabled;
-  render();
-  saveState();
-
-  if (state.hecklerEnabled) {
-    speak("Heckler voice restored. Very brave.");
-  } else {
-    window.speechSynthesis?.cancel();
+elements.autoSpinButton.addEventListener("click", () => {
+  if (state.autospinActive || state.spinning) {
+    return;
   }
+
+  state.autospinActive = true;
+  pulseStatus("Auto-spin active");
+  queueAutoSpin(10);
+  syncControls();
+  saveState();
 });
 
-async function spin() {
+elements.stopAutoSpinButton.addEventListener("click", () => {
+  stopAutoSpin("Auto-spin stopped");
+});
+
+elements.dailyButton.addEventListener("click", () => {
+  claimDailyVC();
+});
+
+elements.prevMachine.addEventListener("click", () => {
+  changeMachine(-1);
+});
+
+elements.nextMachine.addEventListener("click", () => {
+  changeMachine(1);
+});
+
+async function spin(mode) {
   if (state.spinning) {
     return;
   }
 
   if (state.balance < state.bet) {
     setAnnouncement(
-      "Out of tokens",
-      "You cannot afford this spin. The machine recommends a seed round instead of self-control.",
+      "Insufficient VC",
+      "Your balance is below the selected bet. Lower bet or claim daily VC.",
       0,
-      "Need tokens"
+      "Need VC"
     );
-    pulseStatus("Bankroll depleted");
-    vibrate([40, 30, 40]);
-    speak("Insufficient tokens. Please contact your nearest venture capitalist.");
+    pulseStatus("Balance too low");
+    vibrate([30, 30, 30]);
+    if (state.autospinActive) {
+      stopAutoSpin("Auto-spin paused: insufficient balance");
+    }
     return;
   }
 
   ensureAudioContext();
 
+  const machine = currentMachine();
   state.spinning = true;
   state.round += 1;
   state.balance -= state.bet;
+  state.totalSpent += state.bet;
   state.lastNet = -state.bet;
   render();
   syncControls();
 
-  pulseStatus("Querying casino model");
+  triggerSpinCinematics(mode);
+  pulseStatus(state.autospinActive ? "Auto-spin running" : "Spinning");
   setAnnouncement(
-    "Inference in progress",
-    "The reels are consulting a breathtaking quantity of expensive probability.",
+    "Spin in progress",
+    `${machine.name} is rolling with ${formatMultiplier(effectiveMultiplier())} perk pressure.`,
     -state.bet,
-    `Spent ${state.bet}`
+    `Spent ${formatNumber(state.bet)}`
   );
-  playToneSequence([
-    [320, 0.05, "sawtooth"],
-    [280, 0.07, "sine"],
-    [240, 0.09, "triangle"],
-  ]);
-  vibrate(18);
 
   const outcomeSymbols = elements.reels.map(() => pickWeightedSymbol());
+  const baseDuration = prefersReducedMotion ? 180 : 700;
   await Promise.all(
     elements.reels.map((reel, index) =>
-      spinSingleReel(reel, outcomeSymbols[index], 850 + index * (prefersReducedMotion ? 80 : 220), index)
+      spinSingleReel(reel, outcomeSymbols[index], baseDuration + index * (180 + machine.speedBonus), index)
     )
   );
 
-  const outcome = evaluateSpin(outcomeSymbols, state.bet);
+  const multiplier = effectiveMultiplier();
+  const outcome = evaluateSpin(outcomeSymbols, state.bet, multiplier);
   state.balance += outcome.payout;
-  state.bestWin = Math.max(state.bestWin, outcome.payout);
+  state.totalWon += outcome.payout;
   state.lastNet = outcome.payout - state.bet;
-  state.history.unshift({
+
+  if (outcome.payout > 0) {
+    state.winStreak += 1;
+  } else {
+    state.winStreak = 0;
+  }
+
+  const historyEntry = {
     label: `Round ${state.round}`,
     symbols: outcomeSymbols.map((symbol) => symbol.label),
     headline: outcome.headline,
     detail: outcome.detail,
     net: state.lastNet,
-  });
+    payout: outcome.payout,
+  };
+
+  state.history.unshift(historyEntry);
   state.history = state.history.slice(0, MAX_HISTORY);
+
+  if (state.lastNet > 0) {
+    state.winHistory.unshift(historyEntry);
+    state.winHistory = state.winHistory.slice(0, MAX_WIN_HISTORY);
+  }
+
+  if (outcome.payout > state.bestWin) {
+    state.bestWin = outcome.payout;
+    state.bestWinLabel = `${outcome.headline} (${outcomeSymbols.map((s) => s.label).join(" / ")})`;
+    highlightShowcase(outcome, multiplier);
+  }
+
   state.spinning = false;
 
   setAnnouncement(outcome.headline, outcome.detail, state.lastNet, outcome.badgeText);
   pulseStatus(outcome.status);
-  reactToOutcome(outcome);
+  reactToOutcome(outcome, multiplier);
   render();
   syncControls();
   saveState();
+
+  if (state.autospinActive) {
+    queueAutoSpin(100);
+  }
 }
 
-function requestSeedRound() {
-  if (state.spinning) {
+function evaluateSpin(symbols, bet, multiplier) {
+  const labels = symbols.map((symbol) => symbol.label);
+  const sortedKey = [...labels].sort().join("|");
+  const counts = labels.reduce((map, label) => {
+    map[label] = (map[label] ?? 0) + 1;
+    return map;
+  }, {});
+  const highestCount = Math.max(...Object.values(counts));
+
+  if (highestCount === 3) {
+    const symbol = symbols[0];
+    const basePayout = bet * symbol.triple;
+    const payout = Math.round(basePayout * multiplier);
+    return {
+      payout,
+      headline: `${symbol.label} x3`,
+      detail: `Triple match with ${formatMultiplier(multiplier)} perk boost applied.`,
+      badgeText: `Net +${formatNumber(payout - bet)}`,
+      status: "Triple match",
+      outcomeType: "jackpot",
+    };
+  }
+
+  if (SPECIAL_COMBOS[sortedKey]) {
+    const combo = SPECIAL_COMBOS[sortedKey];
+    const basePayout = bet * combo.multiplier;
+    const payout = Math.round(basePayout * multiplier);
+    return {
+      payout,
+      headline: combo.headline,
+      detail: `${combo.detail} ${formatMultiplier(multiplier)} perk boost applied.`,
+      badgeText: `Net +${formatNumber(payout - bet)}`,
+      status: "Special combo",
+      outcomeType: "special",
+    };
+  }
+
+  if (highestCount === 2) {
+    const basePayout = Math.round(bet * 2.2);
+    const payout = Math.round(basePayout * multiplier);
+    const matchedLabel = Object.keys(counts).find((label) => counts[label] === 2);
+    return {
+      payout,
+      headline: `${matchedLabel} pair`,
+      detail: `Pair payout with ${formatMultiplier(multiplier)} perk boost.`,
+      badgeText: `Net +${formatNumber(payout - bet)}`,
+      status: "Pair hit",
+      outcomeType: "pair",
+    };
+  }
+
+  return {
+    payout: 0,
+    headline: "No payout",
+    detail: "No combination lined up on this spin.",
+    badgeText: `Net -${formatNumber(bet)}`,
+    status: "Awaiting next spin",
+    outcomeType: "loss",
+  };
+}
+
+function currentMachine() {
+  return MACHINES[state.machineIndex] ?? MACHINES[0];
+}
+
+function effectiveMultiplier() {
+  const machine = currentMachine();
+  const streakBonus = Math.min(state.winStreak, 6) * 0.07;
+  return 1 + streakBonus + machine.machineBonus;
+}
+
+function highlightShowcase(outcome, multiplier) {
+  elements.showcaseTitle.textContent = `${outcome.headline} - ${formatNumber(outcome.payout)} VC`;
+  elements.showcaseDetail.textContent = `New record with ${formatMultiplier(multiplier)} total multiplier.`;
+  elements.showcase.classList.remove("is-pop");
+  void elements.showcase.offsetWidth;
+  elements.showcase.classList.add("is-pop");
+  createBurst(34, true);
+}
+
+function triggerSpinCinematics(mode) {
+  elements.cabinetFrame.classList.remove("is-shaking");
+  if (!prefersReducedMotion) {
+    void elements.cabinetFrame.offsetWidth;
+    elements.cabinetFrame.classList.add("is-shaking");
+  }
+
+  elements.screenFlash.classList.remove("is-active");
+  void elements.screenFlash.offsetWidth;
+  elements.screenFlash.classList.add("is-active");
+
+  playSpinTension(mode);
+}
+
+function spinSingleReel(reel, finalSymbol, duration, index) {
+  const tickRate = prefersReducedMotion ? 45 : 72;
+
+  return new Promise((resolve) => {
+    reel.classList.add("is-spinning");
+    let cursor = 0;
+
+    const interval = window.setInterval(() => {
+      renderReel(reel, SYMBOLS[cursor % SYMBOLS.length]);
+      cursor += 1 + index;
+    }, tickRate);
+
+    window.setTimeout(() => {
+      window.clearInterval(interval);
+      reel.classList.remove("is-spinning");
+      renderReel(reel, finalSymbol);
+      animateElement(
+        reel,
+        [
+          { transform: "translateY(-9px) scale(1.03)" },
+          { transform: "translateY(0) scale(1)" },
+        ],
+        {
+          duration: prefersReducedMotion ? 1 : 240,
+          easing: "cubic-bezier(.18,.89,.32,1.28)",
+        }
+      );
+      playStopTone(index);
+      resolve();
+    }, Math.max(160, duration));
+  });
+}
+
+function renderReel(reel, symbol) {
+  const label = reel.querySelector(".symbol-card__label");
+  const sub = reel.querySelector(".symbol-card__sub");
+  label.textContent = symbol.label;
+  sub.textContent = symbol.sub;
+}
+
+function reactToOutcome(outcome, multiplier) {
+  if (outcome.outcomeType === "loss") {
+    playToneSequence([[210, 0.05, "sawtooth"]]);
+    return;
+  }
+
+  createBurst(outcome.outcomeType === "jackpot" ? 30 : 18, outcome.outcomeType === "jackpot");
+  vibrate(outcome.outcomeType === "jackpot" ? [40, 30, 60, 30, 80] : [20, 20, 20]);
+
+  if (outcome.outcomeType === "jackpot") {
+    playToneSequence([
+      [523, 0.08, "triangle"],
+      [659, 0.08, "triangle"],
+      [784, 0.12, "triangle"],
+      [1046, 0.17, "triangle"],
+    ]);
+  } else {
+    playToneSequence([
+      [440, 0.08, "sine"],
+      [554, 0.08, "triangle"],
+      [698, 0.12, "triangle"],
+    ]);
+  }
+
+  elements.headline.textContent = `${outcome.headline} (${formatMultiplier(multiplier)})`;
+}
+
+function claimDailyVC() {
+  if (!canClaimDaily()) {
     return;
   }
 
   ensureAudioContext();
-  state.balance += SEED_ROUND_GRANT;
-  state.seedRounds += 1;
-  state.lastNet = SEED_ROUND_GRANT;
-  state.history.unshift({
-    label: `VC ${state.seedRounds}`,
-    symbols: ["SEED", "ROUND", "SIGNED"],
-    headline: "Fresh runway acquired",
-    detail: "A venture fund mistook your losses for growth and handed you more tokens.",
-    net: SEED_ROUND_GRANT,
-  });
+  state.balance += DAILY_GRANT;
+  state.lastDailyClaimAt = Date.now();
+  state.lastNet = DAILY_GRANT;
+
+  const entry = {
+    label: "Daily VC",
+    symbols: ["DAILY", "VC", "CLAIM"],
+    headline: "Daily credit claimed",
+    detail: `+${formatNumber(DAILY_GRANT)} VC added. Next claim in 24h.`,
+    net: DAILY_GRANT,
+    payout: DAILY_GRANT,
+  };
+
+  state.history.unshift(entry);
   state.history = state.history.slice(0, MAX_HISTORY);
+  state.winHistory.unshift(entry);
+  state.winHistory = state.winHistory.slice(0, MAX_WIN_HISTORY);
 
   setAnnouncement(
-    "Seed round closed",
-    "You pitched the burn rate as momentum. The machine wired more pretend capital.",
-    SEED_ROUND_GRANT,
-    `Plus ${SEED_ROUND_GRANT}`
+    "Daily VC claimed",
+    `You received ${formatNumber(DAILY_GRANT)} VC. Claim resets in 24 hours.`,
+    DAILY_GRANT,
+    `+${formatNumber(DAILY_GRANT)} VC`
   );
-  pulseStatus("Investor optimism detected");
-  vibrate([25, 35, 25, 35, 25]);
+  pulseStatus("Daily reward claimed");
   playToneSequence([
     [392, 0.08, "triangle"],
-    [494, 0.08, "triangle"],
-    [588, 0.16, "triangle"],
+    [523, 0.08, "triangle"],
+    [659, 0.14, "triangle"],
   ]);
-  speak("Congratulations. Another fund confused losses with vision.");
+  updateDailyClaimUI();
   render();
+  saveState();
+}
+
+function canClaimDaily() {
+  if (!Number.isFinite(state.lastDailyClaimAt)) {
+    return true;
+  }
+  return Date.now() - state.lastDailyClaimAt >= DAILY_COOLDOWN_MS;
+}
+
+function timeUntilDailyReady() {
+  if (canClaimDaily()) {
+    return 0;
+  }
+
+  const remaining = DAILY_COOLDOWN_MS - (Date.now() - state.lastDailyClaimAt);
+  return Math.max(0, remaining);
+}
+
+function updateDailyClaimUI() {
+  const remaining = timeUntilDailyReady();
+  const claimable = remaining === 0;
+  elements.dailyButton.disabled = state.spinning || !claimable;
+
+  if (claimable) {
+    elements.dailyTimer.textContent = "Daily claim ready.";
+    return;
+  }
+
+  const hours = Math.floor(remaining / (1000 * 60 * 60));
+  const minutes = Math.floor((remaining % (1000 * 60 * 60)) / (1000 * 60));
+  const seconds = Math.floor((remaining % (1000 * 60)) / 1000);
+  elements.dailyTimer.textContent = `Next claim in ${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
+}
+
+function startDailyTicker() {
+  window.clearInterval(dailyTimerInterval);
+  dailyTimerInterval = window.setInterval(updateDailyClaimUI, 1000);
+}
+
+function queueAutoSpin(delay) {
+  window.clearTimeout(autoSpinTimer);
+  autoSpinTimer = window.setTimeout(() => {
+    if (!state.autospinActive || state.spinning) {
+      return;
+    }
+    spin("auto");
+  }, delay);
+}
+
+function stopAutoSpin(message) {
+  state.autospinActive = false;
+  window.clearTimeout(autoSpinTimer);
+  if (message) {
+    pulseStatus(message);
+  }
   syncControls();
   saveState();
+}
+
+function changeMachine(direction) {
+  if (state.spinning) {
+    return;
+  }
+
+  const total = MACHINES.length;
+  state.machineIndex = (state.machineIndex + direction + total) % total;
+  state.winStreak = 0;
+  applyMachineTheme();
+
+  const machine = currentMachine();
+  setAnnouncement(
+    machine.name,
+    `${machine.status}. Machine bonus ${formatMultiplier(1 + machine.machineBonus)}.`,
+    0,
+    "Machine ready"
+  );
+  pulseStatus(machine.status);
+  render();
+  saveState();
+}
+
+function applyMachineTheme() {
+  for (const machine of MACHINES) {
+    elements.root.classList.remove(machine.accentClass);
+  }
+  const machine = currentMachine();
+  elements.root.classList.add(machine.accentClass);
+  elements.machineName.textContent = `${machine.name}: +${Math.round(machine.machineBonus * 100)}% perk`;
+  elements.carouselName.textContent = machine.name;
 }
 
 function render() {
   elements.balance.textContent = formatNumber(state.balance);
   elements.betDisplay.textContent = formatNumber(state.bet);
+  elements.perkMultiplier.textContent = formatMultiplier(effectiveMultiplier());
   elements.bestWin.textContent = formatNumber(state.bestWin);
-  elements.seedRounds.textContent = formatNumber(state.seedRounds);
-  elements.heckleButton.textContent = `Heckler Voice: ${state.hecklerEnabled ? "On" : "Off"}`;
+  elements.bestWinLabel.textContent = state.bestWinLabel || "No showcase yet";
 
   for (const chip of elements.chipGrid.querySelectorAll("[data-bet]")) {
     chip.classList.toggle("is-active", Number(chip.dataset.bet) === state.bet);
   }
 
-  renderHistory();
+  renderSessionHistory();
+  renderWinHistory();
   updateButtonStates();
+  updateDailyClaimUI();
 }
 
-function renderHistory() {
+function renderSessionHistory() {
   elements.history.innerHTML = "";
 
   for (const entry of state.history) {
@@ -285,29 +577,66 @@ function renderHistory() {
   }
 
   if (state.history.length === 0) {
-    const empty = document.createElement("li");
+    renderEmptyHistory(elements.history, "Session", "No spins yet.");
+  }
+}
+
+function renderWinHistory() {
+  elements.winHistory.innerHTML = "";
+
+  for (const entry of state.winHistory) {
+    const item = document.createElement("li");
     const round = document.createElement("span");
     const summary = document.createElement("p");
     const net = document.createElement("span");
 
     round.className = "history__round";
-    round.textContent = "Round 0";
+    round.textContent = entry.label ?? "Win";
+
     summary.className = "history__summary";
-    summary.textContent = "No spins yet. The machine is still pretending to be ethical.";
-    net.className = "history__net";
-    net.textContent = "0";
-    empty.append(round, summary, net);
-    elements.history.append(empty);
+    summary.textContent = `${entry.symbols.join(" / ")}. ${entry.headline}.`;
+
+    net.className = "history__net is-win";
+    net.textContent = `+${formatNumber(Math.max(entry.net, 0))}`;
+
+    item.append(round, summary, net);
+    elements.winHistory.append(item);
   }
+
+  if (state.winHistory.length === 0) {
+    renderEmptyHistory(elements.winHistory, "Wins", "No wins yet.");
+  }
+}
+
+function renderEmptyHistory(container, label, text) {
+  const empty = document.createElement("li");
+  const round = document.createElement("span");
+  const summary = document.createElement("p");
+  const net = document.createElement("span");
+
+  round.className = "history__round";
+  round.textContent = label;
+  summary.className = "history__summary";
+  summary.textContent = text;
+  net.className = "history__net";
+  net.textContent = "0";
+
+  empty.append(round, summary, net);
+  container.append(empty);
 }
 
 function updateButtonStates() {
   elements.spinButton.disabled = state.spinning;
-  elements.seedButton.disabled = state.spinning;
-  elements.spinButton.textContent = state.spinning ? "Spinning..." : "Spin For Inference";
+  elements.autoSpinButton.disabled = state.spinning || state.autospinActive;
+  elements.stopAutoSpinButton.disabled = !state.autospinActive;
+  elements.prevMachine.disabled = state.spinning || state.autospinActive;
+  elements.nextMachine.disabled = state.spinning || state.autospinActive;
+
+  elements.spinButton.textContent = state.spinning ? "Spinning..." : "Spin";
+  elements.autoSpinButton.textContent = state.autospinActive ? "Auto-Spin Running" : "Start Auto-Spin";
 
   for (const chip of elements.chipGrid.querySelectorAll("[data-bet]")) {
-    chip.disabled = state.spinning;
+    chip.disabled = state.spinning || state.autospinActive;
   }
 }
 
@@ -318,8 +647,8 @@ function syncControls() {
 function setAnnouncement(headline, detail, net, badgeText) {
   elements.headline.textContent = headline;
   elements.subheadline.textContent = detail;
-  elements.netBadge.textContent = badgeText ?? (net >= 0 ? `Net +${net}` : `Net ${net}`);
-  elements.netBadge.style.background = net >= 0 ? "rgba(126, 245, 187, 0.1)" : "rgba(255, 119, 100, 0.14)";
+  elements.netBadge.textContent = badgeText ?? (net >= 0 ? `Net +${formatNumber(net)}` : `Net -${formatNumber(Math.abs(net))}`);
+  elements.netBadge.style.background = net >= 0 ? "rgba(126, 245, 187, 0.12)" : "rgba(255, 119, 100, 0.16)";
   elements.netBadge.style.color = net >= 0 ? "var(--mint)" : "var(--alarm)";
   elements.liveRegion.textContent = `${headline}. ${detail}`;
 }
@@ -334,189 +663,10 @@ function pulseStatus(text) {
       { transform: "scale(1)", opacity: 1 },
     ],
     {
-      duration: prefersReducedMotion ? 1 : 420,
+      duration: prefersReducedMotion ? 1 : 380,
       easing: "ease-out",
     }
   );
-}
-
-function renderReel(reel, symbol) {
-  const label = reel.querySelector(".symbol-card__label");
-  const sub = reel.querySelector(".symbol-card__sub");
-
-  label.textContent = symbol.label;
-  sub.textContent = symbol.sub;
-}
-
-function spinSingleReel(reel, finalSymbol, duration, index) {
-  const tickRate = prefersReducedMotion ? 75 : 90;
-
-  return new Promise((resolve) => {
-    reel.classList.add("is-spinning");
-    let cursor = 0;
-
-    const interval = window.setInterval(() => {
-      renderReel(reel, SYMBOLS[cursor % SYMBOLS.length]);
-      cursor += 1 + index;
-    }, tickRate);
-
-    window.setTimeout(() => {
-      window.clearInterval(interval);
-      reel.classList.remove("is-spinning");
-      renderReel(reel, finalSymbol);
-      animateElement(
-        reel,
-        [
-          { transform: "translateY(-8px) scale(1.02)" },
-          { transform: "translateY(0) scale(1)" },
-        ],
-        {
-          duration: prefersReducedMotion ? 1 : 260,
-          easing: "cubic-bezier(.18,.89,.32,1.28)",
-        }
-      );
-      playStopTone(index);
-      resolve();
-    }, duration);
-  });
-}
-
-function evaluateSpin(symbols, bet) {
-  const labels = symbols.map((symbol) => symbol.label);
-  const sortedKey = [...labels].sort().join("|");
-  const counts = labels.reduce((map, label) => {
-    map[label] = (map[label] ?? 0) + 1;
-    return map;
-  }, {});
-  const highestCount = Math.max(...Object.values(counts));
-
-  if (highestCount === 3) {
-    const symbol = symbols[0];
-    const payout = bet * symbol.triple;
-
-    return {
-      payout,
-      headline: `${symbol.label} x3`,
-      detail: tripleDetail(symbol),
-      badgeText: `Net +${payout - bet}`,
-      status: "Jackpot-ish event",
-      outcomeType: "jackpot",
-    };
-  }
-
-  if (SPECIAL_COMBOS[sortedKey]) {
-    const combo = SPECIAL_COMBOS[sortedKey];
-    const payout = bet * combo.multiplier;
-
-    return {
-      payout,
-      headline: combo.headline,
-      detail: combo.detail,
-      badgeText: `Net +${payout - bet}`,
-      status: "Narrative synergy",
-      outcomeType: "special",
-    };
-  }
-
-  if (highestCount === 2) {
-    const payout = Math.round(bet * 2.2);
-    const matchedLabel = Object.keys(counts).find((label) => counts[label] === 2);
-
-    return {
-      payout,
-      headline: `${matchedLabel} pair`,
-      detail: `Two reels matched, which is basically how half the AI industry defines a benchmark win.`,
-      badgeText: `Net +${payout - bet}`,
-      status: "Partial hallucination accepted",
-      outcomeType: "pair",
-    };
-  }
-
-  if (labels.includes("TOKEN") && labels.includes("GPU")) {
-    const payout = Math.round(bet * 1.4);
-
-    return {
-      payout,
-      headline: "Compute rebate",
-      detail: "You did not win, but the house returned a few tokens for demonstrating responsible GPU worship.",
-      badgeText: `Net +${payout - bet}`,
-      status: "Tiny rebate issued",
-      outcomeType: "rebate",
-    };
-  }
-
-  return {
-    payout: 0,
-    headline: "Burn rate normal",
-    detail: "The reels produced pure vibes. Your tokens have been converted into a more impressive monthly active narrative.",
-    badgeText: `Net -${bet}`,
-    status: "House remains profitable",
-    outcomeType: "loss",
-  };
-}
-
-function reactToOutcome(outcome) {
-  switch (outcome.outcomeType) {
-    case "jackpot":
-      createBurst(26);
-      vibrate([45, 30, 55, 30, 75]);
-      playToneSequence([
-        [523, 0.09, "triangle"],
-        [659, 0.09, "triangle"],
-        [784, 0.14, "triangle"],
-        [988, 0.2, "triangle"],
-      ]);
-      speak(`${elements.headline.textContent}. Incredible. The hype machine loves you.`);
-      break;
-    case "special":
-      createBurst(18);
-      vibrate([30, 20, 30]);
-      playToneSequence([
-        [440, 0.08, "sine"],
-        [554, 0.08, "triangle"],
-        [698, 0.12, "triangle"],
-      ]);
-      speak(`${elements.headline.textContent}. That is the closest thing to strategy this casino has seen.`);
-      break;
-    case "pair":
-      vibrate(20);
-      playToneSequence([
-        [392, 0.06, "sine"],
-        [494, 0.08, "triangle"],
-      ]);
-      speak("Pair detected. The machine is grading on a startup curve.");
-      break;
-    case "rebate":
-      playToneSequence([[330, 0.08, "sine"]]);
-      break;
-    default:
-      playToneSequence([[196, 0.08, "sawtooth"]]);
-      speak("No payout. The market has chosen storytelling over substance.");
-      break;
-  }
-}
-
-function tripleDetail(symbol) {
-  switch (symbol.key) {
-    case "GPU":
-      return "Three GPU reels. Somewhere, a data center just dimmed the lights and called it innovation.";
-    case "TOKEN":
-      return "Three TOKEN reels. Congratulations, you monetized autocomplete and got paid in the fumes.";
-    case "PROMPT":
-      return "Three PROMPT reels. Manners still matter when begging a machine for useful text.";
-    case "BOT":
-      return "Three BOT reels. Your agent swarm achieved sentience just long enough to file an expense report.";
-    case "HYPE":
-      return "Three HYPE reels. Nothing shipped, but the valuation is now legally classified as inspirational.";
-    case "FAKE":
-      return "Three FAKE reels. The machine made everything up and still beat expectations.";
-    case "LAG":
-      return "Three LAG reels. Even the jackpot arrived late, like a product roadmap with latency issues.";
-    case "SEED":
-      return "Three SEED reels. Venture money is now raining from the ceiling with absolutely no follow-up diligence.";
-    default:
-      return "The machine aligned three symbols and briefly believed in itself.";
-  }
 }
 
 function pickWeightedSymbol() {
@@ -525,7 +675,6 @@ function pickWeightedSymbol() {
 
   for (const symbol of SYMBOLS) {
     cursor -= symbol.weight;
-
     if (cursor <= 0) {
       return symbol;
     }
@@ -537,18 +686,23 @@ function pickWeightedSymbol() {
 function loadState() {
   try {
     const saved = JSON.parse(window.localStorage.getItem(STORAGE_KEY));
-
     if (saved && typeof saved === "object") {
       return {
         balance: Number.isFinite(saved.balance) ? saved.balance : STARTING_BALANCE,
-        bet: [10, 25, 50, 100].includes(saved.bet) ? saved.bet : 10,
+        bet: BET_OPTIONS.includes(saved.bet) ? saved.bet : 100,
         bestWin: Number.isFinite(saved.bestWin) ? saved.bestWin : 0,
-        seedRounds: Number.isFinite(saved.seedRounds) ? saved.seedRounds : 0,
+        bestWinLabel: typeof saved.bestWinLabel === "string" ? saved.bestWinLabel : "",
         history: Array.isArray(saved.history) ? saved.history.slice(0, MAX_HISTORY) : [],
-        hecklerEnabled: saved.hecklerEnabled !== false,
+        winHistory: Array.isArray(saved.winHistory) ? saved.winHistory.slice(0, MAX_WIN_HISTORY) : [],
         lastNet: Number.isFinite(saved.lastNet) ? saved.lastNet : 0,
         round: Number.isFinite(saved.round) ? saved.round : 0,
         spinning: false,
+        autospinActive: false,
+        machineIndex: Number.isFinite(saved.machineIndex) ? Math.max(0, Math.min(saved.machineIndex, MACHINES.length - 1)) : 0,
+        winStreak: Number.isFinite(saved.winStreak) ? Math.max(0, saved.winStreak) : 0,
+        totalSpent: Number.isFinite(saved.totalSpent) ? saved.totalSpent : 0,
+        totalWon: Number.isFinite(saved.totalWon) ? saved.totalWon : 0,
+        lastDailyClaimAt: Number.isFinite(saved.lastDailyClaimAt) ? saved.lastDailyClaimAt : null,
       };
     }
   } catch (error) {
@@ -557,14 +711,20 @@ function loadState() {
 
   return {
     balance: STARTING_BALANCE,
-    bet: 10,
+    bet: 100,
     bestWin: 0,
-    seedRounds: 0,
+    bestWinLabel: "",
     history: [],
-    hecklerEnabled: true,
+    winHistory: [],
     lastNet: 0,
     round: 0,
     spinning: false,
+    autospinActive: false,
+    machineIndex: 0,
+    winStreak: 0,
+    totalSpent: 0,
+    totalWon: 0,
+    lastDailyClaimAt: null,
   };
 }
 
@@ -573,11 +733,16 @@ function saveState() {
     balance: state.balance,
     bet: state.bet,
     bestWin: state.bestWin,
-    seedRounds: state.seedRounds,
+    bestWinLabel: state.bestWinLabel,
     history: state.history,
-    hecklerEnabled: state.hecklerEnabled,
+    winHistory: state.winHistory,
     lastNet: state.lastNet,
     round: state.round,
+    machineIndex: state.machineIndex,
+    winStreak: state.winStreak,
+    totalSpent: state.totalSpent,
+    totalWon: state.totalWon,
+    lastDailyClaimAt: state.lastDailyClaimAt,
   };
 
   try {
@@ -587,24 +752,26 @@ function saveState() {
   }
 }
 
-function createBurst(count) {
+function createBurst(count, fireworksMode) {
   if (prefersReducedMotion) {
     return;
   }
 
-  const colors = ["#f0b24c", "#ff6f91", "#7ef5bb", "#ff7764", "#f8f3dc"];
+  const colors = fireworksMode
+    ? ["#f0b24c", "#ff6f91", "#7ef5bb", "#f8f3dc", "#70d7ff"]
+    : ["#f0b24c", "#ff6f91", "#7ef5bb", "#ff7764"];
 
   for (let index = 0; index < count; index += 1) {
     const piece = document.createElement("span");
-    piece.className = "burst";
+    piece.className = `burst ${fireworksMode ? "is-firework" : ""}`;
     piece.style.setProperty("--angle", `${(360 / count) * index}deg`);
-    piece.style.setProperty("--distance", `${8 + Math.random() * 24}rem`);
+    piece.style.setProperty("--distance", `${8 + Math.random() * 26}rem`);
     piece.style.background = colors[index % colors.length];
-    piece.style.left = `${44 + Math.random() * 12}%`;
-    piece.style.top = `${38 + Math.random() * 18}%`;
-    piece.style.animationDelay = `${Math.random() * 100}ms`;
+    piece.style.left = `${38 + Math.random() * 24}%`;
+    piece.style.top = `${30 + Math.random() * 24}%`;
+    piece.style.animationDelay = `${Math.random() * 80}ms`;
     elements.burstLayer.append(piece);
-    window.setTimeout(() => piece.remove(), 1100);
+    window.setTimeout(() => piece.remove(), 1200);
   }
 }
 
@@ -623,8 +790,21 @@ function ensureAudioContext() {
   }
 }
 
+function playSpinTension(mode) {
+  if (!audioContext) {
+    return;
+  }
+
+  const base = mode === "auto" ? 250 : 270;
+  playToneSequence([
+    [base, 0.04, "sawtooth"],
+    [base + 40, 0.06, "triangle"],
+    [base + 100, 0.09, "sine"],
+  ]);
+}
+
 function playStopTone(index) {
-  const frequency = 260 + index * 50;
+  const frequency = 300 + index * 70;
   playToneSequence([[frequency, 0.04, "square"]]);
 }
 
@@ -642,7 +822,7 @@ function playToneSequence(sequence) {
     oscillator.type = type;
     oscillator.frequency.setValueAtTime(frequency, when);
     gain.gain.setValueAtTime(0.0001, when);
-    gain.gain.exponentialRampToValueAtTime(0.05, when + 0.01);
+    gain.gain.exponentialRampToValueAtTime(0.06, when + 0.01);
     gain.gain.exponentialRampToValueAtTime(0.0001, when + duration);
     oscillator.connect(gain);
     gain.connect(audioContext.destination);
@@ -659,24 +839,19 @@ function animateElement(element, keyframes, options) {
 }
 
 function formatNumber(value) {
-  return numberFormatter.format(value);
+  return numberFormatter.format(Math.round(value));
+}
+
+function formatMultiplier(value) {
+  return `x${value.toFixed(2)}`;
+}
+
+function pad(value) {
+  return String(value).padStart(2, "0");
 }
 
 function vibrate(pattern) {
   if (typeof navigator.vibrate === "function") {
     navigator.vibrate(pattern);
   }
-}
-
-function speak(text) {
-  if (!state.hecklerEnabled || !("speechSynthesis" in window)) {
-    return;
-  }
-
-  const utterance = new SpeechSynthesisUtterance(text);
-  utterance.pitch = 0.86;
-  utterance.rate = 1.04;
-  utterance.volume = 0.75;
-  window.speechSynthesis.cancel();
-  window.speechSynthesis.speak(utterance);
 }
