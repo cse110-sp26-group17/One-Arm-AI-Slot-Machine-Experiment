@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>One-Arm AI Slot Machine</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="background-layer" aria-hidden="true">
+    <div class="blob blob-a"></div>
+    <div class="blob blob-b"></div>
+    <div class="blob blob-c"></div>
+  </div>
+
+  <main class="app-shell">
+    <header class="hero reveal">
+      <p class="eyebrow">Fine-Tuned Fortune v1.0</p>
+      <h1>One-Arm AI Slot Machine</h1>
+      <p class="subtitle">Spend tokens. Win tokens. Blame the model either way.</p>
+    </header>
+
+    <section class="hud reveal" aria-label="Token dashboard">
+      <article class="panel">
+        <p class="panel-label">Token Wallet</p>
+        <p id="tokenCount" class="panel-value">120</p>
+      </article>
+      <article class="panel">
+        <p class="panel-label">Spin Cost</p>
+        <p id="spinCostDisplay" class="panel-value">10</p>
+      </article>
+      <article class="panel">
+        <p class="panel-label">Biggest Win</p>
+        <p id="biggestWinDisplay" class="panel-value">0</p>
+      </article>
+      <article class="panel">
+        <p class="panel-label">Hype Decks</p>
+        <p id="hypeCountDisplay" class="panel-value">0</p>
+      </article>
+    </section>
+
+    <section class="machine reveal" aria-live="polite">
+      <div class="machine-head">
+        <p class="machine-label">Inference Lane</p>
+        <p id="statusLine" class="status-line">Press spin to burn some venture funding.</p>
+      </div>
+
+      <div class="reel-frame" role="group" aria-label="Slot reels">
+        <div class="reel" id="reel0" aria-label="Reel 1">
+          <span class="symbol-icon">🤖</span>
+          <span class="symbol-name">Agent Army</span>
+        </div>
+        <div class="reel" id="reel1" aria-label="Reel 2">
+          <span class="symbol-icon">🧠</span>
+          <span class="symbol-name">Prompt Wizard</span>
+        </div>
+        <div class="reel" id="reel2" aria-label="Reel 3">
+          <span class="symbol-icon">🪙</span>
+          <span class="symbol-name">Token Printer</span>
+        </div>
+      </div>
+
+      <div class="controls">
+        <label class="bet-control" for="betRange">
+          Spin budget:
+          <strong><span id="betValue">10</span> tokens</strong>
+        </label>
+        <input id="betRange" type="range" min="5" max="30" step="1" value="10">
+
+        <div class="button-row">
+          <button id="spinBtn" class="btn btn-primary" type="button">Spin and Ship</button>
+          <button id="hypeBtn" class="btn btn-secondary" type="button">Buy Hype Deck (-25)</button>
+          <button id="copyBtn" class="btn btn-ghost" type="button">Copy Bragging Rights</button>
+          <button id="resetBtn" class="btn btn-danger" type="button">Reset Economy</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="log reveal" aria-label="Activity log">
+      <div class="log-head">
+        <h2>Startup Memo</h2>
+        <p>Latest grifts and gains</p>
+      </div>
+      <ul id="eventLog"></ul>
+    </section>
+  </main>
+
+  <script src="script.js" defer></script>
+</body>
+</html>
