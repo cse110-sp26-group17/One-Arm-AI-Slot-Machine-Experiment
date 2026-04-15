@@ -1,6 +1,6 @@
 | Field                     | Notes |
 |---------------------------|-------|
-| Run ID                    | step2-candidate-016 |
+| Run ID                    | step2-candidate-016-refinement-1 |
 | Timestamp                 | 2026-04-14T19:01:20 |
 | Model + version string    | GPT-5.3-Codex |
 | Input Tokens              |   44,427 |
