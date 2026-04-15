@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>One-Armed LLM Bandit</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="machine-shell">
+    <header class="hero">
+      <p class="eyebrow">AI Casino Prototype</p>
+      <h1>One-Armed LLM Bandit</h1>
+      <p class="subtitle">Spend prompt tokens, chase model hype, and pretend this was all deterministic.</p>
+    </header>
+
+    <section class="stats" aria-label="Slot machine statistics">
+      <article class="stat-card">
+        <h2>Balance</h2>
+        <p id="tokenBalance">0</p>
+      </article>
+      <article class="stat-card">
+        <h2>Spent</h2>
+        <p id="totalSpent">0</p>
+      </article>
+      <article class="stat-card">
+        <h2>Won</h2>
+        <p id="totalWon">0</p>
+      </article>
+      <article class="stat-card">
+        <h2>Spins</h2>
+        <p id="spinCount">0</p>
+      </article>
+      <article class="stat-card">
+        <h2>Jackpots</h2>
+        <p id="jackpotCount">0</p>
+      </article>
+    </section>
+
+    <section class="reel-bank" aria-label="Slot reels">
+      <div class="reels" role="img" aria-label="Three slot reels">
+        <div class="reel" id="reel-0">PROMPT</div>
+        <div class="reel" id="reel-1">GPU</div>
+        <div class="reel" id="reel-2">CACHE</div>
+      </div>
+      <p class="cost-label">Each spin costs <strong id="spinCostLabel">15</strong> tokens.</p>
+    </section>
+
+    <section class="controls" aria-label="Controls">
+      <button id="spinButton" class="primary" type="button">Spin For Tokens</button>
+      <button id="bailoutButton" type="button">Ask VC For Bailout</button>
+      <button id="shareButton" type="button">Share Score</button>
+    </section>
+
+    <p id="announcer" class="announcer" aria-live="polite"></p>
+
+    <section class="paytable" aria-label="Payout table">
+      <h2>How The Grift Works</h2>
+      <ul>
+        <li>Three matching symbols pay full rewards.</li>
+        <li>A pair pays a small "inference credit".</li>
+        <li>PROMPT + GPU + CACHE unlocks "actual optimization".</li>
+        <li>No match means your tokens funded someone else's demo day.</li>
+      </ul>
+    </section>
+
+    <section class="log-panel" aria-label="Game log">
+      <h2>Roast Log</h2>
+      <ul id="logList"></ul>
+    </section>
+  </main>
+
+  <script src="script.js" defer></script>
+</body>
+</html>

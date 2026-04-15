@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Latency Casino</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Righteous&family=Archivo:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="scene-glow" aria-hidden="true"></div>
+
+    <main class="app" aria-label="AI slot machine app">
+      <header class="hero panel enter">
+        <p class="kicker">One-Arm AI Slot Machine</p>
+        <h1>Latency Casino</h1>
+        <p class="lead">
+          Spend tokens to spin the reels. Win tokens when the hype aligns. Lose tokens when your
+          model rediscovers confident nonsense.
+        </p>
+      </header>
+
+      <section class="board enter" aria-label="Token dashboard">
+        <article class="stat">
+          <p class="stat-label">Wallet</p>
+          <p class="stat-value" id="walletValue">150</p>
+        </article>
+        <article class="stat">
+          <p class="stat-label">Spins</p>
+          <p class="stat-value" id="spinsValue">0</p>
+        </article>
+        <article class="stat">
+          <p class="stat-label">Hype Credits</p>
+          <p class="stat-value" id="hypeValue">0</p>
+        </article>
+        <article class="stat">
+          <p class="stat-label">Patch Notes</p>
+          <p class="stat-value" id="patchValue">0</p>
+        </article>
+        <article class="stat">
+          <p class="stat-label">Lucky Cache</p>
+          <p class="stat-value" id="cacheValue">0</p>
+        </article>
+      </section>
+
+      <section class="machine panel enter" aria-label="Slot machine">
+        <div class="machine-head">
+          <p class="machine-kicker">Inference Lane</p>
+          <p class="machine-status" id="statusText">Ready to spend tokens on probability theater.</p>
+        </div>
+
+        <div class="reels" role="group" aria-label="Slot reels">
+          <div class="reel" id="reel0" aria-live="polite">PROMPT</div>
+          <div class="reel" id="reel1" aria-live="polite">GPU</div>
+          <div class="reel" id="reel2" aria-live="polite">HYPE</div>
+        </div>
+
+        <div class="controls">
+          <label class="bet" for="betInput">
+            Bet Tokens
+            <input id="betInput" type="number" min="5" max="60" step="5" value="10" />
+          </label>
+          <button id="spinBtn" class="btn btn-spin" type="button">Pull Lever</button>
+        </div>
+      </section>
+
+      <section class="shop panel enter" aria-label="Token shop">
+        <h2>Spend Tokens</h2>
+        <div class="shop-grid">
+          <button id="buyHype" class="shop-item" type="button">
+            <span class="shop-title">Buy Hype Credits</span>
+            <span class="shop-desc">-25 tokens, +60% next payout</span>
+          </button>
+          <button id="buyPatch" class="shop-item" type="button">
+            <span class="shop-title">Buy Patch Note</span>
+            <span class="shop-desc">-18 tokens, 50% refund on next loss</span>
+          </button>
+          <button id="buyCache" class="shop-item" type="button">
+            <span class="shop-title">Buy Lucky Cache</span>
+            <span class="shop-desc">-30 tokens, better odds for 3 spins</span>
+          </button>
+        </div>
+      </section>
+
+      <section class="feed panel enter" aria-label="Event feed">
+        <h2>AI Commentary Feed</h2>
+        <ul id="logList"></ul>
+      </section>
+
+      <button id="bailoutBtn" class="bailout hidden" type="button">
+        Emergency Funding Round (+90 tokens)
+      </button>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>

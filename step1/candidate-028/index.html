@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Token Burner 3000</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="bg-layer" aria-hidden="true"></div>
+    <main class="app shell-enter">
+      <header class="hero">
+        <p class="eyebrow">One-Arm AI Slot Machine</p>
+        <h1>Token Burner 3000</h1>
+        <p class="subhead">
+          Train models, burn money, call it innovation. Win tokens and spend them
+          on increasingly questionable AI upgrades.
+        </p>
+      </header>
+
+      <section class="status-grid" aria-label="Token status">
+        <article class="status-card">
+          <p class="label">Token Wallet</p>
+          <p class="value" id="tokenValue">120</p>
+        </article>
+        <article class="status-card">
+          <p class="label">Total Spins</p>
+          <p class="value" id="spinValue">0</p>
+        </article>
+        <article class="status-card">
+          <p class="label">Prompt Boosters</p>
+          <p class="value" id="boosterValue">0</p>
+        </article>
+        <article class="status-card">
+          <p class="label">Guardrails</p>
+          <p class="value" id="guardrailValue">0</p>
+        </article>
+        <article class="status-card">
+          <p class="label">Lucky Compute Spins</p>
+          <p class="value" id="luckValue">0</p>
+        </article>
+      </section>
+
+      <section class="machine" aria-label="Slot machine">
+        <div class="reel-frame">
+          <div class="reel" id="reel0" aria-live="polite">GPT</div>
+          <div class="reel" id="reel1" aria-live="polite">TOKEN</div>
+          <div class="reel" id="reel2" aria-live="polite">GPU</div>
+        </div>
+        <div class="controls">
+          <label class="bet-field" for="betInput">
+            Bet Tokens
+            <input id="betInput" type="number" min="5" step="5" value="10" />
+          </label>
+          <button id="spinBtn" class="spin-btn" type="button">Spin Reel</button>
+        </div>
+      </section>
+
+      <section class="shop" aria-label="Spend tokens">
+        <h2>Spend Tokens</h2>
+        <div class="shop-grid">
+          <button type="button" class="shop-item" id="buyPrompt">
+            <span class="shop-name">Prompt Pack</span>
+            <span class="shop-meta">-20 tokens, +50% next win payout</span>
+          </button>
+          <button type="button" class="shop-item" id="buyLuck">
+            <span class="shop-name">Cloud Burst</span>
+            <span class="shop-meta">-30 tokens, luck boost for 3 spins</span>
+          </button>
+          <button type="button" class="shop-item" id="buyGuardrail">
+            <span class="shop-name">Guardrail Patch</span>
+            <span class="shop-meta">-15 tokens, 50% refund on next loss</span>
+          </button>
+        </div>
+      </section>
+
+      <section class="log" aria-label="Event log">
+        <h2>AI Commentary Feed</h2>
+        <ul id="logList"></ul>
+      </section>
+
+      <button id="rebootBtn" class="reboot-btn hidden" type="button">
+        Bankruptcy Recovery (+80 tokens)
+      </button>
+    </main>
+    <script src="script.js"></script>
+  </body>
+</html>
