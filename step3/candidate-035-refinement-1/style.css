@@ -271,6 +271,25 @@ h1 {
   text-transform: uppercase;
 }
 
+.tension-meter {
+  height: 12px;
+  border-radius: 999px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.26);
+  background: rgba(255, 255, 255, 0.08);
+  position: relative;
+}
+
+.tension-fill {
+  display: block;
+  width: 0%;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #7bdff2, #f9c74f, #f9844a);
+  box-shadow: 0 0 22px color-mix(in srgb, var(--machine-accent) 65%, transparent);
+  transition: width 70ms linear;
+}
+
 .controls {
   display: grid;
   gap: 10px;
@@ -414,6 +433,61 @@ button:disabled {
   margin: 8px 0 0;
   font-size: 0.84rem;
   color: var(--muted);
+}
+
+.showcase-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.perk-store {
+  margin-top: 8px;
+  display: grid;
+  gap: 8px;
+}
+
+.perk-card {
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  padding: 8px;
+  background: rgba(255, 255, 255, 0.03);
+  display: grid;
+  gap: 6px;
+}
+
+.perk-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.perk-card h4 {
+  margin: 0;
+  font-size: 0.9rem;
+  letter-spacing: 0.03em;
+}
+
+.perk-card p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
+.perk-card .cost {
+  font-family: "Courier New", "Lucida Console", monospace;
+  font-size: 0.82rem;
+  color: #ffe4b3;
+}
+
+.perk-buy {
+  padding: 8px;
+  font-size: 0.8rem;
+  border-radius: 8px;
+}
+
+.perk-card.owned {
+  border-color: color-mix(in srgb, var(--machine-accent) 62%, white);
+  background: color-mix(in srgb, var(--machine-accent) 14%, rgba(255, 255, 255, 0.03));
 }
 
 .event-log {
@@ -622,6 +696,12 @@ button:disabled {
   .showcase-grid,
   .logs-grid {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (min-width: 981px) and (max-width: 1180px) {
+  .showcase-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
