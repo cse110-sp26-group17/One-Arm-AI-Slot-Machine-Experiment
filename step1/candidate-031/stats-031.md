@@ -10,6 +10,6 @@
 | Files produced            | 3: index.html, script.js, styles.css | 
 | Lines of code             | 1313 | 
 | Runs in browser?          | yes |
-| App Quality Notes         | It runs pretty well and the style looks decent as well |
-| Code Quality Notes        | Lots of if statements for each slot. Segments are broken up, but not organized. |
+| App Quality Notes         | It runs pretty well and the style looks decent as well. Score: 4 |
+| Code Quality Notes        | Lots of if statements for each slot. Segments are broken up, but not organized. Score: 3 |
 |---------------------------|---------|
