@@ -1,0 +1,64 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AI Token Slot Machine</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rubik+Mono+One&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="app">
+    <header>
+      <p class="eyebrow">Prompt & Pray Casino</p>
+      <h1>AI Token Slot Machine</h1>
+      <p class="tagline">Spend tokens. Win tokens. Pretend this is sustainable.</p>
+    </header>
+
+    <section class="stats" aria-label="Token stats">
+      <div>
+        <span>Balance</span>
+        <strong id="balance">0</strong>
+      </div>
+      <div>
+        <span>Spin Cost</span>
+        <strong id="cost">10</strong>
+      </div>
+      <div>
+        <span>Jackpots</span>
+        <strong id="jackpots">0</strong>
+      </div>
+    </section>
+
+    <section class="machine" aria-label="Slot machine reels">
+      <div class="reel" id="reel0" aria-live="polite">🤖</div>
+      <div class="reel" id="reel1" aria-live="polite">🤖</div>
+      <div class="reel" id="reel2" aria-live="polite">🤖</div>
+    </section>
+
+    <section class="controls" aria-label="Controls">
+      <button id="spinBtn" type="button">Spin (-10)</button>
+      <button id="resetBtn" type="button" class="ghost">Reset Tokens</button>
+    </section>
+
+    <p class="message" id="message" role="status" aria-live="polite">
+      Welcome. You have startup funding.
+    </p>
+
+    <details class="paytable">
+      <summary>Paytable</summary>
+      <ul>
+        <li>3x 🧠 = +120 tokens ("Synthetic Genius")</li>
+        <li>3x 📉 = +90 tokens ("Model Collapse Hedge")</li>
+        <li>3x 🤖 = +70 tokens ("Agent Swarm")</li>
+        <li>3x 💥 = +60 tokens ("Hallucination Explosion")</li>
+        <li>Any 2 matching = +20 tokens</li>
+      </ul>
+    </details>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

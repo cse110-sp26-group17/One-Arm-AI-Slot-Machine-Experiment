@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Token Grinder 3000</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="app-shell">
+    <header class="hero">
+      <p class="eyebrow">Silicon Valley Casino Night</p>
+      <h1>Token Grinder 3000</h1>
+      <p class="tagline">Feed tokens to the model. Sometimes it gives tokens back. Investors call this a business model.</p>
+    </header>
+
+    <section class="dashboard" aria-label="Player stats">
+      <article class="stat-card primary">
+        <p class="label">Wallet</p>
+        <p class="value" id="tokenBalance">0</p>
+        <p class="hint">AI tokens available</p>
+      </article>
+      <article class="stat-card">
+        <p class="label">Spins</p>
+        <p class="value" id="spinCount">0</p>
+        <p class="hint">Prompt attempts</p>
+      </article>
+      <article class="stat-card">
+        <p class="label">Win Rate</p>
+        <p class="value" id="winRate">0%</p>
+        <p class="hint">Luck-adjusted confidence</p>
+      </article>
+      <article class="stat-card">
+        <p class="label">Net Tokens</p>
+        <p class="value" id="netTokens">0</p>
+        <p class="hint">Won minus spent</p>
+      </article>
+    </section>
+
+    <section class="machine" aria-label="Slot machine">
+      <div class="machine-topline">
+        <p class="machine-title">Reinforcement Reel Learning</p>
+        <p class="machine-subtitle">Spin cost: <strong>10</strong> tokens</p>
+      </div>
+
+      <div class="reel-window" aria-live="polite" aria-atomic="true">
+        <div class="reel" id="reel0">PROMPT</div>
+        <div class="reel" id="reel1">PROMPT</div>
+        <div class="reel" id="reel2">PROMPT</div>
+      </div>
+
+      <p class="status" id="statusMessage">Insert tokens and prepare for probabilistic disappointment.</p>
+
+      <div class="controls">
+        <button id="spinButton" class="btn btn-spin">Spin (-10)</button>
+        <button id="tuneButton" class="btn btn-secondary">Fine-Tune (-25)</button>
+        <button id="airdropButton" class="btn btn-secondary">Collect Airdrop (+50)</button>
+        <button id="shareButton" class="btn btn-ghost">Share Brag</button>
+        <button id="resetButton" class="btn btn-ghost danger">Hard Reset</button>
+      </div>
+    </section>
+
+    <section class="feed" aria-label="Recent activity">
+      <div class="feed-header">
+        <h2>Experiment Log</h2>
+        <p>Latest token drama</p>
+      </div>
+      <ul id="historyList" class="history-list"></ul>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
