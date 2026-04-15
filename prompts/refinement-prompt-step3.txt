@@ -1,5 +1,5 @@
 
-PICK TOP 1 FROM 2
+PICK TOP 2 FROM 3
 
 Create a hyper-addictive Roblox slot machine that feels like premium gacha games — engineered to trigger constant "just one more spin" dopamine loops and keep players hooked for hours. It'll be themed around making fun of AI (spending tokens to gamble)
 
