@@ -3,16 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Starlight Spinworks</title>
+  <title>Token Roast Spinworks</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body data-theme="solar">
   <main class="app-shell">
     <header class="top-bar">
-      <p class="eyebrow">Vanilla HTML + CSS + JavaScript</p>
-      <h1>Starlight Spinworks</h1>
+      <p class="eyebrow">Arcade Satire | Token-Only Economy</p>
+      <h1>Token Roast Spinworks</h1>
       <p class="subtitle">
-        Cinematic slot-machine prototype with transparent tracking and optional session guardrails.
+        Premium-feel slot prototype themed around roasting chaotic AI outputs, with transparent tracking.
       </p>
     </header>
 
@@ -35,7 +35,7 @@
         <p class="label">Spins</p>
         <p id="spins" class="value">0</p>
       </article>
-      <article>
+      <article id="biggestWinCard">
         <p class="label">Biggest Win</p>
         <p id="biggestWin" class="value">0 VC</p>
       </article>
@@ -58,6 +58,16 @@
         <div class="reel" id="reel0">SUN</div>
         <div class="reel" id="reel1">BOT</div>
         <div class="reel" id="reel2">ORB</div>
+      </div>
+
+      <div class="tension-wrap" aria-label="Spin tension meter">
+        <div class="tension-head">
+          <span>Spin Tension</span>
+          <span id="tensionText">Idle</span>
+        </div>
+        <div class="meter tension-meter">
+          <div id="tensionFill" class="meter-fill tension-fill"></div>
+        </div>
       </div>
 
       <div id="multiplierPop" class="multiplier-pop" aria-live="polite"></div>
@@ -102,6 +112,18 @@
           <div id="perkFill" class="meter-fill"></div>
         </div>
         <p id="perkStatus" class="panel-copy">Win spins to charge your perk meter.</p>
+        <p id="buffState" class="panel-copy">Store buffs: none active.</p>
+      </article>
+
+      <article class="panel">
+        <h2>Token Store</h2>
+        <p class="panel-copy">Spend VC on temporary boosts with clear, visible effects.</p>
+        <div class="store-list">
+          <button class="store-item" data-buff="luck" type="button"></button>
+          <button class="store-item" data-buff="payout" type="button"></button>
+          <button class="store-item" data-buff="refund" type="button"></button>
+        </div>
+        <p id="storeStatus" class="panel-copy">Buy boosts to change luck, payout, or refund behavior.</p>
       </article>
 
       <article class="panel">

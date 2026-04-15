@@ -4,67 +4,90 @@ const DAILY_GRANT = 250;
 const SESSION_REMINDER_INTERVAL = 25;
 const PERK_PROGRESS_TARGET = 5;
 const PERK_MULTIPLIERS = [1, 1.06, 1.14, 1.24, 1.35, 1.5];
-const SAVE_KEY = "starlight-spinworks-v2";
+const SAVE_KEY = "starlight-spinworks-v3";
+const STORE_ITEMS = [
+  {
+    id: "luck",
+    name: "Lucky Prompt Patch",
+    cost: 450,
+    duration: 10,
+    description: "Boosts chances for high-tier symbols for 10 spins.",
+  },
+  {
+    id: "payout",
+    name: "Payout Booster",
+    cost: 520,
+    duration: 8,
+    description: "Adds +20% payout multiplier for 8 spins.",
+  },
+  {
+    id: "refund",
+    name: "Patch Rollback",
+    cost: 340,
+    duration: 10,
+    description: "Refunds 35% of bet on losing spins for 10 spins.",
+  },
+];
 
 const machines = [
   {
-    name: "Solar Vault",
+    name: "Prompt Pit",
     theme: "solar",
-    flavor: "High-volatility arcs with bright jackpot spikes.",
-    jackpotBoost: 1.16,
-    safetyCode: "SHD",
+    flavor: "Satirical machine for clowning on unstable AI outputs.",
+    jackpotBoost: 1.15,
+    safetyCode: "FIX",
     special: {
-      codes: ["SUN", "BOT", "SHD"],
-      multiplier: 13,
-      label: "Trinity Ignition",
+      codes: ["BOT", "ERR", "LOL"],
+      multiplier: 12.8,
+      label: "Model Meltdown",
     },
     symbols: [
-      { code: "SUN", name: "Solar Crest", weight: 16, pair: 2.3, triple: 9.2 },
-      { code: "BOT", name: "Core Automaton", weight: 18, pair: 2.1, triple: 7.7 },
-      { code: "ORB", name: "Plasma Orb", weight: 19, pair: 1.9, triple: 6.9 },
-      { code: "ARC", name: "Arc Relay", weight: 17, pair: 2.4, triple: 8.1 },
-      { code: "NEX", name: "Nexus Crown", weight: 13, pair: 3.2, triple: 11.8 },
-      { code: "SHD", name: "Shield Node", weight: 8, pair: 4.1, triple: 15.4 },
+      { code: "TOK", name: "Token Spill", weight: 20, pair: 1.8, triple: 6.6 },
+      { code: "BOT", name: "Bot Loop", weight: 17, pair: 2.2, triple: 8.2 },
+      { code: "GPU", name: "GPU Burn", weight: 16, pair: 2.4, triple: 8.9 },
+      { code: "ERR", name: "Error Stack", weight: 15, pair: 2.8, triple: 10.8 },
+      { code: "LOL", name: "Meme Reply", weight: 13, pair: 3.0, triple: 11.5 },
+      { code: "FIX", name: "Quick Fix", weight: 9, pair: 4.1, triple: 14.8 },
     ],
   },
   {
-    name: "Rift Engine",
+    name: "Hallucination Harbor",
     theme: "rift",
-    flavor: "Cool-tone machine with sharper high-end payout bursts.",
+    flavor: "Unhinged AI seascape with wild traceback-style jackpots.",
     jackpotBoost: 1.12,
-    safetyCode: "AEG",
+    safetyCode: "LOG",
     special: {
-      codes: ["RFT", "QNT", "AEG"],
-      multiplier: 12,
-      label: "Rift Overdrive",
+      codes: ["AIO", "404", "LOG"],
+      multiplier: 12.3,
+      label: "Traceback Storm",
     },
     symbols: [
-      { code: "RFT", name: "Rift Core", weight: 17, pair: 2.2, triple: 8.4 },
-      { code: "QNT", name: "Quantum Coil", weight: 15, pair: 2.7, triple: 9.6 },
-      { code: "ICE", name: "Ice Prism", weight: 21, pair: 1.8, triple: 6.5 },
-      { code: "GLY", name: "Glyph Disk", weight: 17, pair: 2.2, triple: 7.8 },
-      { code: "VEC", name: "Vector Pulse", weight: 12, pair: 3.4, triple: 12.4 },
-      { code: "AEG", name: "Aegis Bit", weight: 8, pair: 4.0, triple: 14.2 },
+      { code: "LAG", name: "Latency Spike", weight: 21, pair: 1.8, triple: 6.4 },
+      { code: "AIO", name: "AI Oracle", weight: 17, pair: 2.1, triple: 7.9 },
+      { code: "RAM", name: "RAM Surge", weight: 18, pair: 2.2, triple: 8.1 },
+      { code: "NLP", name: "NLP Tangle", weight: 13, pair: 2.9, triple: 10.7 },
+      { code: "404", name: "Lost Endpoint", weight: 12, pair: 3.2, triple: 12.2 },
+      { code: "LOG", name: "Audit Trail", weight: 9, pair: 4.0, triple: 14.4 },
     ],
   },
   {
-    name: "Neon Orchard",
+    name: "Token Furnace",
     theme: "neon",
-    flavor: "Smoother baseline hits with vibrant late-run fireworks.",
+    flavor: "High-energy machine where token burn meets meme-grade chaos.",
     jackpotBoost: 1.1,
-    safetyCode: "VIT",
+    safetyCode: "DBG",
     special: {
-      codes: ["NVA", "LUX", "VIT"],
-      multiplier: 11,
-      label: "Neon Bloom",
+      codes: ["TOK", "MEM", "DBG"],
+      multiplier: 11.7,
+      label: "Cache Explosion",
     },
     symbols: [
-      { code: "NVA", name: "Nova Seed", weight: 20, pair: 2.0, triple: 7.2 },
-      { code: "LUX", name: "Lux Vine", weight: 18, pair: 2.3, triple: 8.3 },
-      { code: "PUL", name: "Pulse Bloom", weight: 17, pair: 2.4, triple: 8.7 },
-      { code: "GRN", name: "Green Spark", weight: 15, pair: 2.8, triple: 10.1 },
-      { code: "RSE", name: "Rose Flux", weight: 11, pair: 3.5, triple: 12.6 },
-      { code: "VIT", name: "Vital Chip", weight: 9, pair: 3.9, triple: 14.6 },
+      { code: "RNG", name: "Random Drift", weight: 20, pair: 1.9, triple: 6.8 },
+      { code: "TOK", name: "Token Burn", weight: 19, pair: 2.0, triple: 7.3 },
+      { code: "BOT", name: "Bot Stampede", weight: 17, pair: 2.2, triple: 8.0 },
+      { code: "MEM", name: "Memory Leak", weight: 15, pair: 2.6, triple: 9.6 },
+      { code: "PTC", name: "Patch Queue", weight: 12, pair: 3.1, triple: 11.4 },
+      { code: "DBG", name: "Debug Hero", weight: 10, pair: 3.8, triple: 13.8 },
     ],
   },
 ];
@@ -96,6 +119,12 @@ const perkTierEl = document.getElementById("perkTier");
 const perkMultiplierEl = document.getElementById("perkMultiplier");
 const perkFillEl = document.getElementById("perkFill");
 const perkStatusEl = document.getElementById("perkStatus");
+const buffStateEl = document.getElementById("buffState");
+const storeStatusEl = document.getElementById("storeStatus");
+const storeButtonsEl = Array.from(document.querySelectorAll(".store-item"));
+const tensionFillEl = document.getElementById("tensionFill");
+const tensionTextEl = document.getElementById("tensionText");
+const biggestWinCardEl = document.getElementById("biggestWinCard");
 const screenFlashEl = document.getElementById("screenFlash");
 const multiplierPopEl = document.getElementById("multiplierPop");
 const confettiLayerEl = document.getElementById("confettiLayer");
@@ -116,11 +145,17 @@ const state = {
   sessionGuard: true,
   perkTier: 0,
   perkCharge: 0,
+  storeBuffs: {
+    luck: 0,
+    payout: 0,
+    refund: 0,
+  },
   log: [],
 };
 
 let audioCtx;
 let tensionTimers = [];
+let tensionMeterTimer = 0;
 
 init();
 
@@ -129,6 +164,7 @@ function init() {
   bindEvents();
   applyMachine();
   paintIdleReels();
+  resetTensionMeter();
 
   if (state.log.length === 0) {
     pushLog("info", `${timestamp()} Session started.`);
@@ -136,6 +172,7 @@ function init() {
 
   syncUI();
   renderActivityLog();
+  renderStoreButtons();
   updateDailyGrantAvailability();
 }
 
@@ -186,6 +223,12 @@ function bindEvents() {
 
   prevMachineEl.addEventListener("click", () => cycleMachine(-1));
   nextMachineEl.addEventListener("click", () => cycleMachine(1));
+
+  for (const button of storeButtonsEl) {
+    button.addEventListener("click", () => {
+      buyStoreBuff(button.dataset.buff || "");
+    });
+  }
 
   document.addEventListener("pointerdown", ensureAudioContext, { once: true });
 }
@@ -251,6 +294,12 @@ function renderPayoutRules() {
   const perks = document.createElement("li");
   perks.textContent = "Perks apply 1.00x to 1.50x on top of base payouts.";
   payoutListEl.appendChild(perks);
+
+  for (const item of STORE_ITEMS) {
+    const storeRule = document.createElement("li");
+    storeRule.textContent = `${item.name}: ${item.description} Cost ${fmtVc(item.cost)}.`;
+    payoutListEl.appendChild(storeRule);
+  }
 }
 
 async function spin() {
@@ -273,18 +322,21 @@ async function spin() {
 
   const machine = currentMachine();
   const spinSymbols = machine.symbols;
+  const weightedSpinSymbols = applyLuckWeighting(spinSymbols);
   const spinDuration = 830 + Math.random() * 220;
+  const totalSettleDuration = spinDuration + (reels.length - 1) * 170;
 
   setResult("Reels charged. Resolving outcome...", "info");
   triggerShake();
   pulseFlash();
-  startTensionAudio(spinDuration);
+  startTensionAudio(totalSettleDuration);
+  startTensionMeter(totalSettleDuration);
   syncUI();
 
   const outcomes = [
-    pickWeighted(spinSymbols),
-    pickWeighted(spinSymbols),
-    pickWeighted(spinSymbols),
+    pickWeighted(weightedSpinSymbols),
+    pickWeighted(weightedSpinSymbols),
+    pickWeighted(weightedSpinSymbols),
   ];
 
   await Promise.all(
@@ -295,14 +347,22 @@ async function spin() {
   );
 
   clearTensionAudio();
+  finishTensionMeter();
 
   const payoutResult = calculatePayout(outcomes, state.bet, machine);
   const perkMultiplier = currentPerkMultiplier();
   let payout = Math.round(payoutResult.basePayout * perkMultiplier);
+  const payoutStoreActive = state.storeBuffs.payout > 0;
+
+  if (payoutStoreActive && payout > 0) {
+    payout = Math.round(payout * 1.2);
+  }
 
   if (payoutResult.isJackpot) {
     payout = Math.round(payout * machine.jackpotBoost);
   }
+
+  const isNewRecord = payout > state.biggestWin;
 
   if (payout > 0) {
     state.balance += payout;
@@ -311,19 +371,36 @@ async function spin() {
     chargePerkMeter(payout, state.bet);
 
     const totalMult = payout / state.bet;
-    setResult(`${payoutResult.label}. Won ${fmtVc(payout)} (${totalMult.toFixed(2)}x).`, "win");
-    pushLog("win", `${timestamp()} +${fmtVc(payout)} (${payoutResult.label})`);
+    const boostNote = payoutStoreActive ? " + Booster" : "";
+    setResult(`${payoutResult.label}${boostNote}. Won ${fmtVc(payout)} (${totalMult.toFixed(2)}x).`, "win");
+    pushLog("win", `${timestamp()} +${fmtVc(payout)} (${payoutResult.label}${boostNote})`);
 
     celebrateWin({
       payout,
       isJackpot: payoutResult.isJackpot,
       multiplier: totalMult,
     });
+
+    if (isNewRecord) {
+      triggerBiggestWinShowcase(payout, totalMult);
+    }
   } else {
     coolPerkMeter();
-    setResult(`No payout. ${fmtVc(state.bet)} spent this spin.`, "loss");
-    pushLog("loss", `${timestamp()} -${fmtVc(state.bet)} (no payout)`);
-    playLossSound();
+    const refundActive = state.storeBuffs.refund > 0;
+
+    if (refundActive) {
+      const refund = Math.round(state.bet * 0.35);
+      state.balance += refund;
+      state.totalWon += refund;
+      setResult(`No line hit. Patch Rollback refunded ${fmtVc(refund)}.`, "info");
+      pushLog("info", `${timestamp()} +${fmtVc(refund)} (Patch Rollback refund)`);
+      showMultiplierPop("Refund 35%");
+      playTone(250, 0.08, "triangle", 0.06);
+    } else {
+      setResult(`No payout. ${fmtVc(state.bet)} spent this spin.`, "loss");
+      pushLog("loss", `${timestamp()} -${fmtVc(state.bet)} (no payout)`);
+      playLossSound();
+    }
   }
 
   if (state.sessionGuard && state.spins % SESSION_REMINDER_INTERVAL === 0) {
@@ -331,7 +408,9 @@ async function spin() {
     setResult(`Reminder: ${state.spins} spins completed. Take a short break.`, "info");
   }
 
+  consumeStoreBuffSpin();
   state.isSpinning = false;
+  resetTensionMeter(260);
 
   if (state.balance < state.bet) {
     state.autoSpin = false;
@@ -351,17 +430,31 @@ async function spin() {
 }
 
 function pickWeighted(symbols) {
-  const totalWeight = symbols.reduce((sum, symbol) => sum + symbol.weight, 0);
+  const totalWeight = symbols.reduce((sum, symbol) => sum + (symbol.adjustedWeight || symbol.weight), 0);
   let roll = Math.random() * totalWeight;
 
   for (const symbol of symbols) {
-    roll -= symbol.weight;
+    roll -= symbol.adjustedWeight || symbol.weight;
     if (roll <= 0) {
       return symbol;
     }
   }
 
   return symbols[symbols.length - 1];
+}
+
+function applyLuckWeighting(symbols) {
+  if (state.storeBuffs.luck <= 0) {
+    return symbols;
+  }
+
+  const sorted = [...symbols].sort((a, b) => b.triple - a.triple);
+  const boostedCodes = new Set(sorted.slice(0, 2).map((symbol) => symbol.code));
+
+  return symbols.map((symbol) => ({
+    ...symbol,
+    adjustedWeight: boostedCodes.has(symbol.code) ? symbol.weight * 1.28 : symbol.weight,
+  }));
 }
 
 function calculatePayout(outcomes, bet, machine) {
@@ -457,6 +550,17 @@ function celebrateWin({ payout, isJackpot, multiplier }) {
   playWinSound(payout, state.bet);
 }
 
+function triggerBiggestWinShowcase(payout, multiplier) {
+  biggestWinCardEl.classList.remove("record");
+  void biggestWinCardEl.offsetWidth;
+  biggestWinCardEl.classList.add("record");
+  spawnFireworks(6);
+  showMultiplierPop(`New Record ${multiplier.toFixed(2)}x`);
+  playTone(500, 0.09, "triangle", 0.08);
+  playTone(760, 0.13, "triangle", 0.09, 0.11);
+  pushLog("info", `${timestamp()} New biggest win: ${fmtVc(payout)}.`);
+}
+
 function chargePerkMeter(payout, bet) {
   const gain = Math.min(2.2, 0.9 + payout / Math.max(1, bet) * 0.17);
   state.perkCharge += gain;
@@ -477,6 +581,71 @@ function coolPerkMeter() {
 
 function currentPerkMultiplier() {
   return PERK_MULTIPLIERS[state.perkTier];
+}
+
+function consumeStoreBuffSpin() {
+  for (const item of STORE_ITEMS) {
+    state.storeBuffs[item.id] = Math.max(0, (state.storeBuffs[item.id] || 0) - 1);
+  }
+}
+
+function storeItemById(id) {
+  return STORE_ITEMS.find((item) => item.id === id);
+}
+
+function buyStoreBuff(buffId) {
+  const item = storeItemById(buffId);
+  if (!item || state.isSpinning || state.autoSpin) {
+    return;
+  }
+
+  if (state.balance < item.cost) {
+    setResult(`Not enough VC for ${item.name}.`, "loss");
+    playLossSound();
+    return;
+  }
+
+  state.balance -= item.cost;
+  state.totalSpent += item.cost;
+  state.storeBuffs[item.id] = (state.storeBuffs[item.id] || 0) + item.duration;
+
+  setResult(`${item.name} activated for ${item.duration} spins.`, "info");
+  pushLog("info", `${timestamp()} Bought ${item.name}: -${fmtVc(item.cost)} (${item.duration} spins).`);
+  playTone(390, 0.08, "triangle", 0.07);
+  playTone(570, 0.1, "triangle", 0.08, 0.09);
+
+  saveState();
+  syncUI();
+  renderActivityLog();
+}
+
+function buffSummaryText() {
+  const segments = [];
+  for (const item of STORE_ITEMS) {
+    const spinsLeft = state.storeBuffs[item.id] || 0;
+    if (spinsLeft > 0) {
+      segments.push(`${item.name}: ${spinsLeft} spin${spinsLeft === 1 ? "" : "s"} left`);
+    }
+  }
+
+  return segments.length > 0 ? segments.join(" | ") : "none active.";
+}
+
+function renderStoreButtons() {
+  for (const button of storeButtonsEl) {
+    const item = storeItemById(button.dataset.buff || "");
+    if (!item) {
+      continue;
+    }
+
+    const spinsLeft = state.storeBuffs[item.id] || 0;
+    const suffix = spinsLeft > 0 ? ` | ${spinsLeft} left` : "";
+    button.textContent = `${item.name} - ${fmtVc(item.cost)}${suffix}`;
+    button.classList.toggle("active", spinsLeft > 0);
+    button.disabled = state.isSpinning || state.autoSpin || state.balance < item.cost;
+  }
+
+  storeStatusEl.textContent = `Store buffs: ${buffSummaryText()}`;
 }
 
 function setResult(message, type) {
@@ -559,6 +728,8 @@ function syncUI() {
     perkStatusEl.textContent = `${state.perkCharge.toFixed(1)} / ${PERK_PROGRESS_TARGET} charge to next perk tier.`;
   }
 
+  buffStateEl.textContent = `Store buffs: ${buffSummaryText()}`;
+  renderStoreButtons();
   updateDailyGrantAvailability();
 }
 
@@ -588,6 +759,55 @@ function renderActivityLog() {
   }
 }
 
+function startTensionMeter(durationMs) {
+  if (tensionMeterTimer) {
+    clearInterval(tensionMeterTimer);
+  }
+
+  const total = Math.max(300, durationMs);
+  const startedAt = performance.now();
+  tensionFillEl.style.width = "0%";
+  tensionTextEl.textContent = "Charging";
+
+  const tick = () => {
+    const elapsed = performance.now() - startedAt;
+    const pct = Math.min(100, elapsed / total * 100);
+    tensionFillEl.style.width = `${pct.toFixed(1)}%`;
+    tensionTextEl.textContent = pct >= 100 ? "Locked" : `${Math.round(pct)}%`;
+
+    if (pct >= 100) {
+      clearInterval(tensionMeterTimer);
+      tensionMeterTimer = 0;
+    }
+  };
+
+  tick();
+  tensionMeterTimer = setInterval(tick, 40);
+}
+
+function finishTensionMeter() {
+  if (tensionMeterTimer) {
+    clearInterval(tensionMeterTimer);
+    tensionMeterTimer = 0;
+  }
+  tensionFillEl.style.width = "100%";
+  tensionTextEl.textContent = "Locked";
+}
+
+function resetTensionMeter(delayMs = 0) {
+  const runReset = () => {
+    tensionFillEl.style.width = "0%";
+    tensionTextEl.textContent = "Idle";
+  };
+
+  if (delayMs > 0) {
+    setTimeout(runReset, delayMs);
+    return;
+  }
+
+  runReset();
+}
+
 function triggerShake() {
   appShellEl.classList.remove("shake");
   void appShellEl.offsetWidth;
@@ -612,6 +832,7 @@ function spawnConfetti(count) {
     const piece = document.createElement("span");
     piece.className = "confetti";
     piece.style.setProperty("--x", `${Math.random() * 100}%`);
+    piece.style.top = `${Math.random() * 60}%`;
     piece.style.setProperty("--h", `${Math.floor(Math.random() * 360)}`);
     piece.style.setProperty("--rot", `${Math.floor(Math.random() * 360)}deg`);
     piece.style.setProperty("--dur", `${0.8 + Math.random() * 0.8}s`);
@@ -738,6 +959,12 @@ function loadState() {
     state.sessionGuard = typeof saved.sessionGuard === "boolean" ? saved.sessionGuard : true;
     state.perkTier = clamp(asNumber(saved.perkTier, state.perkTier), 0, PERK_MULTIPLIERS.length - 1);
     state.perkCharge = clamp(asNumber(saved.perkCharge, state.perkCharge), 0, PERK_PROGRESS_TARGET);
+    const savedBuffs = saved.storeBuffs && typeof saved.storeBuffs === "object" ? saved.storeBuffs : {};
+    state.storeBuffs = {
+      luck: clamp(asNumber(savedBuffs.luck, 0), 0, 999),
+      payout: clamp(asNumber(savedBuffs.payout, 0), 0, 999),
+      refund: clamp(asNumber(savedBuffs.refund, 0), 0, 999),
+    };
 
     if (Array.isArray(saved.log)) {
       state.log = saved.log
@@ -766,6 +993,7 @@ function saveState() {
     sessionGuard: state.sessionGuard,
     perkTier: state.perkTier,
     perkCharge: state.perkCharge,
+    storeBuffs: state.storeBuffs,
     log: state.log,
   };
 
