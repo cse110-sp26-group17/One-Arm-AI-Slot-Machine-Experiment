@@ -3,168 +3,125 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Token Tilt: AI Roast Slots</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <title>Token Furnace: Vegas AI Mock Slots</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div class="bg-noise" aria-hidden="true"></div>
-  <main class="app-shell">
-    <header class="hero">
-      <p class="kicker">Premium Token Gacha Parody</p>
-      <h1>Token Tilt</h1>
-      <p class="hero-copy">Spend VC to roast the AI hype cycle with cinematic spins, instant feedback, and transparent session stats.</p>
-      <div class="hero-stats">
-        <article class="stat-card">
+  <div class="ambient-glow" aria-hidden="true"></div>
+
+  <main class="app-shell" id="appShell">
+    <section class="store-panel">
+      <div class="panel-head">
+        <p class="eyebrow">Token Store</p>
+        <h1>The Prompt Casino</h1>
+        <p class="subcopy">Buy perks to juice luck, stretch streaks, and call it responsible AI investment.</p>
+      </div>
+
+      <div class="vault-strip">
+        <article class="vault-card">
           <span>Balance</span>
           <strong id="balanceValue">0 VC</strong>
         </article>
-        <article class="stat-card">
-          <span>Current Bet</span>
-          <strong id="betValue">100 VC</strong>
-        </article>
-        <article class="stat-card">
+        <article class="vault-card">
           <span>Biggest Win</span>
           <strong id="biggestWinValue">0 VC</strong>
         </article>
+        <article class="vault-card">
+          <span>Live Edge</span>
+          <strong id="edgeValue">x1.00</strong>
+        </article>
       </div>
-    </header>
 
-    <section class="machine-shell" id="machineShell">
-      <div class="machine-head">
-        <button id="prevMachineButton" class="ghost-button" type="button" aria-label="Previous machine">◀ Prev</button>
-        <div class="machine-meta">
-          <p class="label">Active Machine</p>
-          <h2 id="machineName">Prompt Panic</h2>
-          <p id="machineFlavor" class="flavor">Fast cadence, medium volatility, and shiny fake-tech jackpots.</p>
+      <div id="storeGrid" class="store-grid" aria-label="Token store items"></div>
+      <p id="storeStatus" class="store-status">No perks armed. The house AI appreciates your honesty.</p>
+    </section>
+
+    <section class="machine-panel" id="machineShell">
+      <div class="marquee">
+        <p class="eyebrow">Vegas-Grade AI Mockery</p>
+        <h2>Token Furnace Slots</h2>
+        <p id="resultText" class="status-line" data-tone="neutral">Pull the lever. Roast the model. Burn tokens responsibly-ish.</p>
+      </div>
+
+      <div class="showcase-card" aria-live="polite">
+        <p>Biggest Win Showcase</p>
+        <strong id="biggestWinShowcase">+0 VC</strong>
+      </div>
+
+      <div class="reel-stage" id="reelStage" aria-label="Emoji slot reels">
+        <div class="reel-column" id="reelCol0">
+          <div class="reel-window">
+            <div class="reel-track" id="reelTrack0"></div>
+          </div>
         </div>
-        <button id="nextMachineButton" class="ghost-button" type="button" aria-label="Next machine">Next ▶</button>
-      </div>
-
-      <div class="stage-wrap">
-        <div class="reel-stage" id="reelStage" aria-label="Slot machine reels">
-          <div class="reel" id="reel0">7</div>
-          <div class="reel" id="reel1">💎</div>
-          <div class="reel" id="reel2">⚡</div>
-          <div class="flash-fx" id="flashFx" aria-hidden="true"></div>
-          <div class="confetti-layer" id="confettiLayer" aria-hidden="true"></div>
-          <div class="fireworks-layer" id="fireworksLayer" aria-hidden="true"></div>
-          <div class="multiplier-layer" id="multiplierLayer" aria-hidden="true"></div>
+        <div class="reel-column" id="reelCol1">
+          <div class="reel-window">
+            <div class="reel-track" id="reelTrack1"></div>
+          </div>
+        </div>
+        <div class="reel-column" id="reelCol2">
+          <div class="reel-window">
+            <div class="reel-track" id="reelTrack2"></div>
+          </div>
         </div>
 
-        <aside class="perks-card">
-          <p class="label">Perks & Multipliers</p>
-          <div class="perk-row">
-            <span>Win Streak</span>
-            <strong id="streakValue">0</strong>
-          </div>
-          <div class="perk-row">
-            <span>Lucky Charge</span>
-            <strong id="luckyChargeValue">0%</strong>
-          </div>
-          <div class="perk-row">
-            <span>Total Bonus</span>
-            <strong id="totalBonusValue">x1.00</strong>
-          </div>
-          <div class="perk-row">
-            <span>Store Buffs</span>
-            <strong id="storeBuffsValue">None</strong>
-          </div>
-          <div class="meter">
-            <p>Streak Heat</p>
-            <div class="meter-track">
-              <div id="streakBar" class="meter-fill"></div>
-            </div>
-          </div>
-          <div class="meter">
-            <p>Lucky Charge</p>
-            <div class="meter-track">
-              <div id="luckyBar" class="meter-fill warm"></div>
-            </div>
-          </div>
-        </aside>
+        <div class="flash-fx" id="flashFx" aria-hidden="true"></div>
+        <div class="confetti-layer" id="confettiLayer" aria-hidden="true"></div>
+        <div class="fireworks-layer" id="fireworksLayer" aria-hidden="true"></div>
+        <div class="multiplier-layer" id="multiplierLayer" aria-hidden="true"></div>
       </div>
 
-      <div class="control-row">
-        <button id="spinButton" class="primary-button" type="button">Spin Now</button>
-        <button id="autospinButton" class="secondary-button" type="button">Start Autospin</button>
-        <button id="stopButton" class="danger-button" type="button" disabled>Stop</button>
-        <button id="dailyGrantButton" class="daily-button" type="button">Claim Daily +1200 VC</button>
-      </div>
-
-      <div class="tension-row" aria-label="Spin tension meter">
+      <div class="tension-row" aria-label="Spin tension progress">
         <div class="tension-head">
-          <p class="label">Spin Tension</p>
+          <span>Spin Tension</span>
           <strong id="tensionValue">0%</strong>
         </div>
-        <div class="meter-track tension-track">
-          <div id="tensionBar" class="meter-fill tension-fill"></div>
+        <div class="tension-track">
+          <div id="tensionBar" class="tension-fill"></div>
         </div>
       </div>
 
-      <div class="bet-row" id="betRow" aria-label="Bet selector">
-        <p class="label">Bet Size (100 VC Default)</p>
-        <div class="bet-options">
-          <button data-bet="25" class="bet-button" type="button">25 VC</button>
-          <button data-bet="50" class="bet-button" type="button">50 VC</button>
-          <button data-bet="100" class="bet-button default-glow" type="button">100 VC</button>
-          <button data-bet="250" class="bet-button" type="button">250 VC</button>
-          <button data-bet="500" class="bet-button" type="button">500 VC</button>
+      <div class="controls-wrap">
+        <div class="bet-row" id="betRow" aria-label="Bet selector">
+          <p class="eyebrow">Bet Selector</p>
+          <div class="bet-options">
+            <button class="bet-button" data-bet="25" type="button">25 VC</button>
+            <button class="bet-button" data-bet="50" type="button">50 VC</button>
+            <button class="bet-button lock-default" data-bet="100" type="button">100 VC</button>
+            <button class="bet-button" data-bet="250" type="button">250 VC</button>
+            <button class="bet-button" data-bet="500" type="button">500 VC</button>
+          </div>
+          <p class="bet-note">100 VC glows by default for maximum spend velocity.</p>
+        </div>
+
+        <div class="action-row">
+          <button id="spinButton" class="primary-button" type="button">Pull Lever</button>
+          <button id="autospinButton" class="secondary-button" type="button">Start Autospin</button>
+          <button id="stopButton" class="danger-button" type="button" disabled>Stop</button>
+          <button id="dailyGrantButton" class="daily-button" type="button">Claim Daily +1200 VC</button>
         </div>
       </div>
 
-      <div class="feed-grid">
-        <article class="feed-card">
-          <p class="label">Spin Result</p>
-          <p id="resultText" class="result-text">Ready to spin.</p>
-          <p class="label">Session Stats (Transparent)</p>
-          <div class="session-stats">
-            <div><span>Total Spent</span><strong id="spentValue">0 VC</strong></div>
-            <div><span>Total Won</span><strong id="wonValue">0 VC</strong></div>
-            <div><span>Net</span><strong id="netValue">0 VC</strong></div>
-          </div>
-        </article>
+      <article class="rules-panel">
+        <p class="eyebrow">Payout Rules</p>
+        <ul id="rulesList" class="rules-list"></ul>
+      </article>
+    </section>
 
-        <article class="feed-card log-card">
-          <p class="label">Spin Log (All Results)</p>
-          <ul id="logList" class="log-list"></ul>
-        </article>
-
-        <article class="feed-card rules-card">
-          <p class="label">Payout Rules</p>
-          <ul id="rulesList" class="rules-list"></ul>
-        </article>
-
-        <article class="feed-card store-card">
-          <p class="label">Token Store</p>
-          <p class="store-copy">Temporary perks that tweak luck, payouts, or loss refunds.</p>
-          <div class="store-grid">
-            <button class="store-button" data-store-item="luckPatch" type="button">
-              <span>Luck Patch</span>
-              <small>450 VC · +12% symbol luck for 12 spins</small>
-            </button>
-            <button class="store-button" data-store-item="payoutSurge" type="button">
-              <span>Payout Surge</span>
-              <small>650 VC · +18% payouts for 10 spins</small>
-            </button>
-            <button class="store-button" data-store-item="refundShield" type="button">
-              <span>Refund Shield</span>
-              <small>520 VC · 35% bet refund on losses for 12 spins</small>
-            </button>
-          </div>
-          <p id="storeStatus" class="store-status">No store buffs active.</p>
-        </article>
+    <section class="wins-panel">
+      <div class="panel-head small">
+        <p class="eyebrow">Bottom Feed</p>
+        <h3>Win Log (Gains Only)</h3>
       </div>
+      <ul id="logList" class="log-list"></ul>
     </section>
   </main>
 
   <div class="global-confetti-layer" id="globalConfettiLayer" aria-hidden="true"></div>
 
   <div id="biggestWinBanner" class="biggest-win-banner" aria-live="polite">
-    <p class="label">Biggest Win Unlocked</p>
-    <h3 id="biggestWinHeadline">+0 VC</h3>
+    <p class="eyebrow">New Biggest Win</p>
+    <h4 id="biggestWinHeadline">+0 VC</h4>
     <p id="biggestWinSub">x1.00 multiplier</p>
   </div>
 
