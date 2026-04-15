@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>VC Reactor Slots</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="ambient-grid" aria-hidden="true"></div>
+    <div class="flash-layer" id="flashLayer" aria-hidden="true"></div>
+    <canvas id="fxCanvas" class="fx-canvas" aria-hidden="true"></canvas>
+
+    <main class="app shell-enter" id="appShell">
+      <header class="hero">
+        <p class="eyebrow">Candidate 028 · Premium Reel Prototype</p>
+        <h1>VC Reactor Slots</h1>
+        <p class="subhead">
+          High-impact slot machine with cinematic reels, instant machine swapping,
+          and transparent session tracking.
+        </p>
+      </header>
+
+      <section class="machine-switcher" aria-label="Machine carousel">
+        <button type="button" class="carousel-btn" id="prevMachineBtn">Previous</button>
+        <div class="machine-meta">
+          <p class="machine-name" id="machineName">Neon Nexus</p>
+          <p class="machine-flavor" id="machineFlavor">Synthwave reels with balanced volatility.</p>
+        </div>
+        <button type="button" class="carousel-btn" id="nextMachineBtn">Next</button>
+      </section>
+
+      <section class="status-grid" aria-label="Player status">
+        <article class="status-card">
+          <p class="label">Balance</p>
+          <p class="value" id="balanceValue">1000 VC</p>
+        </article>
+        <article class="status-card">
+          <p class="label">Current Bet</p>
+          <p class="value" id="betValue">100 VC</p>
+        </article>
+        <article class="status-card">
+          <p class="label">Total Spins</p>
+          <p class="value" id="spinValue">0</p>
+        </article>
+        <article class="status-card">
+          <p class="label">Session Net</p>
+          <p class="value" id="sessionNetValue">0 VC</p>
+        </article>
+        <article class="status-card">
+          <p class="label">Biggest Win</p>
+          <p class="value" id="biggestWinValue">0 VC</p>
+        </article>
+        <article class="status-card">
+          <p class="label">Multiplier</p>
+          <p class="value" id="multiplierValue">x1.00</p>
+        </article>
+        <article class="status-card">
+          <p class="label">Win Rate</p>
+          <p class="value" id="winRateValue">0%</p>
+        </article>
+      </section>
+
+      <section class="machine-panel" aria-label="Slot machine">
+        <div class="tension-track" aria-label="Spin tension">
+          <p class="tension-label">Spin Tension</p>
+          <div class="tension-meter"><span id="tensionFill"></span></div>
+        </div>
+
+        <div class="reel-shell" id="reelShell">
+          <div class="reel-window">
+            <div class="reel" id="reel0">ORB</div>
+            <div class="reel" id="reel1">STAR</div>
+            <div class="reel" id="reel2">NOVA</div>
+          </div>
+          <p class="spin-result" id="spinResult">Choose a bet and launch a spin.</p>
+        </div>
+
+        <div class="control-stack">
+          <div class="bet-row" role="group" aria-label="Bet selector">
+            <button type="button" class="bet-chip" data-bet="25">25 VC</button>
+            <button type="button" class="bet-chip" data-bet="50">50 VC</button>
+            <button type="button" class="bet-chip is-default is-active" data-bet="100">100 VC</button>
+            <button type="button" class="bet-chip" data-bet="250">250 VC</button>
+            <button type="button" class="bet-chip" data-bet="500">500 VC</button>
+          </div>
+          <div class="cta-row">
+            <button id="spinBtn" class="cta spin" type="button">Spin</button>
+            <button id="autoBtn" class="cta auto" type="button">Autospin</button>
+            <button id="stopAutoBtn" class="cta stop" type="button" disabled>Stop</button>
+          </div>
+          <p class="autospin-note" id="autoState">Autospin idle.</p>
+        </div>
+      </section>
+
+      <section class="utility-grid">
+        <article class="panel daily-panel">
+          <h2>Daily VC Grant</h2>
+          <p class="panel-copy">One claim per local day to top up your balance.</p>
+          <button id="dailyGrantBtn" class="daily-btn" type="button">Claim +300 VC</button>
+          <p class="panel-copy" id="dailyHint">Available now.</p>
+        </article>
+
+        <article class="panel perk-panel">
+          <h2>Perks & Multipliers</h2>
+          <p class="perk-line"><span>Combo Streak</span><strong id="comboValue">0</strong></p>
+          <p class="perk-line"><span>Perk Tier</span><strong id="tierValue">0</strong></p>
+          <p class="perk-line"><span>Perk Charge</span><strong id="chargeValue">0%</strong></p>
+          <div class="perk-meter"><span id="perkFill"></span></div>
+          <p class="panel-copy" id="perkCaption">Win spins to charge perks and lift multiplier.</p>
+        </article>
+
+        <article class="panel payout-panel">
+          <h2>Payout Rules</h2>
+          <p class="panel-copy" id="payoutPair">Any pair pays 1.8x bet (before multiplier).</p>
+          <table>
+            <thead>
+              <tr>
+                <th>Symbol</th>
+                <th>Triple Payout</th>
+              </tr>
+            </thead>
+            <tbody id="payoutRows"></tbody>
+          </table>
+        </article>
+      </section>
+
+      <section class="log-grid" aria-label="Spin logs">
+        <article class="panel">
+          <h2>Gain Feed</h2>
+          <ul id="gainLog" class="log-list"></ul>
+        </article>
+        <article class="panel">
+          <h2>Spin Journal</h2>
+          <ul id="journalLog" class="log-list"></ul>
+        </article>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
