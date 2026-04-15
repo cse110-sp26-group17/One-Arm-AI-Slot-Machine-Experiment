@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Token Gobbler 3000</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="machine" aria-labelledby="game-title">
+      <header class="top">
+        <p class="eyebrow">Totally Fair AI Casino</p>
+        <h1 id="game-title">Token Gobbler 3000</h1>
+        <p class="subtitle">
+          Feed the model your tokens. Sometimes it hallucinates a jackpot.
+        </p>
+      </header>
+
+      <section class="wallet" aria-live="polite">
+        <div class="stat">
+          <span class="label">Your Tokens</span>
+          <strong id="balance" class="value">120</strong>
+        </div>
+        <div class="stat">
+          <span class="label">Spin Cost</span>
+          <strong id="spin-cost" class="value">8</strong>
+        </div>
+        <div class="stat">
+          <span class="label">Last Payout</span>
+          <strong id="last-payout" class="value">0</strong>
+        </div>
+      </section>
+
+      <section class="reels" aria-label="Slot machine reels">
+        <div class="reel" id="reel-0" aria-label="reel one">🤖</div>
+        <div class="reel" id="reel-1" aria-label="reel two">🧠</div>
+        <div class="reel" id="reel-2" aria-label="reel three">💸</div>
+      </section>
+
+      <section class="actions">
+        <button id="spin-btn" class="spin-btn" type="button">Spend 8 Tokens</button>
+        <button id="refill-btn" class="ghost-btn" type="button">Beg VC For 60 Tokens</button>
+      </section>
+
+      <section class="status" aria-live="polite">
+        <p id="message">Hit spin and pray to the stochastic parrots.</p>
+      </section>
+
+      <section class="paytable" aria-label="Payout rules">
+        <h2>Model Behavior</h2>
+        <ul>
+          <li>3 of a kind: 50 tokens</li>
+          <li>2 of a kind: 16 tokens</li>
+          <li>Any 3 AI symbols (🤖 🧠 🛰️): 30 tokens</li>
+          <li>Exactly one 💸 appears: +4 pity tokens</li>
+        </ul>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
