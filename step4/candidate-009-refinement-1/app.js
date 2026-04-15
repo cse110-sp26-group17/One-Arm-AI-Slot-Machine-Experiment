@@ -1,97 +1,115 @@
-const STORAGE_KEY = "velocity-reels-state-v2";
+const STORAGE_KEY = "vegas-ai-mock-slot-v3";
 const DAILY_GRANT_AMOUNT = 1200;
-const MAX_LOG_ITEMS = 24;
-const MAX_STREAK_BONUS = 0.36;
-const STREAK_STEP = 0.06;
-const MAX_LUCKY_CHARGE = 0.75;
-const LUCKY_GAIN_PER_LOSS = 0.08;
+const MAX_LOG_ITEMS = 28;
+const MAX_STREAK_BONUS = 0.42;
+const STREAK_STEP = 0.07;
+const MAX_LUCKY_CHARGE = 0.78;
+const LUCKY_GAIN_PER_LOSS = 0.09;
 const TENSION_COOLDOWN_MS = 320;
+const BET_OPTIONS = [25, 50, 100, 250, 500];
+
+const MACHINE = {
+  symbols: ["🤖", "🧠", "🪙", "📉", "🧾", "🔥", "404", "💎", "🎰"],
+  weights: [13, 12, 15, 11, 10, 8, 7, 4, 3],
+  triples: {
+    "🤖": 6,
+    "🧠": 7,
+    "🪙": 5,
+    "📉": 8,
+    "🧾": 9,
+    "🔥": 12,
+    "404": 11,
+    "💎": 18,
+    "🎰": 24,
+  },
+  pairMultiplier: 2.15,
+  machineBonus: 0.05,
+};
 
 const STORE_ITEMS = {
-  luckPatch: {
-    id: "luckPatch",
-    name: "Luck Patch",
-    cost: 450,
+  luckyChance: {
+    id: "luckyChance",
+    emoji: "🎲",
+    name: "Lucky Chance",
+    cost: 460,
     spins: 12,
-    luckBoost: 0.12,
+    luckBoost: 0.16,
     payoutBoost: 0,
     refundRate: 0,
+    streakHeatBoost: 0,
+    description: "Pushes RNG toward premium symbols. Purely accidental math.",
   },
-  payoutSurge: {
-    id: "payoutSurge",
-    name: "Payout Surge",
-    cost: 650,
+  streakHeat: {
+    id: "streakHeat",
+    emoji: "🔥",
+    name: "Streak Heat",
+    cost: 540,
     spins: 10,
     luckBoost: 0,
-    payoutBoost: 0.18,
+    payoutBoost: 0,
     refundRate: 0,
+    streakHeatBoost: 0.14,
+    description: "Keeps your streak alive when the AI confidently whiffs.",
   },
-  refundShield: {
-    id: "refundShield",
-    name: "Refund Shield",
+  multiplierFuel: {
+    id: "multiplierFuel",
+    emoji: "⚡",
+    name: "Multiplier Fuel",
+    cost: 680,
+    spins: 8,
+    luckBoost: 0,
+    payoutBoost: 0.24,
+    refundRate: 0,
+    streakHeatBoost: 0,
+    description: "Adds payout voltage. Compliance calls it user engagement.",
+  },
+  refundFirewall: {
+    id: "refundFirewall",
+    emoji: "🧯",
+    name: "Refund Firewall",
     cost: 520,
     spins: 12,
     luckBoost: 0,
     payoutBoost: 0,
-    refundRate: 0.35,
+    refundRate: 0.4,
+    streakHeatBoost: 0,
+    description: "Partial rollback on losses. Prompt failure insurance.",
   },
 };
 
-const MACHINES = [
-  {
-    name: "Prompt Panic",
-    flavor: "Fast cadence, medium volatility, and shiny fake-tech jackpots.",
-    symbols: ["🤖", "🪙", "📉", "🧠", "⚠️", "✨"],
-    weights: [10, 13, 11, 8, 9, 4],
-    triples: {
-      "🤖": 7,
-      "🪙": 5,
-      "📉": 6,
-      "🧠": 10,
-      "⚠️": 8,
-      "✨": 15,
-    },
-    pairMultiplier: 1.9,
-    machineBonus: 0.04,
-  },
-  {
-    name: "Hallucination Deluxe",
-    flavor: "High volatility where fake confidence can still spike huge wins.",
-    symbols: ["🌀", "🧪", "🧾", "🔥", "404", "🏆"],
-    weights: [8, 9, 11, 9, 10, 3],
-    triples: {
-      "🌀": 7,
-      "🧪": 8,
-      "🧾": 6,
-      "🔥": 10,
-      "404": 9,
-      "🏆": 18,
-    },
-    pairMultiplier: 1.75,
-    machineBonus: 0.06,
-  },
-  {
-    name: "Token Furnace",
-    flavor: "Balanced machine with frequent small hits and occasional overkill multipliers.",
-    symbols: ["💬", "🪫", "📦", "💥", "🧬", "🌈"],
-    weights: [11, 12, 9, 8, 7, 4],
-    triples: {
-      "💬": 6,
-      "🪫": 5,
-      "📦": 7,
-      "💥": 10,
-      "🧬": 11,
-      "🌈": 14,
-    },
-    pairMultiplier: 2,
-    machineBonus: 0.03,
-  },
+const SPIN_START_QUIPS = [
+  "Lever pulled. Routing {bet} VC into the confidence black hole.",
+  "Deploying {bet} VC to train the house model on your pain.",
+  "Token burn initiated: {bet} VC for premium uncertainty.",
+];
+
+const WIN_QUIPS = [
+  "{label} landed. AI called it strategy. You banked +{payout} VC at x{mult}.",
+  "The model hallucinated alpha. {label} pays +{payout} VC at x{mult}.",
+  "Prompt reached production. {label} sends +{payout} VC at x{mult}.",
+];
+
+const LOSS_QUIPS = [
+  "Model output: confidently wrong. House absorbs {loss} VC.",
+  "Inference complete: your bankroll donated {loss} VC to GPU overhead.",
+  "The AI said 'trust me'. It cost {loss} VC.",
+];
+
+const LOSS_REFUND_QUIPS = [
+  "Bad spin, decent rollback. Net hit {loss} VC after refund patch.",
+  "RNG betrayed you, firewall refunded dignity. Net {loss} VC.",
+  "Token spill detected. Refund routine softened damage to {loss} VC.",
+];
+
+const PURCHASE_QUIPS = [
+  "{perk} armed. Totally legitimate edge acquired.",
+  "{perk} loaded. The house calls this retention optimization.",
+  "{perk} purchased. Ethics review scheduled for never.",
 ];
 
 const DEFAULT_STATE = {
-  balance: 5000,
+  balance: 6000,
   currentBet: 100,
-  machineIndex: 0,
   spins: 0,
   wins: 0,
   losses: 0,
@@ -101,58 +119,49 @@ const DEFAULT_STATE = {
   winStreak: 0,
   luckyCharge: 0,
   lastDailyClaim: "",
-  lastResult: "Ready to spin.",
+  lastResult: "Pull the lever. Roast the model. Burn tokens responsibly-ish.",
+  resultTone: "neutral",
   lastSymbols: ["🤖", "🪙", "📉"],
   isSpinning: false,
   autoSpin: false,
   autoSpinStopRequested: false,
   spinProgress: 0,
   storeBuffs: {
-    luckPatch: 0,
-    payoutSurge: 0,
-    refundShield: 0,
+    luckyChance: 0,
+    streakHeat: 0,
+    multiplierFuel: 0,
+    refundFirewall: 0,
   },
-  log: [],
+  winLog: [],
 };
 
 const state = loadState();
 
-const reels = [
-  document.getElementById("reel0"),
-  document.getElementById("reel1"),
-  document.getElementById("reel2"),
-];
+const reels = Array.from({ length: 3 }, (_, index) => ({
+  column: document.getElementById(`reelCol${index}`),
+  window: document.querySelector(`#reelCol${index} .reel-window`),
+  track: document.getElementById(`reelTrack${index}`),
+}));
 
 const elements = {
+  appShell: document.getElementById("appShell"),
+  machineShell: document.getElementById("machineShell"),
   balanceValue: document.getElementById("balanceValue"),
-  betValue: document.getElementById("betValue"),
   biggestWinValue: document.getElementById("biggestWinValue"),
-  machineName: document.getElementById("machineName"),
-  machineFlavor: document.getElementById("machineFlavor"),
+  biggestWinShowcase: document.getElementById("biggestWinShowcase"),
+  edgeValue: document.getElementById("edgeValue"),
   resultText: document.getElementById("resultText"),
-  spentValue: document.getElementById("spentValue"),
-  wonValue: document.getElementById("wonValue"),
-  netValue: document.getElementById("netValue"),
-  streakValue: document.getElementById("streakValue"),
-  luckyChargeValue: document.getElementById("luckyChargeValue"),
-  totalBonusValue: document.getElementById("totalBonusValue"),
-  storeBuffsValue: document.getElementById("storeBuffsValue"),
-  streakBar: document.getElementById("streakBar"),
-  luckyBar: document.getElementById("luckyBar"),
   tensionBar: document.getElementById("tensionBar"),
   tensionValue: document.getElementById("tensionValue"),
   spinButton: document.getElementById("spinButton"),
   autospinButton: document.getElementById("autospinButton"),
   stopButton: document.getElementById("stopButton"),
   dailyGrantButton: document.getElementById("dailyGrantButton"),
-  prevMachineButton: document.getElementById("prevMachineButton"),
-  nextMachineButton: document.getElementById("nextMachineButton"),
   betButtons: [...document.querySelectorAll(".bet-button")],
-  storeButtons: [...document.querySelectorAll(".store-button")],
+  storeGrid: document.getElementById("storeGrid"),
   storeStatus: document.getElementById("storeStatus"),
-  logList: document.getElementById("logList"),
   rulesList: document.getElementById("rulesList"),
-  machineShell: document.getElementById("machineShell"),
+  logList: document.getElementById("logList"),
   flashFx: document.getElementById("flashFx"),
   confettiLayer: document.getElementById("confettiLayer"),
   globalConfettiLayer: document.getElementById("globalConfettiLayer"),
@@ -163,9 +172,16 @@ const elements = {
   biggestWinSub: document.getElementById("biggestWinSub"),
 };
 
+buildStoreButtons();
 bindEvents();
+bootstrapReels();
+renderRules();
 renderAll();
 setInterval(() => renderDailyGrantState(), 1000);
+
+function cloneDefaultState() {
+  return JSON.parse(JSON.stringify(DEFAULT_STATE));
+}
 
 function bindEvents() {
   elements.spinButton.addEventListener("click", () => {
@@ -183,43 +199,76 @@ function bindEvents() {
   elements.stopButton.addEventListener("click", stopAutoSpin);
   elements.dailyGrantButton.addEventListener("click", claimDailyGrant);
 
-  elements.prevMachineButton.addEventListener("click", () => cycleMachine(-1));
-  elements.nextMachineButton.addEventListener("click", () => cycleMachine(1));
-
   elements.betButtons.forEach((button) => {
     button.addEventListener("click", () => {
-      if (state.isSpinning) {
+      if (state.isSpinning || state.autoSpin) {
         return;
       }
+
       const bet = Number(button.dataset.bet);
+      if (!BET_OPTIONS.includes(bet)) {
+        return;
+      }
+
       state.currentBet = bet;
-      state.lastResult = `Bet updated to ${formatNumber(bet)} VC.`;
+      setStatus(`Bet rerouted to ${formatNumber(bet)} VC. The house thanks your optimism.`, "neutral");
       renderAll();
       persist();
     });
   });
 
-  elements.storeButtons.forEach((button) => {
-    button.addEventListener("click", () => {
-      if (state.isSpinning) {
-        return;
-      }
-      purchaseStoreItem(button.dataset.storeItem);
-    });
+  elements.storeGrid.addEventListener("click", (event) => {
+    const target = event.target.closest("button[data-store-item]");
+    if (!target || state.isSpinning || state.autoSpin) {
+      return;
+    }
+
+    purchaseStoreItem(target.dataset.storeItem);
+  });
+}
+
+function buildStoreButtons() {
+  elements.storeGrid.innerHTML = "";
+
+  Object.values(STORE_ITEMS).forEach((item) => {
+    const button = document.createElement("button");
+    button.className = "store-button";
+    button.type = "button";
+    button.dataset.storeItem = item.id;
+    button.innerHTML = `
+      <span>${item.emoji} ${item.name}</span>
+      <small class="store-line">${formatNumber(item.cost)} VC · ${item.description}</small>
+      <em class="store-remaining" data-remaining-for="${item.id}">${item.spins} spins per buy</em>
+    `;
+    elements.storeGrid.appendChild(button);
+  });
+}
+
+function bootstrapReels() {
+  reels.forEach((reel, index) => {
+    const symbol = state.lastSymbols[index] || MACHINE.symbols[index] || "🤖";
+    renderStaticSymbol(reel.track, symbol);
   });
 }
 
 function loadState() {
   const saved = localStorage.getItem(STORAGE_KEY);
   if (!saved) {
-    return structuredClone(DEFAULT_STATE);
+    return cloneDefaultState();
   }
 
   try {
     const parsed = JSON.parse(saved);
-    const merged = { ...DEFAULT_STATE, ...parsed };
+    const merged = {
+      ...cloneDefaultState(),
+      ...parsed,
+      storeBuffs: {
+        ...cloneDefaultState().storeBuffs,
+        ...(parsed.storeBuffs || {}),
+      },
+    };
 
-    if (![25, 50, 100, 250, 500].includes(merged.currentBet)) {
+    if (!BET_OPTIONS.includes(merged.currentBet)) {
       merged.currentBet = 100;
     }
 
@@ -227,37 +276,24 @@ function loadState() {
       merged.lastSymbols = [...DEFAULT_STATE.lastSymbols];
     }
 
-    if (!Array.isArray(merged.log)) {
-      merged.log = [];
+    if (!Array.isArray(merged.winLog)) {
+      merged.winLog = [];
     }
 
-    if (typeof merged.spinProgress !== "number" || Number.isNaN(merged.spinProgress)) {
-      merged.spinProgress = 0;
-    }
-
-    if (!merged.storeBuffs || typeof merged.storeBuffs !== "object") {
-      merged.storeBuffs = { ...DEFAULT_STATE.storeBuffs };
-    } else {
-      merged.storeBuffs = {
-        ...DEFAULT_STATE.storeBuffs,
-        ...merged.storeBuffs,
-      };
-    }
-
-    if (typeof merged.machineIndex !== "number" || Number.isNaN(merged.machineIndex)) {
-      merged.machineIndex = 0;
-    }
-
-    merged.machineIndex = clampMachineIndex(merged.machineIndex);
+    merged.spinProgress = Number.isFinite(merged.spinProgress) ? merged.spinProgress : 0;
+    merged.machineIndex = 0;
     merged.isSpinning = false;
     merged.autoSpin = false;
     merged.autoSpinStopRequested = false;
+    merged.resultTone = ["neutral", "win", "loss"].includes(merged.resultTone)
+      ? merged.resultTone
+      : "neutral";
+
     return merged;
   } catch {
-    return {
-      ...structuredClone(DEFAULT_STATE),
-      lastResult: "Saved state was unreadable. Session reset.",
-    };
+    const fallback = cloneDefaultState();
+    fallback.lastResult = "State data corrupted. Session reset by the house auditor.";
+    return fallback;
   }
 }
 
@@ -265,59 +301,58 @@ function persist() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
 }
 
-function clampMachineIndex(index) {
-  const length = MACHINES.length;
-  return ((index % length) + length) % length;
-}
-
-function getActiveMachine() {
-  return MACHINES[clampMachineIndex(state.machineIndex)];
-}
-
 function getStoreBuffSpins(itemId) {
   return Math.max(0, Number(state.storeBuffs[itemId]) || 0);
 }
 
 function getStoreLuckBonus() {
-  return getStoreBuffSpins("luckPatch") > 0 ? STORE_ITEMS.luckPatch.luckBoost : 0;
+  return getStoreBuffSpins("luckyChance") > 0 ? STORE_ITEMS.luckyChance.luckBoost : 0;
+}
+
+function getStoreStreakHeatBonus() {
+  return getStoreBuffSpins("streakHeat") > 0 ? STORE_ITEMS.streakHeat.streakHeatBoost : 0;
 }
 
 function getStorePayoutBonus() {
-  return getStoreBuffSpins("payoutSurge") > 0 ? STORE_ITEMS.payoutSurge.payoutBoost : 0;
+  return getStoreBuffSpins("multiplierFuel") > 0 ? STORE_ITEMS.multiplierFuel.payoutBoost : 0;
 }
 
 function getStoreRefundRate() {
-  return getStoreBuffSpins("refundShield") > 0 ? STORE_ITEMS.refundShield.refundRate : 0;
+  return getStoreBuffSpins("refundFirewall") > 0 ? STORE_ITEMS.refundFirewall.refundRate : 0;
+}
+
+function getPerkMultiplier() {
+  const streakBonus = Math.min(state.winStreak * STREAK_STEP, MAX_STREAK_BONUS);
+  const luckyBonus = Math.min(state.luckyCharge, MAX_LUCKY_CHARGE);
+  const payoutBonus = getStorePayoutBonus();
+  const streakHeat = getStoreStreakHeatBonus();
+  return 1 + MACHINE.machineBonus + streakBonus + luckyBonus + payoutBonus + streakHeat;
 }
 
 function getActiveStoreBuffSummary() {
-  const summary = [];
-  if (getStoreBuffSpins("luckPatch") > 0) {
-    summary.push(`Luck ${getStoreBuffSpins("luckPatch")}`);
-  }
-  if (getStoreBuffSpins("payoutSurge") > 0) {
-    summary.push(`Payout ${getStoreBuffSpins("payoutSurge")}`);
-  }
-  if (getStoreBuffSpins("refundShield") > 0) {
-    summary.push(`Refund ${getStoreBuffSpins("refundShield")}`);
-  }
-  return summary.length ? summary.join(" • ") : "None";
+  const parts = [];
+
+  Object.values(STORE_ITEMS).forEach((item) => {
+    const remaining = getStoreBuffSpins(item.id);
+    if (remaining > 0) {
+      parts.push(`${item.name} ${remaining}`);
+    }
+  });
+
+  return parts.length ? parts.join(" • ") : "None";
 }
 
 function consumeStoreBuffSpin() {
-  Object.keys(DEFAULT_STATE.storeBuffs).forEach((id) => {
+  Object.keys(state.storeBuffs).forEach((id) => {
     if (getStoreBuffSpins(id) > 0) {
       state.storeBuffs[id] = getStoreBuffSpins(id) - 1;
     }
   });
 }
 
-function getPerkMultiplier() {
-  const streakBonus = Math.min(state.winStreak * STREAK_STEP, MAX_STREAK_BONUS);
-  const luckyBonus = Math.min(state.luckyCharge, MAX_LUCKY_CHARGE);
-  const machineBonus = getActiveMachine().machineBonus;
-  const storeBonus = getStorePayoutBonus();
-  return 1 + streakBonus + luckyBonus + machineBonus + storeBonus;
+function setStatus(text, tone = "neutral") {
+  state.lastResult = text;
+  state.resultTone = tone;
 }
 
 function setSpinProgress(progress) {
@@ -328,40 +363,17 @@ function setSpinProgress(progress) {
 }
 
 function renderAll() {
-  const machine = getActiveMachine();
-  const net = state.totalWon - state.totalSpent;
-
   elements.balanceValue.textContent = formatVc(state.balance);
-  elements.betValue.textContent = formatVc(state.currentBet);
   elements.biggestWinValue.textContent = formatVc(state.biggestWin);
-  elements.machineName.textContent = machine.name;
-  elements.machineFlavor.textContent = machine.flavor;
+  elements.biggestWinShowcase.textContent = `+${formatNumber(state.biggestWin)} VC`;
+  elements.edgeValue.textContent = `x${getPerkMultiplier().toFixed(2)}`;
   elements.resultText.textContent = state.lastResult;
-  elements.spentValue.textContent = formatVc(state.totalSpent);
-  elements.wonValue.textContent = formatVc(state.totalWon);
-  elements.netValue.textContent = formatSignedVc(net);
-  elements.netValue.style.color = net >= 0 ? "#7ff8e2" : "#ff9dad";
-
-  elements.streakValue.textContent = String(state.winStreak);
-  elements.luckyChargeValue.textContent = `${Math.round(state.luckyCharge * 100)}%`;
-  elements.totalBonusValue.textContent = `x${getPerkMultiplier().toFixed(2)}`;
-  elements.storeBuffsValue.textContent = getActiveStoreBuffSummary();
-  elements.streakBar.style.width = `${Math.min((state.winStreak / 6) * 100, 100)}%`;
-  elements.luckyBar.style.width = `${Math.min((state.luckyCharge / MAX_LUCKY_CHARGE) * 100, 100)}%`;
-  setSpinProgress(state.spinProgress);
-
-  if (!state.isSpinning && Array.isArray(state.lastSymbols) && state.lastSymbols.length === 3) {
-    reels.forEach((reel, index) => {
-      reel.textContent = state.lastSymbols[index];
-    });
-  }
+  elements.resultText.dataset.tone = state.resultTone;
 
   elements.spinButton.disabled = state.isSpinning || state.autoSpin || state.balance < state.currentBet;
   elements.autospinButton.disabled = state.isSpinning || state.balance < state.currentBet;
   elements.autospinButton.textContent = state.autoSpin ? "Autospin Running" : "Start Autospin";
-  elements.stopButton.disabled = !state.autoSpin && !state.isSpinning;
-  elements.prevMachineButton.disabled = state.isSpinning;
-  elements.nextMachineButton.disabled = state.isSpinning;
+  elements.stopButton.disabled = !state.autoSpin;
 
   elements.betButtons.forEach((button) => {
     const isActive = Number(button.dataset.bet) === state.currentBet;
@@ -370,27 +382,101 @@ function renderAll() {
   });
 
   renderStore();
-
   renderDailyGrantState();
   renderLog();
-  renderRules(machine);
+  setSpinProgress(state.spinProgress);
 }
 
 function renderStore() {
-  elements.storeButtons.forEach((button) => {
-    const item = STORE_ITEMS[button.dataset.storeItem];
-    if (!item) {
+  const activeSummary = getActiveStoreBuffSummary();
+  const refundRate = Math.round(getStoreRefundRate() * 100);
+  const luckyCharge = Math.round(state.luckyCharge * 100);
+
+  elements.storeStatus.textContent = activeSummary === "None"
+    ? "No perks armed. The house AI appreciates your honesty."
+    : `Active: ${activeSummary}${refundRate ? ` • Refund ${refundRate}%` : ""} • Lucky Charge ${luckyCharge}%`;
+
+  Object.values(STORE_ITEMS).forEach((item) => {
+    const button = elements.storeGrid.querySelector(`[data-store-item="${item.id}"]`);
+    if (!button) {
       return;
     }
 
-    const activeSpins = getStoreBuffSpins(item.id);
-    button.classList.toggle("active-buff", activeSpins > 0);
+    const remaining = getStoreBuffSpins(item.id);
+    button.classList.toggle("active-buff", remaining > 0);
     button.disabled = state.isSpinning || state.autoSpin || state.balance < item.cost;
-  });
 
-  const refundRate = Math.round(getStoreRefundRate() * 100);
-  const refundText = refundRate > 0 ? ` • ${refundRate}% refund armed` : "";
-  elements.storeStatus.textContent = `Active buffs: ${getActiveStoreBuffSummary()}${refundText}`;
+    const remainingLabel = button.querySelector(`[data-remaining-for="${item.id}"]`);
+    if (remainingLabel) {
+      remainingLabel.textContent = remaining > 0
+        ? `${remaining} spins live`
+        : `${item.spins} spins per buy`;
+    }
+  });
+}
+
+function renderDailyGrantState() {
+  if (canClaimDaily()) {
+    elements.dailyGrantButton.disabled = false;
+    elements.dailyGrantButton.textContent = `Claim Daily +${formatNumber(DAILY_GRANT_AMOUNT)} VC`;
+    return;
+  }
+
+  const waitMs = msUntilNextLocalDay();
+  elements.dailyGrantButton.disabled = true;
+  elements.dailyGrantButton.textContent = `Next Daily In ${formatDuration(waitMs)}`;
+}
+
+function renderLog() {
+  elements.logList.innerHTML = "";
+
+  if (!state.winLog.length) {
+    const item = document.createElement("li");
+    item.className = "empty";
+    item.textContent = "No gains yet. The machine is currently in smug mode.";
+    elements.logList.appendChild(item);
+    return;
+  }
+
+  state.winLog.forEach((entry) => {
+    const item = document.createElement("li");
+    const time = new Date(entry.ts).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+
+    item.innerHTML = `
+      <span class="log-emoji">${entry.emoji}</span>
+      <div class="log-copy">
+        <strong>+${formatNumber(entry.amount)} VC</strong>
+        <p>${entry.label}${entry.multiplier ? ` • x${entry.multiplier.toFixed(2)}` : ""}</p>
+      </div>
+      <span class="log-time">${time}</span>
+    `;
+
+    elements.logList.appendChild(item);
+  });
+}
+
+function renderRules() {
+  elements.rulesList.innerHTML = "";
+
+  const bestTriples = Object.entries(MACHINE.triples)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 6)
+    .map(([symbol, multiplier]) => `3x ${symbol} = x${multiplier.toFixed(2)} base payout`);
+
+  const rows = [
+    ...bestTriples,
+    `Any pair = x${MACHINE.pairMultiplier.toFixed(2)} base payout`,
+    `House machine edge bonus = +${Math.round(MACHINE.machineBonus * 100)}%`,
+    "Streak bonus = +7% per consecutive win (max +42%)",
+    "Lucky Charge = +9% after each loss (max +78%)",
+    "Store perks: Lucky Chance, Streak Heat, Multiplier Fuel, Refund Firewall",
+  ];
+
+  rows.forEach((row) => {
+    const li = document.createElement("li");
+    li.textContent = row;
+    elements.rulesList.appendChild(li);
+  });
 }
 
 let tensionAnimationFrame = 0;
@@ -405,6 +491,7 @@ function animateSpinTension(durationMs) {
   const tick = (now) => {
     const progress = ((now - start) / durationMs) * 100;
     setSpinProgress(progress);
+
     if (state.isSpinning && progress < 100) {
       tensionAnimationFrame = requestAnimationFrame(tick);
     } else {
@@ -423,82 +510,13 @@ function animateSpinTension(durationMs) {
   };
 }
 
-function renderDailyGrantState() {
-  if (canClaimDaily()) {
-    elements.dailyGrantButton.disabled = false;
-    elements.dailyGrantButton.textContent = `Claim Daily +${formatNumber(DAILY_GRANT_AMOUNT)} VC`;
-    return;
-  }
-
-  const waitMs = msUntilNextLocalDay();
-  elements.dailyGrantButton.disabled = true;
-  elements.dailyGrantButton.textContent = `Next Daily In ${formatDuration(waitMs)}`;
-}
-
-function renderLog() {
-  elements.logList.innerHTML = "";
-
-  if (!state.log.length) {
-    const empty = document.createElement("li");
-    empty.textContent = "No spins yet.";
-    elements.logList.appendChild(empty);
-    return;
-  }
-
-  state.log.forEach((entry) => {
-    const item = document.createElement("li");
-    const isNegative = entry.type === "loss" || entry.type === "purchase";
-    item.classList.add(isNegative ? "loss" : "win");
-
-    const time = new Date(entry.ts).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
-    if (entry.type === "grant") {
-      item.textContent = `DAILY +${formatNumber(entry.delta)} VC • ${time}`;
-    } else if (entry.type === "purchase") {
-      item.textContent = `STORE ${entry.label} ${formatSignedNumber(entry.delta)} VC • ${time}`;
-    } else if (entry.type === "win") {
-      item.textContent = `WIN +${formatNumber(entry.basePayout || entry.payout)} VC (net ${formatSignedNumber(entry.delta)}) • ${entry.symbols} • ${time}`;
-    } else {
-      const refundText = entry.refund > 0 ? ` (refund +${formatNumber(entry.refund)} VC)` : "";
-      item.textContent = `LOSS ${formatSignedNumber(entry.delta)} VC${refundText} • ${entry.symbols} • ${time}`;
-    }
-
-    elements.logList.appendChild(item);
-  });
-}
-
-function renderRules(machine) {
-  elements.rulesList.innerHTML = "";
-
-  const tripleRows = Object.entries(machine.triples)
-    .sort((a, b) => b[1] - a[1])
-    .slice(0, 5)
-    .map(([symbol, multiplier]) => `3x ${symbol} = x${multiplier.toFixed(2)} base`);
-
-  const rows = [
-    ...tripleRows,
-    `Any pair = x${machine.pairMultiplier.toFixed(2)} base`,
-    `Streak bonus: +6% per consecutive win (max +36%)`,
-    `Lucky Charge: +8% per loss (max +75%)`,
-    `Machine bonus: +${Math.round(machine.machineBonus * 100)}%`,
-    `Store • Luck Patch: +12% symbol luck for 12 spins`,
-    `Store • Payout Surge: +18% payout multiplier for 10 spins`,
-    `Store • Refund Shield: 35% bet refund on losses for 12 spins`,
-  ];
-
-  rows.forEach((text) => {
-    const li = document.createElement("li");
-    li.textContent = text;
-    elements.rulesList.appendChild(li);
-  });
-}
-
 async function spinOnce() {
   if (state.isSpinning) {
     return false;
   }
 
   if (state.balance < state.currentBet) {
-    state.lastResult = "Insufficient VC for this bet. Lower the bet or claim your daily grant.";
+    setStatus("Insufficient VC for this bet. Claim daily VC or lower the burn rate.", "loss");
     renderAll();
     persist();
     return false;
@@ -506,35 +524,53 @@ async function spinOnce() {
 
   state.isSpinning = true;
   state.spinProgress = 0;
+  state.spins += 1;
   state.totalSpent += state.currentBet;
   state.balance -= state.currentBet;
-  state.spins += 1;
-  state.lastResult = "Reels spinning...";
+
+  setStatus(
+    pickRandom(SPIN_START_QUIPS).replace("{bet}", formatNumber(state.currentBet)),
+    "neutral"
+  );
+
   elements.machineShell.classList.add("spinning");
   renderAll();
   persist();
 
-  const machine = getActiveMachine();
-  const reelDurations = reels.map((_, index) => 560 + index * 220);
-  const totalSpinDuration = reelDurations[reelDurations.length - 1] + 260;
+  const finalSymbols = reels.map(() => sampleWeightedSymbol());
+  const reelDurations = reels.map((_, index) => 1500 + index * 360 + Math.floor(Math.random() * 140));
+  const reelDelayStep = 80;
+  const totalSpinDuration = reelDurations[reelDurations.length - 1] + reelDelayStep * (reels.length - 1);
 
   triggerFlash();
-  screenShake(6, 240);
-  const stopTensionAudio = playTensionRamp(totalSpinDuration + 320);
-  const stopTensionBar = animateSpinTension(totalSpinDuration + 140);
+  screenShake(5, 240);
+  playLeverPull();
 
-  const finalSymbols = [];
-  for (let index = 0; index < reels.length; index += 1) {
-    const symbol = await animateReel(reels[index], machine, reelDurations[index]);
-    finalSymbols.push(symbol);
-    playReelStopTone(index);
-    screenShake(4 + index, 130);
-  }
+  const stopSpinBed = playReelSpinBed(totalSpinDuration + 240);
+  const stopTicks = playSpinTickLoop(totalSpinDuration + 200);
+  const stopTensionAudio = playTensionRamp(totalSpinDuration + 280);
+  const stopTensionBar = animateSpinTension(totalSpinDuration + 120);
+
+  const landedSymbols = await Promise.all(
+    reels.map((reel, index) =>
+      animateReelToSymbol(
+        reel,
+        index,
+        finalSymbols[index],
+        reelDurations[index],
+        index * reelDelayStep
+      )
+    )
+  );
+
+  stopSpinBed();
+  stopTicks();
   stopTensionAudio();
   stopTensionBar();
 
-  const outcome = scoreSpin(finalSymbols, machine);
-  state.lastSymbols = finalSymbols;
+  state.lastSymbols = landedSymbols;
+
+  const outcome = scoreSpin(landedSymbols);
   let refund = 0;
 
   if (outcome.payout > 0) {
@@ -543,47 +579,85 @@ async function spinOnce() {
     state.wins += 1;
     state.winStreak += 1;
     state.luckyCharge = 0;
-    state.lastResult = `${outcome.label} +${formatNumber(outcome.payout)} VC (x${outcome.finalMultiplier.toFixed(2)}).`;
 
-    triggerWinFx(outcome.finalMultiplier);
+    setStatus(
+      pickRandom(WIN_QUIPS)
+        .replace("{label}", outcome.label)
+        .replace("{payout}", formatNumber(outcome.payout))
+        .replace("{mult}", outcome.finalMultiplier.toFixed(2)),
+      "win"
+    );
+
+    triggerWinFx(outcome.finalMultiplier, outcome.isJackpot);
+
+    addGainLogEntry({
+      emoji: outcome.isJackpot ? "🎇" : "🤑",
+      amount: outcome.payout,
+      label: `${outcome.label} • ${landedSymbols.join(" ")}`,
+      multiplier: outcome.finalMultiplier,
+      ts: Date.now(),
+    });
 
     if (outcome.payout > state.biggestWin) {
       state.biggestWin = outcome.payout;
       showBiggestWinBanner(outcome.payout, outcome.finalMultiplier);
-      burstFireworks(26);
+      burstFireworks(outcome.isJackpot ? 44 : 30);
     }
   } else {
     state.losses += 1;
-    state.winStreak = 0;
+
+    if (getStoreBuffSpins("streakHeat") > 0) {
+      state.winStreak = Math.max(0, state.winStreak - 1);
+    } else {
+      state.winStreak = 0;
+    }
+
     state.luckyCharge = Math.min(MAX_LUCKY_CHARGE, state.luckyCharge + LUCKY_GAIN_PER_LOSS);
+
     const refundRate = getStoreRefundRate();
     if (refundRate > 0) {
       refund = Math.floor(state.currentBet * refundRate);
       state.balance += refund;
       state.totalWon += refund;
+
+      addGainLogEntry({
+        emoji: "🧯",
+        amount: refund,
+        label: "Refund Firewall rebate",
+        multiplier: null,
+        ts: Date.now(),
+      });
     }
+
     const netLoss = state.currentBet - refund;
-    state.lastResult = refund > 0
-      ? `${outcome.label} -${formatNumber(netLoss)} VC after ${formatNumber(refund)} VC refund.`
-      : `${outcome.label} -${formatNumber(state.currentBet)} VC. Lucky Charge increased.`;
+
+    if (refund > 0) {
+      setStatus(
+        pickRandom(LOSS_REFUND_QUIPS)
+          .replace("{loss}", formatNumber(netLoss)),
+        "loss"
+      );
+    } else {
+      setStatus(
+        pickRandom(LOSS_QUIPS)
+          .replace("{loss}", formatNumber(state.currentBet)),
+        "loss"
+      );
+    }
+
     triggerLossFx();
   }
 
   consumeStoreBuffSpin();
 
-  addLogEntry({
-    type: outcome.payout > 0 ? "win" : "loss",
-    delta: outcome.payout + refund - state.currentBet,
-    payout: outcome.payout + refund,
-    basePayout: outcome.payout,
-    refund,
-    bet: state.currentBet,
-    symbols: finalSymbols.join(" "),
-    ts: Date.now(),
-  });
-
   state.isSpinning = false;
   elements.machineShell.classList.remove("spinning");
+
+  if (state.autoSpinStopRequested) {
+    state.autoSpin = false;
+    state.autoSpinStopRequested = false;
+  }
+
   setTimeout(() => {
     if (!state.isSpinning) {
       state.spinProgress = 0;
@@ -591,14 +665,159 @@ async function spinOnce() {
     }
   }, TENSION_COOLDOWN_MS);
 
-  if (state.autoSpinStopRequested) {
-    state.autoSpin = false;
-    state.autoSpinStopRequested = false;
-  }
-
   renderAll();
   persist();
   return true;
+}
+
+function scoreSpin(symbols) {
+  const counts = new Map();
+  symbols.forEach((symbol) => {
+    counts.set(symbol, (counts.get(symbol) || 0) + 1);
+  });
+
+  const entries = [...counts.entries()].sort((a, b) => b[1] - a[1]);
+  const [topSymbol, topCount] = entries[0];
+
+  let baseMultiplier = 0;
+  let label = "No payout.";
+
+  if (topCount === 3) {
+    baseMultiplier = MACHINE.triples[topSymbol] || 5;
+    label = `Triple ${topSymbol}`;
+  } else if (topCount === 2) {
+    baseMultiplier = MACHINE.pairMultiplier;
+    label = `Pair ${topSymbol}`;
+  }
+
+  if (baseMultiplier <= 0) {
+    return {
+      payout: 0,
+      finalMultiplier: 0,
+      label,
+      isJackpot: false,
+    };
+  }
+
+  const perkMultiplier = getPerkMultiplier();
+  const finalMultiplier = baseMultiplier * perkMultiplier;
+  const payout = Math.floor(state.currentBet * finalMultiplier);
+  const isJackpot = topCount === 3 && (topSymbol === "💎" || topSymbol === "🎰" || finalMultiplier >= 20);
+
+  return {
+    payout,
+    finalMultiplier,
+    label,
+    isJackpot,
+  };
+}
+
+function buildReelStrip(startSymbol, finalSymbol, randomCount) {
+  const strip = [startSymbol];
+
+  for (let i = 0; i < randomCount; i += 1) {
+    strip.push(sampleWeightedSymbol());
+  }
+
+  strip.push(finalSymbol);
+  return strip;
+}
+
+function symbolCellHtml(symbol) {
+  return `<div class="symbol-cell">${symbol}</div>`;
+}
+
+function renderStaticSymbol(track, symbol) {
+  track.style.transition = "none";
+  track.style.transform = "translate3d(0, 0, 0)";
+  track.innerHTML = symbolCellHtml(symbol);
+}
+
+function animateReelToSymbol(reel, reelIndex, finalSymbol, durationMs, delayMs) {
+  return new Promise((resolve) => {
+    const startSymbol = state.lastSymbols[reelIndex] || sampleWeightedSymbol();
+    const strip = buildReelStrip(startSymbol, finalSymbol, 20 + reelIndex * 4 + Math.floor(Math.random() * 6));
+
+    reel.track.style.transition = "none";
+    reel.track.style.transform = "translate3d(0, 0, 0)";
+    reel.track.innerHTML = strip.map((symbol) => symbolCellHtml(symbol)).join("");
+    reel.column.classList.remove("lock-hit");
+
+    const cellHeight = reel.window.clientHeight || 96;
+    const finalIndex = strip.length - 1;
+    const targetY = -finalIndex * cellHeight;
+
+    const begin = () => {
+      reel.column.classList.add("is-spinning");
+      reel.track.style.transition = `transform ${durationMs}ms cubic-bezier(0.11, 0.78, 0.16, 1)`;
+      reel.track.style.transform = `translate3d(0, ${targetY}px, 0)`;
+    };
+
+    const startTimer = window.setTimeout(() => {
+      requestAnimationFrame(begin);
+    }, delayMs);
+
+    let done = false;
+    let fallbackTimer = 0;
+
+    const finish = () => {
+      if (done) {
+        return;
+      }
+
+      done = true;
+      window.clearTimeout(startTimer);
+      window.clearTimeout(fallbackTimer);
+      reel.track.removeEventListener("transitionend", onEnd);
+
+      reel.column.classList.remove("is-spinning");
+      reel.column.classList.add("lock-hit");
+      renderStaticSymbol(reel.track, finalSymbol);
+      playReelStopClick(reelIndex);
+      screenShake(3 + reelIndex, 130);
+
+      setTimeout(() => {
+        reel.column.classList.remove("lock-hit");
+      }, 150);
+
+      resolve(finalSymbol);
+    };
+
+    const onEnd = (event) => {
+      if (event.target !== reel.track || event.propertyName !== "transform") {
+        return;
+      }
+      finish();
+    };
+
+    reel.track.addEventListener("transitionend", onEnd);
+    fallbackTimer = window.setTimeout(finish, delayMs + durationMs + 120);
+  });
+}
+
+function sampleWeightedSymbol() {
+  const luckBoost = getStoreLuckBonus();
+
+  const adjustedWeights = MACHINE.weights.map((weight, index) => {
+    const highTier = index >= MACHINE.weights.length - 3;
+    if (!highTier || luckBoost <= 0) {
+      return weight;
+    }
+
+    return weight * (1 + luckBoost * 2);
+  });
+
+  const totalWeight = adjustedWeights.reduce((sum, weight) => sum + weight, 0);
+  let roll = Math.random() * totalWeight;
+
+  for (let index = 0; index < MACHINE.symbols.length; index += 1) {
+    roll -= adjustedWeights[index];
+    if (roll <= 0) {
+      return MACHINE.symbols[index];
+    }
+  }
+
+  return MACHINE.symbols[MACHINE.symbols.length - 1];
 }
 
 async function startAutoSpin() {
@@ -607,7 +826,7 @@ async function startAutoSpin() {
   }
 
   if (state.balance < state.currentBet) {
-    state.lastResult = "Autospin unavailable: not enough VC for the selected bet.";
+    setStatus("Autospin blocked: bankroll too low for this burn rate.", "loss");
     renderAll();
     persist();
     return;
@@ -615,7 +834,7 @@ async function startAutoSpin() {
 
   state.autoSpin = true;
   state.autoSpinStopRequested = false;
-  state.lastResult = "Autospin engaged. Press Stop any time.";
+  setStatus("Autospin engaged. Delegating your bankroll to an unsupervised agent.", "neutral");
   renderAll();
   persist();
 
@@ -629,14 +848,14 @@ async function startAutoSpin() {
       break;
     }
 
-    await sleep(80);
+    await sleep(70);
   }
 
   state.autoSpin = false;
   state.autoSpinStopRequested = false;
 
   if (state.balance < state.currentBet) {
-    state.lastResult = "Autospin paused: insufficient VC for current bet.";
+    setStatus("Autospin paused: wallet exhausted for current bet.", "loss");
   }
 
   renderAll();
@@ -644,33 +863,20 @@ async function startAutoSpin() {
 }
 
 function stopAutoSpin() {
-  if (!state.autoSpin && !state.isSpinning) {
+  if (!state.autoSpin) {
     return;
   }
 
   state.autoSpin = false;
   state.autoSpinStopRequested = true;
-  state.lastResult = "Autospin stop requested.";
-  renderAll();
-  persist();
-}
-
-function cycleMachine(step) {
-  if (state.isSpinning) {
-    return;
-  }
-
-  state.machineIndex = clampMachineIndex(state.machineIndex + step);
-  const machine = getActiveMachine();
-  state.lastSymbols = machine.symbols.slice(0, 3);
-  state.lastResult = `Switched to ${machine.name}.`;
+  setStatus("Autospin stop queued. Current spin will hard-lock and halt.", "neutral");
   renderAll();
   persist();
 }
 
 function claimDailyGrant() {
   if (!canClaimDaily()) {
-    state.lastResult = "Daily grant already claimed. Come back at local midnight.";
+    setStatus("Daily VC already claimed. Come back after local midnight.", "loss");
     renderAll();
     persist();
     return;
@@ -678,20 +884,30 @@ function claimDailyGrant() {
 
   state.balance += DAILY_GRANT_AMOUNT;
   state.lastDailyClaim = getTodayKey();
-  state.lastResult = `Daily grant claimed: +${formatNumber(DAILY_GRANT_AMOUNT)} VC.`;
 
-  addLogEntry({
-    type: "grant",
-    delta: DAILY_GRANT_AMOUNT,
-    payout: DAILY_GRANT_AMOUNT,
-    bet: 0,
-    symbols: "Daily Grant",
+  setStatus(`Daily stipend injected: +${formatNumber(DAILY_GRANT_AMOUNT)} VC from the venture capital fairy.`, "win");
+
+  addGainLogEntry({
+    emoji: "💸",
+    amount: DAILY_GRANT_AMOUNT,
+    label: "Daily VC stipend",
+    multiplier: null,
     ts: Date.now(),
   });
 
   triggerFlash();
-  screenShake(4, 220);
+  burstConfetti(18, {
+    layer: elements.globalConfettiLayer,
+    leftMin: 10,
+    leftRange: 80,
+    topMin: 0,
+    topRange: 10,
+    drift: 300,
+    drop: Math.max(window.innerHeight * 0.88, 420),
+    lifetime: 1080,
+  });
   playGrantTone();
+  screenShake(4, 220);
   renderAll();
   persist();
 }
@@ -703,7 +919,7 @@ function purchaseStoreItem(itemId) {
   }
 
   if (state.balance < item.cost) {
-    state.lastResult = `Not enough VC for ${item.name}.`;
+    setStatus(`Not enough VC for ${item.name}. The model says "insufficient context window".`, "loss");
     renderAll();
     persist();
     return;
@@ -712,19 +928,11 @@ function purchaseStoreItem(itemId) {
   state.balance -= item.cost;
   state.totalSpent += item.cost;
   state.storeBuffs[item.id] = getStoreBuffSpins(item.id) + item.spins;
-  state.lastResult = `${item.name} purchased for ${formatNumber(item.cost)} VC. ${item.spins} spins loaded.`;
 
-  addLogEntry({
-    type: "purchase",
-    label: item.name,
-    delta: -item.cost,
-    payout: 0,
-    basePayout: 0,
-    refund: 0,
-    bet: 0,
-    symbols: "Store",
-    ts: Date.now(),
-  });
+  setStatus(
+    pickRandom(PURCHASE_QUIPS).replace("{perk}", item.name),
+    "neutral"
+  );
 
   triggerFlash();
   playStorePurchaseTone();
@@ -751,105 +959,38 @@ function getTodayKey() {
   return `${year}-${month}-${day}`;
 }
 
-function scoreSpin(symbols, machine) {
-  const counts = new Map();
-  symbols.forEach((symbol) => {
-    counts.set(symbol, (counts.get(symbol) || 0) + 1);
-  });
+function addGainLogEntry(entry) {
+  state.winLog.unshift(entry);
 
-  const entries = [...counts.entries()].sort((a, b) => b[1] - a[1]);
-  const [topSymbol, topCount] = entries[0];
-
-  let baseMultiplier = 0;
-  let label = "No payout.";
-
-  if (topCount === 3) {
-    baseMultiplier = machine.triples[topSymbol] || 5;
-    label = `Triple ${topSymbol}!`;
-  } else if (topCount === 2) {
-    baseMultiplier = machine.pairMultiplier;
-    label = `Pair hit (${topSymbol}).`;
+  if (state.winLog.length > MAX_LOG_ITEMS) {
+    state.winLog.length = MAX_LOG_ITEMS;
   }
-
-  if (baseMultiplier <= 0) {
-    return {
-      payout: 0,
-      finalMultiplier: 0,
-      label,
-    };
-  }
-
-  const perkMultiplier = getPerkMultiplier();
-  const finalMultiplier = baseMultiplier * perkMultiplier;
-  const payout = Math.floor(state.currentBet * finalMultiplier);
-
-  return {
-    payout,
-    finalMultiplier,
-    label,
-  };
 }
 
-async function animateReel(reel, machine, durationMs) {
-  reel.classList.add("is-spinning");
-  const start = performance.now();
-  let softDuration = durationMs;
-
-  while (performance.now() - start < softDuration) {
-    reel.textContent = sampleWeightedSymbol(machine);
-    await sleep(42);
-
-    if (state.autoSpinStopRequested) {
-      softDuration = Math.min(softDuration, performance.now() - start + 75);
-    }
-  }
-
-  const finalSymbol = sampleWeightedSymbol(machine);
-  reel.textContent = finalSymbol;
-  reel.classList.remove("is-spinning");
-  return finalSymbol;
-}
-
-function sampleWeightedSymbol(machine) {
-  const luckBoost = getStoreLuckBonus();
-  const boostedWeights = machine.weights.map((weight, index) => {
-    if (luckBoost <= 0) {
-      return weight;
-    }
-
-    const isHighTier = index >= machine.weights.length - 2;
-    return isHighTier ? weight * (1 + luckBoost * 1.8) : weight;
-  });
-
-  const totalWeight = boostedWeights.reduce((sum, weight) => sum + weight, 0);
-  let roll = Math.random() * totalWeight;
-
-  for (let index = 0; index < machine.symbols.length; index += 1) {
-    roll -= boostedWeights[index];
-    if (roll <= 0) {
-      return machine.symbols[index];
-    }
-  }
-
-  return machine.symbols[machine.symbols.length - 1];
-}
-
-function triggerWinFx(multiplier) {
+function triggerWinFx(multiplier, isJackpot) {
   triggerFlash();
-  burstConfetti(30);
-  burstConfetti(96, {
+
+  burstConfetti(32);
+  burstConfetti(isJackpot ? 180 : 120, {
     layer: elements.globalConfettiLayer,
     leftMin: 2,
     leftRange: 96,
     topMin: 0,
-    topRange: 20,
-    drift: 340,
-    drop: Math.max(window.innerHeight * 0.92, 420),
-    lifetime: 1150,
+    topRange: 16,
+    drift: 360,
+    drop: Math.max(window.innerHeight * 0.94, 460),
+    lifetime: 1200,
   });
+
   burstMultiplier(multiplier);
-  screenShake(8, 320);
-  playWinStinger();
+  screenShake(isJackpot ? 12 : 8, isJackpot ? 420 : 320);
+
+  if (isJackpot) {
+    burstFireworks(46);
+    playJackpotFanfare();
+  } else {
+    playCoinClinkBurst(multiplier);
+  }
 }
 
 function triggerLossFx() {
@@ -866,13 +1007,13 @@ function triggerFlash() {
 function burstConfetti(count, options = {}) {
   const {
     layer = elements.confettiLayer,
-    leftMin = 10,
-    leftRange = 80,
-    topMin = 2,
-    topRange = 18,
-    drift = 280,
+    leftMin = 12,
+    leftRange = 76,
+    topMin = 3,
+    topRange = 16,
+    drift = 260,
     drop = 220,
-    lifetime = 950,
+    lifetime = 980,
   } = options;
 
   for (let index = 0; index < count; index += 1) {
@@ -880,7 +1021,7 @@ function burstConfetti(count, options = {}) {
     particle.className = "confetti";
     particle.style.left = `${leftMin + Math.random() * leftRange}%`;
     particle.style.top = `${topMin + Math.random() * topRange}%`;
-    particle.style.background = `hsl(${Math.floor(Math.random() * 360)} 98% 66%)`;
+    particle.style.background = `hsl(${Math.floor(16 + Math.random() * 78)} 96% 63%)`;
     particle.style.setProperty("--x", `${(Math.random() - 0.5) * drift}px`);
     particle.style.setProperty("--drop", `${drop}px`);
     layer.appendChild(particle);
@@ -895,16 +1036,16 @@ function burstFireworks(count) {
   for (let index = 0; index < count; index += 1) {
     const sparkle = document.createElement("span");
     sparkle.className = "firework";
-    sparkle.style.left = `${15 + Math.random() * 70}%`;
+    sparkle.style.left = `${14 + Math.random() * 72}%`;
     sparkle.style.top = `${8 + Math.random() * 56}%`;
-    sparkle.style.background = `hsl(${Math.floor(20 + Math.random() * 60)} 100% 70%)`;
-    sparkle.style.setProperty("--x", `${(Math.random() - 0.5) * 180}px`);
-    sparkle.style.setProperty("--y", `${(Math.random() - 0.5) * 180}px`);
+    sparkle.style.background = `hsl(${Math.floor(20 + Math.random() * 62)} 100% 70%)`;
+    sparkle.style.setProperty("--x", `${(Math.random() - 0.5) * 210}px`);
+    sparkle.style.setProperty("--y", `${(Math.random() - 0.5) * 210}px`);
     elements.fireworksLayer.appendChild(sparkle);
 
     setTimeout(() => {
       sparkle.remove();
-    }, 760);
+    }, 800);
   }
 }
 
@@ -916,7 +1057,7 @@ function burstMultiplier(multiplier) {
 
   setTimeout(() => {
     bubble.remove();
-  }, 740);
+  }, 780);
 }
 
 let biggestBannerTimer = 0;
@@ -935,33 +1076,18 @@ function showBiggestWinBanner(payout, multiplier) {
 }
 
 function screenShake(intensity, durationMs) {
-  elements.machineShell.style.setProperty("--shake-intensity", `${intensity}px`);
-  elements.machineShell.classList.remove("shake");
-  void elements.machineShell.offsetWidth;
-  elements.machineShell.classList.add("shake");
+  elements.appShell.style.setProperty("--shake-intensity", `${intensity}px`);
+  elements.appShell.classList.remove("shake");
+  void elements.appShell.offsetWidth;
+  elements.appShell.classList.add("shake");
 
   setTimeout(() => {
-    elements.machineShell.classList.remove("shake");
+    elements.appShell.classList.remove("shake");
   }, durationMs);
-}
-
-function addLogEntry(entry) {
-  state.log.unshift(entry);
-  if (state.log.length > MAX_LOG_ITEMS) {
-    state.log.length = MAX_LOG_ITEMS;
-  }
 }
 
 function formatVc(value) {
   return `${formatNumber(value)} VC`;
-}
-
-function formatSignedVc(value) {
-  return `${value >= 0 ? "+" : "-"}${formatNumber(Math.abs(value))} VC`;
-}
-
-function formatSignedNumber(value) {
-  return `${value >= 0 ? "+" : "-"}${formatNumber(Math.abs(value))}`;
 }
 
 function formatNumber(value) {
@@ -975,6 +1101,10 @@ function formatDuration(ms) {
   return `${String(hours).padStart(2, "0")}h ${String(minutes).padStart(2, "0")}m`;
 }
 
+function pickRandom(list) {
+  return list[Math.floor(Math.random() * list.length)] || "";
+}
+
 function sleep(ms) {
   return new Promise((resolve) => {
     setTimeout(resolve, ms);
@@ -983,6 +1113,7 @@ function sleep(ms) {
 
 const sound = {
   context: null,
+  noiseBuffer: null,
 };
 
 function getAudioContext() {
@@ -1002,65 +1133,19 @@ function getAudioContext() {
   return sound.context;
 }
 
-function playTensionRamp(durationMs) {
-  const ctx = getAudioContext();
-  if (!ctx) {
-    return () => {};
+function getNoiseBuffer(ctx) {
+  if (sound.noiseBuffer) {
+    return sound.noiseBuffer;
   }
 
-  const oscillator = ctx.createOscillator();
-  const gainNode = ctx.createGain();
-  oscillator.type = "sawtooth";
+  const buffer = ctx.createBuffer(1, ctx.sampleRate * 2, ctx.sampleRate);
+  const data = buffer.getChannelData(0);
+  for (let i = 0; i < data.length; i += 1) {
+    data[i] = (Math.random() * 2 - 1) * 0.9;
+  }
 
-  const now = ctx.currentTime;
-  const end = now + durationMs / 1000;
-
-  oscillator.frequency.setValueAtTime(130, now);
-  oscillator.frequency.exponentialRampToValueAtTime(420, end);
-
-  gainNode.gain.setValueAtTime(0.0001, now);
-  gainNode.gain.exponentialRampToValueAtTime(0.05, now + 0.08);
-  gainNode.gain.exponentialRampToValueAtTime(0.0001, end);
-
-  oscillator.connect(gainNode);
-  gainNode.connect(ctx.destination);
-  oscillator.start(now);
-
-  let stopped = false;
-  return () => {
-    if (stopped) {
-      return;
-    }
-    stopped = true;
-    const stopAt = ctx.currentTime + 0.08;
-    gainNode.gain.cancelScheduledValues(ctx.currentTime);
-    gainNode.gain.exponentialRampToValueAtTime(0.0001, stopAt);
-    oscillator.stop(stopAt + 0.02);
-  };
-}
-
-function playReelStopTone(index) {
-  playTone(280 + index * 85, 0.06, "triangle", 0.05);
-}
-
-function playWinStinger() {
-  playTone(520, 0.08, "square", 0.05, 0.02);
-  playTone(680, 0.12, "triangle", 0.055, 0.08);
-  playTone(840, 0.15, "sine", 0.06, 0.13);
-}
-
-function playLossTone() {
-  playTone(230, 0.1, "sawtooth", 0.04, 0);
-}
-
-function playGrantTone() {
-  playTone(480, 0.08, "triangle", 0.05, 0);
-  playTone(720, 0.1, "sine", 0.05, 0.06);
-}
-
-function playStorePurchaseTone() {
-  playTone(360, 0.08, "triangle", 0.045, 0);
-  playTone(540, 0.11, "sine", 0.05, 0.06);
+  sound.noiseBuffer = buffer;
+  return sound.noiseBuffer;
 }
 
 function playTone(frequency, duration, type, peak, delay = 0) {
@@ -1077,11 +1162,254 @@ function playTone(frequency, duration, type, peak, delay = 0) {
   oscillator.frequency.setValueAtTime(frequency, start);
 
   gainNode.gain.setValueAtTime(0.0001, start);
-  gainNode.gain.exponentialRampToValueAtTime(Math.max(peak, 0.0002), start + 0.01);
+  gainNode.gain.exponentialRampToValueAtTime(Math.max(peak, 0.0002), start + 0.012);
   gainNode.gain.exponentialRampToValueAtTime(0.0001, start + duration);
 
   oscillator.connect(gainNode);
   gainNode.connect(ctx.destination);
   oscillator.start(start);
   oscillator.stop(start + duration + 0.03);
+}
+
+function playToneSweep(fromFrequency, toFrequency, duration, type, peak, delay = 0) {
+  const ctx = getAudioContext();
+  if (!ctx) {
+    return;
+  }
+
+  const oscillator = ctx.createOscillator();
+  const gainNode = ctx.createGain();
+  const start = ctx.currentTime + delay;
+  const end = start + duration;
+
+  oscillator.type = type;
+  oscillator.frequency.setValueAtTime(fromFrequency, start);
+  oscillator.frequency.exponentialRampToValueAtTime(Math.max(toFrequency, 20), end);
+
+  gainNode.gain.setValueAtTime(0.0001, start);
+  gainNode.gain.exponentialRampToValueAtTime(Math.max(peak, 0.0002), start + 0.015);
+  gainNode.gain.exponentialRampToValueAtTime(0.0001, end);
+
+  oscillator.connect(gainNode);
+  gainNode.connect(ctx.destination);
+  oscillator.start(start);
+  oscillator.stop(end + 0.03);
+}
+
+function playNoiseBurst(duration, peak, fromFreq, toFreq, delay = 0) {
+  const ctx = getAudioContext();
+  if (!ctx) {
+    return;
+  }
+
+  const source = ctx.createBufferSource();
+  source.buffer = getNoiseBuffer(ctx);
+
+  const filter = ctx.createBiquadFilter();
+  filter.type = "bandpass";
+
+  const gainNode = ctx.createGain();
+  const start = ctx.currentTime + delay;
+  const end = start + duration;
+
+  filter.frequency.setValueAtTime(fromFreq, start);
+  filter.frequency.exponentialRampToValueAtTime(Math.max(toFreq, 40), end);
+  filter.Q.setValueAtTime(0.9, start);
+
+  gainNode.gain.setValueAtTime(0.0001, start);
+  gainNode.gain.exponentialRampToValueAtTime(Math.max(peak, 0.0002), start + 0.006);
+  gainNode.gain.exponentialRampToValueAtTime(0.0001, end);
+
+  source.connect(filter);
+  filter.connect(gainNode);
+  gainNode.connect(ctx.destination);
+
+  source.start(start);
+  source.stop(end + 0.02);
+}
+
+function playLeverPull() {
+  playToneSweep(220, 92, 0.14, "triangle", 0.055, 0);
+  playNoiseBurst(0.08, 0.045, 1400, 320, 0);
+  playTone(84, 0.09, "sine", 0.03, 0.045);
+}
+
+function playReelSpinBed(durationMs) {
+  const ctx = getAudioContext();
+  if (!ctx) {
+    return () => {};
+  }
+
+  const now = ctx.currentTime;
+  const end = now + durationMs / 1000;
+
+  const noise = ctx.createBufferSource();
+  noise.buffer = getNoiseBuffer(ctx);
+  noise.loop = true;
+
+  const noiseFilter = ctx.createBiquadFilter();
+  noiseFilter.type = "bandpass";
+  noiseFilter.frequency.setValueAtTime(520, now);
+  noiseFilter.frequency.linearRampToValueAtTime(430, end);
+  noiseFilter.Q.setValueAtTime(0.75, now);
+
+  const noiseGain = ctx.createGain();
+  noiseGain.gain.setValueAtTime(0.0001, now);
+  noiseGain.gain.linearRampToValueAtTime(0.03, now + 0.1);
+  noiseGain.gain.linearRampToValueAtTime(0.018, end);
+
+  const rumble = ctx.createOscillator();
+  rumble.type = "sawtooth";
+  rumble.frequency.setValueAtTime(58, now);
+  rumble.frequency.linearRampToValueAtTime(72, end);
+
+  const rumbleGain = ctx.createGain();
+  rumbleGain.gain.setValueAtTime(0.0001, now);
+  rumbleGain.gain.linearRampToValueAtTime(0.012, now + 0.08);
+  rumbleGain.gain.linearRampToValueAtTime(0.0001, end + 0.1);
+
+  noise.connect(noiseFilter);
+  noiseFilter.connect(noiseGain);
+  noiseGain.connect(ctx.destination);
+
+  rumble.connect(rumbleGain);
+  rumbleGain.connect(ctx.destination);
+
+  noise.start(now);
+  rumble.start(now);
+
+  let stopped = false;
+  return () => {
+    if (stopped) {
+      return;
+    }
+
+    stopped = true;
+    const stopAt = ctx.currentTime + 0.1;
+    noiseGain.gain.cancelScheduledValues(ctx.currentTime);
+    noiseGain.gain.exponentialRampToValueAtTime(0.0001, stopAt);
+
+    rumbleGain.gain.cancelScheduledValues(ctx.currentTime);
+    rumbleGain.gain.exponentialRampToValueAtTime(0.0001, stopAt);
+
+    noise.stop(stopAt + 0.03);
+    rumble.stop(stopAt + 0.04);
+  };
+}
+
+function playSpinTickLoop(durationMs) {
+  let timer = 0;
+
+  const fireTick = () => {
+    playTone(290 + Math.random() * 90, 0.018, "triangle", 0.011, 0);
+    playNoiseBurst(0.018, 0.009, 2200, 1400, 0);
+  };
+
+  timer = window.setInterval(fireTick, 92);
+  const stopTimer = window.setTimeout(() => {
+    window.clearInterval(timer);
+  }, durationMs + 40);
+
+  return () => {
+    window.clearInterval(timer);
+    window.clearTimeout(stopTimer);
+  };
+}
+
+function playReelStopClick(index) {
+  playNoiseBurst(0.024, 0.024, 2800, 900, 0);
+  playTone(190 + index * 28, 0.05, "square", 0.026, 0.004);
+}
+
+function playTensionRamp(durationMs) {
+  const ctx = getAudioContext();
+  if (!ctx) {
+    return () => {};
+  }
+
+  const now = ctx.currentTime;
+  const end = now + durationMs / 1000;
+
+  const lead = ctx.createOscillator();
+  lead.type = "sawtooth";
+  lead.frequency.setValueAtTime(110, now);
+  lead.frequency.exponentialRampToValueAtTime(370, end);
+
+  const support = ctx.createOscillator();
+  support.type = "triangle";
+  support.frequency.setValueAtTime(170, now);
+  support.frequency.exponentialRampToValueAtTime(640, end);
+
+  const gainNode = ctx.createGain();
+  gainNode.gain.setValueAtTime(0.0001, now);
+  gainNode.gain.exponentialRampToValueAtTime(0.032, now + 0.12);
+  gainNode.gain.exponentialRampToValueAtTime(0.0001, end);
+
+  const filter = ctx.createBiquadFilter();
+  filter.type = "lowpass";
+  filter.frequency.setValueAtTime(1800, now);
+  filter.frequency.linearRampToValueAtTime(2200, end);
+
+  lead.connect(gainNode);
+  support.connect(gainNode);
+  gainNode.connect(filter);
+  filter.connect(ctx.destination);
+
+  lead.start(now);
+  support.start(now);
+
+  let stopped = false;
+  return () => {
+    if (stopped) {
+      return;
+    }
+
+    stopped = true;
+    const stopAt = ctx.currentTime + 0.08;
+    gainNode.gain.cancelScheduledValues(ctx.currentTime);
+    gainNode.gain.exponentialRampToValueAtTime(0.0001, stopAt);
+    lead.stop(stopAt + 0.02);
+    support.stop(stopAt + 0.03);
+  };
+}
+
+function playCoinClinkBurst(multiplier) {
+  const count = Math.min(10, Math.max(4, Math.round(multiplier + 1)));
+
+  for (let i = 0; i < count; i += 1) {
+    const delay = i * 0.048 + Math.random() * 0.012;
+    playTone(1180 + Math.random() * 480, 0.08, "triangle", 0.034, delay);
+    playTone(760 + Math.random() * 320, 0.06, "sine", 0.02, delay + 0.008);
+  }
+}
+
+function playJackpotFanfare() {
+  const melody = [523.25, 659.25, 783.99, 1046.5, 1318.51];
+
+  melody.forEach((frequency, index) => {
+    const delay = index * 0.12;
+    playTone(frequency, 0.2, "sawtooth", 0.05, delay);
+    playTone(frequency * 2, 0.13, "triangle", 0.025, delay + 0.025);
+  });
+
+  [523.25, 659.25, 783.99].forEach((frequency) => {
+    playTone(frequency, 0.58, "square", 0.034, 0.64);
+  });
+
+  playCoinClinkBurst(9);
+}
+
+function playLossTone() {
+  playToneSweep(190, 84, 0.18, "sawtooth", 0.036, 0);
+  playNoiseBurst(0.06, 0.02, 900, 180, 0.03);
+}
+
+function playGrantTone() {
+  playTone(510, 0.11, "triangle", 0.05, 0);
+  playTone(760, 0.14, "sine", 0.048, 0.07);
+}
+
+function playStorePurchaseTone() {
+  playTone(330, 0.09, "triangle", 0.04, 0);
+  playTone(520, 0.11, "sine", 0.046, 0.06);
 }

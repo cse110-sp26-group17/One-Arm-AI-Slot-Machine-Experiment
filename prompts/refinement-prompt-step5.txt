@@ -1,0 +1,16 @@
+Build a Las Vegas-style AI-mocking slot machine. The slot machine must be the front-and-center hero element of the page.
+
+Reels must vertically scroll/slide emoji symbols into place like a real casino machine — each column spins independently with staggered stops: the first two reels lock, then the third reel hangs for a dramatic extra beat before landing with a satisfying click-lock.
+
+Replace the spin button with an interactive pull lever on the right side of the machine — drag it down to spin, like a real Vegas one-arm bandit.
+
+Use authentic casino sound design: lever pull, spinning reels, coin clinks on wins, rising tension tones, jackpot fanfare — no cheap or goofy sounds.
+
+Theme: making fun of AI (spending tokens to gamble). Sharp, witty AI humor in every message, quip, and description.
+
+Layout (top to bottom):
+- Slot machine with lever, reels, bet selector, Autospin + stop, Daily VC grant
+- Token store below with buyable perks (Lucky Chance, Streak Heat, multipliers, refunds)
+- Win log (emoji-tagged, gains only) at the bottom
+
+Full-screen confetti + screen shake on wins. Biggest Win showcase. Spin tension progress bar. Clean payout rules panel. Premium, juicy, Vegas-expensive feel throughout.
