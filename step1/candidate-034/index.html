@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>One-Arm AI Slot Machine</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script defer src="script.js"></script>
+  </head>
+  <body>
+    <div class="bg-pattern" aria-hidden="true"></div>
+    <main class="machine">
+      <header class="panel reveal">
+        <p class="eyebrow">Prompt Casino</p>
+        <h1>One-Arm AI Slot Machine</h1>
+        <p class="subtitle">
+          Burn tokens. Win tokens. Get roasted by a fake model either way.
+        </p>
+      </header>
+
+      <section class="stats panel reveal" aria-label="Game statistics">
+        <article>
+          <p>Wallet</p>
+          <strong id="wallet">0</strong>
+        </article>
+        <article>
+          <p>Spent</p>
+          <strong id="spent">0</strong>
+        </article>
+        <article>
+          <p>Won</p>
+          <strong id="won">0</strong>
+        </article>
+        <article>
+          <p>Net</p>
+          <strong id="net">0</strong>
+        </article>
+        <article>
+          <p>Best Wallet</p>
+          <strong id="best">0</strong>
+        </article>
+      </section>
+
+      <section class="panel reel-panel reveal">
+        <div class="reels" aria-live="polite">
+          <div class="reel" id="reel-0"><span class="symbol">🤖</span></div>
+          <div class="reel" id="reel-1"><span class="symbol">🪙</span></div>
+          <div class="reel" id="reel-2"><span class="symbol">📉</span></div>
+        </div>
+        <p class="status" id="status">
+          Ready to spend tokens on statistically questionable decision-making.
+        </p>
+      </section>
+
+      <section class="panel controls reveal">
+        <label for="bet">Spin Cost</label>
+        <select id="bet">
+          <option value="10">10 tokens</option>
+          <option value="25" selected>25 tokens</option>
+          <option value="50">50 tokens</option>
+          <option value="100">100 tokens</option>
+        </select>
+
+        <button id="spinBtn" class="primary">Burn Tokens</button>
+        <button id="shareBtn">Share Score</button>
+        <button id="resetBtn" class="ghost">Reset Run</button>
+
+        <label class="voice">
+          <input type="checkbox" id="voiceToggle" checked />
+          Enable AI trash talk
+        </label>
+      </section>
+
+      <section class="panel payout reveal">
+        <h2>Payout Table</h2>
+        <ul>
+          <li>Three matching symbols: <strong>6x</strong> your spin cost</li>
+          <li>Three coins (<span>🪙🪙🪙</span>): <strong>10x</strong> jackpot</li>
+          <li>Any two matching symbols: <strong>2x</strong> your spin cost</li>
+          <li>Coin + sparkle combo: <strong>3x</strong> bonus payout</li>
+          <li>Bug symbol may trigger a hidden “API bill”</li>
+        </ul>
+      </section>
+
+      <footer class="footer reveal">
+        Uses platform APIs: localStorage, Vibration, Web Audio, SpeechSynthesis,
+        Share/Clipboard.
+      </footer>
+    </main>
+  </body>
+</html>

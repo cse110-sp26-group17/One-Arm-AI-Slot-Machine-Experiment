@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>One-Armed AI Slot Machine</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bungee&family=IBM+Plex+Sans:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="app-shell">
+    <header class="title-block">
+      <p class="eyebrow">Silicon Strip Casino</p>
+      <h1>One-Armed AI Slot Machine</h1>
+      <p class="subtitle">Spend tokens. Win tokens. Pretend the model is helping.</p>
+    </header>
+
+    <section class="dashboard" aria-label="Token statistics">
+      <article class="stat-card">
+        <h2>Token Balance</h2>
+        <p id="tokenBalance" class="stat-value">0</p>
+      </article>
+      <article class="stat-card">
+        <h2>Total Spent</h2>
+        <p id="totalSpent" class="stat-value">0</p>
+      </article>
+      <article class="stat-card">
+        <h2>Total Won</h2>
+        <p id="totalWon" class="stat-value">0</p>
+      </article>
+      <article class="stat-card">
+        <h2>Spins</h2>
+        <p id="spinCount" class="stat-value">0</p>
+      </article>
+    </section>
+
+    <section class="machine" aria-label="Slot machine">
+      <div class="reels" role="img" aria-label="Three spinning reels">
+        <div class="reel"><span class="symbol" id="reel0">??</span></div>
+        <div class="reel"><span class="symbol" id="reel1">??</span></div>
+        <div class="reel"><span class="symbol" id="reel2">??</span></div>
+      </div>
+
+      <div class="controls">
+        <label for="betSize">Tokens per spin</label>
+        <select id="betSize" aria-label="Choose bet size">
+          <option value="5">5</option>
+          <option value="10" selected>10</option>
+          <option value="20">20</option>
+          <option value="40">40</option>
+        </select>
+
+        <button id="spinBtn" class="spin-btn">Spin The Hype Cycle</button>
+        <button id="bailoutBtn" class="bailout-btn" type="button">Ask VC For Bailout (+50)</button>
+      </div>
+    </section>
+
+    <section class="payouts" aria-label="Payout table">
+      <h2>Payout Table</h2>
+      <ul>
+        <li><span>?? ?? ??</span><strong>12x</strong></li>
+        <li><span>?? ?? ??</span><strong>8x</strong></li>
+        <li><span>?? ?? ??</span><strong>5x</strong></li>
+        <li><span>?? ?? ??</span><strong>4x</strong></li>
+        <li><span>Any 2 matching</span><strong>2x</strong></li>
+      </ul>
+      <p class="fine-print">If you hit ?? ?? ?? your model "optimizes costs" by taking 15 extra tokens.</p>
+    </section>
+
+    <section class="feed" aria-live="polite" aria-label="Game log">
+      <h2>Model Commentary</h2>
+      <ul id="log"></ul>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
