@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>One-Arm AI Slot Machine</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bungee:wght@400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="bg-shape bg-shape-a" aria-hidden="true"></div>
+  <div class="bg-shape bg-shape-b" aria-hidden="true"></div>
+  <main class="machine">
+    <header class="hero panel">
+      <p class="kicker">Compute Casino</p>
+      <h1>One-Arm AI Slot Machine</h1>
+      <p class="subtitle">Spin hype. Win tokens. Spend tokens pretending your model is not winging it.</p>
+    </header>
+
+    <section class="panel status-panel">
+      <div class="token-card">
+        <p>Token Balance</p>
+        <strong id="balance">0 TOK</strong>
+      </div>
+      <div class="stats-grid">
+        <p>Total Spent: <strong id="total-spent">0</strong></p>
+        <p>Total Won: <strong id="total-won">0</strong></p>
+        <p>Spins: <strong id="spin-count">0</strong></p>
+        <p>Net: <strong id="net-tokens">0</strong></p>
+      </div>
+    </section>
+
+    <section class="panel spin-panel">
+      <div class="reels" aria-live="polite">
+        <div class="reel" id="reel-0">BOT</div>
+        <div class="reel" id="reel-1">GPU</div>
+        <div class="reel" id="reel-2">HYPE</div>
+      </div>
+
+      <div class="bet-controls">
+        <button id="bet-down" type="button" aria-label="Decrease bet">-</button>
+        <p>Bet: <strong id="bet-value">10 TOK</strong></p>
+        <button id="bet-up" type="button" aria-label="Increase bet">+</button>
+      </div>
+
+      <button id="spin-button" class="spin-button" type="button">Spin The Model</button>
+    </section>
+
+    <section class="panel shop-panel">
+      <h2>Spend Tokens On Totally Serious AI Strategy</h2>
+      <div class="shop-grid">
+        <button class="shop-item" type="button" data-item="benchmark">
+          Bribe The Benchmark
+          <span>30 TOK</span>
+        </button>
+        <button class="shop-item" type="button" data-item="prompt">
+          Prompt Polish
+          <span>20 TOK</span>
+        </button>
+        <button class="shop-item" type="button" data-item="intern">
+          Blame The Intern
+          <span>18 TOK</span>
+        </button>
+      </div>
+      <p class="buff-line" id="buff-line">No active boosts. Raw chaos only.</p>
+    </section>
+
+    <section class="panel log-panel">
+      <h2>Incident Feed</h2>
+      <ul id="log-list"></ul>
+    </section>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,7 +1,7 @@
 
 | Field                    	| Notes| 
 |---------------------------|---------|
-| Run ID	                | candidate-041     |
+| Run ID	                | candidate-042     |
 | Timestamp	                | 2026-04-14T17:36:00-8:00  |
 | Model + version string 	| GPT-5.3-Codex     |
 | Input tokens              | 23,593 |
