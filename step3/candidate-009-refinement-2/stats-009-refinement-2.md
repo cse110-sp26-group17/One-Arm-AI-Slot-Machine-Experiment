@@ -1,7 +1,7 @@
 
 | Field                  | Notes                                                                      |
 | ---------------------- | -------------------------------------------------------------------------- |
-| Run ID                 | candidate-009                                                              |
+| Run ID                 | candidate-009-refinement-2                                                              |
 | Timestamp              | 2026-04-14T17:45:00-8:00                                                        |
 | Model + version string | GPT-5.3-Codex                                                              |
 | Wall-clock time (s)    | 7m 10s                                                                   |
