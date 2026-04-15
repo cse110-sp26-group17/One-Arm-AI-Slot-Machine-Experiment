@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Neon Vault Slots</title>
+    <link rel="stylesheet" href="style.css" />
+    <script defer src="script.js"></script>
+  </head>
+  <body>
+    <div id="screen-flash" class="screen-flash" aria-hidden="true"></div>
+    <div id="fireworks-layer" class="fireworks-layer" aria-hidden="true"></div>
+
+    <main class="app-shell">
+      <header class="hero">
+        <p class="eyebrow">One-Armed AI Slot Machine</p>
+        <h1>Neon Vault Slots</h1>
+        <p class="tagline">
+          Cinematic reels, rapid rounds, and high-energy feedback with transparent session stats.
+        </p>
+        <div class="machine-carousel" aria-label="Machine carousel">
+          <button id="prev-machine" class="nav-btn" aria-label="Previous machine">Prev</button>
+          <div>
+            <p class="machine-label">Current Machine</p>
+            <h2 id="machine-name">Neon Drift</h2>
+            <p id="machine-flavor" class="machine-flavor"></p>
+          </div>
+          <button id="next-machine" class="nav-btn" aria-label="Next machine">Next</button>
+        </div>
+      </header>
+
+      <section class="machine" aria-live="polite">
+        <div class="status-grid">
+          <article class="stat-card">
+            <span class="stat-label">Balance</span>
+            <strong id="balance-value">0 VC</strong>
+          </article>
+          <article class="stat-card">
+            <span class="stat-label">Bet</span>
+            <strong id="bet-value">100 VC</strong>
+          </article>
+          <article class="stat-card">
+            <span class="stat-label">Perk Multiplier</span>
+            <strong id="perk-value">x1.00</strong>
+          </article>
+          <article class="stat-card">
+            <span class="stat-label">Biggest Win</span>
+            <strong id="biggest-value">0 VC</strong>
+          </article>
+          <article class="stat-card">
+            <span class="stat-label">Spent</span>
+            <strong id="spent-value">0 VC</strong>
+          </article>
+          <article class="stat-card">
+            <span class="stat-label">Won</span>
+            <strong id="won-value">0 VC</strong>
+          </article>
+          <article class="stat-card">
+            <span class="stat-label">Net</span>
+            <strong id="net-value">0 VC</strong>
+          </article>
+          <article class="stat-card">
+            <span class="stat-label">Spins</span>
+            <strong id="spins-value">0</strong>
+          </article>
+        </div>
+
+        <div class="reel-stage">
+          <div class="reel-frame" role="img" aria-label="Slot reels">
+            <div class="reel" id="reel-0" data-symbol="ready"><span>READY</span></div>
+            <div class="reel" id="reel-1" data-symbol="ready"><span>READY</span></div>
+            <div class="reel" id="reel-2" data-symbol="ready"><span>READY</span></div>
+          </div>
+          <p id="spin-tension" class="spin-tension">Tension x1.00</p>
+        </div>
+
+        <div class="controls">
+          <div id="bet-strip" class="bet-strip" aria-label="Bet options">
+            <button class="bet-chip" data-bet="25">25 VC</button>
+            <button class="bet-chip" data-bet="50">50 VC</button>
+            <button class="bet-chip" data-bet="100">100 VC</button>
+            <button class="bet-chip" data-bet="200">200 VC</button>
+            <button class="bet-chip" data-bet="500">500 VC</button>
+          </div>
+
+          <div class="button-row">
+            <button id="spin-btn" class="primary">Spin</button>
+            <button id="autospin-btn" class="accent">Autospin</button>
+            <button id="stop-btn" class="ghost">Stop</button>
+            <button id="daily-btn" class="reward">Daily VC Grant</button>
+          </div>
+        </div>
+
+        <p id="headline" class="headline">Pick a bet and fire a spin.</p>
+
+        <section class="showcase-grid">
+          <article class="panel biggest-panel">
+            <h3>Biggest Win Showcase</h3>
+            <p id="biggest-win-text">No wins yet.</p>
+            <div id="multiplier-popups" class="multiplier-popups" aria-live="polite"></div>
+          </article>
+
+          <article class="panel payout-panel">
+            <h3>Payout Rules</h3>
+            <ul id="payout-rules" class="rules-list"></ul>
+            <p class="rules-note">Pairs pay lower multipliers. Triples pay premium multipliers.</p>
+          </article>
+        </section>
+
+        <section class="logs-grid">
+          <article class="panel">
+            <h3>Win Feed</h3>
+            <ul id="win-log" class="event-log" aria-label="Wins"></ul>
+          </article>
+
+          <article class="panel">
+            <h3>Session Ledger</h3>
+            <ul id="session-log" class="event-log" aria-label="Session ledger"></ul>
+          </article>
+        </section>
+      </section>
+    </main>
+  </body>
+</html>

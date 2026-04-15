@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Velocity Reels</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="bg-noise" aria-hidden="true"></div>
+  <main class="app-shell">
+    <header class="hero">
+      <p class="kicker">Premium Arcade Slot Lab</p>
+      <h1>Velocity Reels</h1>
+      <p class="hero-copy">Cinematic reel action with transparent stats, instant controls, and no fake wait states.</p>
+      <div class="hero-stats">
+        <article class="stat-card">
+          <span>Balance</span>
+          <strong id="balanceValue">0 VC</strong>
+        </article>
+        <article class="stat-card">
+          <span>Current Bet</span>
+          <strong id="betValue">100 VC</strong>
+        </article>
+        <article class="stat-card">
+          <span>Biggest Win</span>
+          <strong id="biggestWinValue">0 VC</strong>
+        </article>
+      </div>
+    </header>
+
+    <section class="machine-shell" id="machineShell">
+      <div class="machine-head">
+        <button id="prevMachineButton" class="ghost-button" type="button" aria-label="Previous machine">◀ Prev</button>
+        <div class="machine-meta">
+          <p class="label">Active Machine</p>
+          <h2 id="machineName">Neon Mirage</h2>
+          <p id="machineFlavor" class="flavor">Fast rhythm, medium volatility, bright payouts.</p>
+        </div>
+        <button id="nextMachineButton" class="ghost-button" type="button" aria-label="Next machine">Next ▶</button>
+      </div>
+
+      <div class="stage-wrap">
+        <div class="reel-stage" id="reelStage" aria-label="Slot machine reels">
+          <div class="reel" id="reel0">7</div>
+          <div class="reel" id="reel1">💎</div>
+          <div class="reel" id="reel2">⚡</div>
+          <div class="flash-fx" id="flashFx" aria-hidden="true"></div>
+          <div class="confetti-layer" id="confettiLayer" aria-hidden="true"></div>
+          <div class="fireworks-layer" id="fireworksLayer" aria-hidden="true"></div>
+          <div class="multiplier-layer" id="multiplierLayer" aria-hidden="true"></div>
+        </div>
+
+        <aside class="perks-card">
+          <p class="label">Perks & Multipliers</p>
+          <div class="perk-row">
+            <span>Win Streak</span>
+            <strong id="streakValue">0</strong>
+          </div>
+          <div class="perk-row">
+            <span>Lucky Charge</span>
+            <strong id="luckyChargeValue">0%</strong>
+          </div>
+          <div class="perk-row">
+            <span>Total Bonus</span>
+            <strong id="totalBonusValue">x1.00</strong>
+          </div>
+          <div class="meter">
+            <p>Streak Heat</p>
+            <div class="meter-track">
+              <div id="streakBar" class="meter-fill"></div>
+            </div>
+          </div>
+          <div class="meter">
+            <p>Lucky Charge</p>
+            <div class="meter-track">
+              <div id="luckyBar" class="meter-fill warm"></div>
+            </div>
+          </div>
+        </aside>
+      </div>
+
+      <div class="control-row">
+        <button id="spinButton" class="primary-button" type="button">Spin Now</button>
+        <button id="autospinButton" class="secondary-button" type="button">Start Autospin</button>
+        <button id="stopButton" class="danger-button" type="button" disabled>Stop</button>
+        <button id="dailyGrantButton" class="daily-button" type="button">Claim Daily +1200 VC</button>
+      </div>
+
+      <div class="bet-row" id="betRow" aria-label="Bet selector">
+        <p class="label">Bet Size</p>
+        <div class="bet-options">
+          <button data-bet="25" class="bet-button" type="button">25 VC</button>
+          <button data-bet="50" class="bet-button" type="button">50 VC</button>
+          <button data-bet="100" class="bet-button default-glow" type="button">100 VC</button>
+          <button data-bet="250" class="bet-button" type="button">250 VC</button>
+          <button data-bet="500" class="bet-button" type="button">500 VC</button>
+        </div>
+      </div>
+
+      <div class="feed-grid">
+        <article class="feed-card">
+          <p class="label">Spin Result</p>
+          <p id="resultText" class="result-text">Ready to spin.</p>
+          <div class="session-stats">
+            <div><span>Total Spent</span><strong id="spentValue">0 VC</strong></div>
+            <div><span>Total Won</span><strong id="wonValue">0 VC</strong></div>
+            <div><span>Net</span><strong id="netValue">0 VC</strong></div>
+          </div>
+        </article>
+
+        <article class="feed-card log-card">
+          <p class="label">Spin Log (Wins + Losses)</p>
+          <ul id="logList" class="log-list"></ul>
+        </article>
+
+        <article class="feed-card rules-card">
+          <p class="label">Payout Rules</p>
+          <ul id="rulesList" class="rules-list"></ul>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <div id="biggestWinBanner" class="biggest-win-banner" aria-live="polite">
+    <p class="label">Biggest Win Unlocked</p>
+    <h3 id="biggestWinHeadline">+0 VC</h3>
+    <p id="biggestWinSub">x1.00 multiplier</p>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
