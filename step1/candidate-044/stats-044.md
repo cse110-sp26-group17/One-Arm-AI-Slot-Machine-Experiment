@@ -11,5 +11,5 @@
 | Files produced            | 3: index.html, script.js, styles.css | 
 | Lines of code	            | 668 | 
 | Runs in browser?	        | yes |
-| App Quality Notes	        | N/A |
-| Code Quality Notes        | N/A | 
+| App Quality Notes	        | 3 - looks nice visually, no way to replenish tokens, upgrades have no descriptions, |
+| Code Quality Notes        | 4 - well written code that is easily trackable, no comments to describe, some variables names aren't clear | 
