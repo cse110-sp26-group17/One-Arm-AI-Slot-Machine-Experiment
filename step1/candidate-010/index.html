@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Token Furnace</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Audiowide&family=Space+Grotesk:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="marquee-card">
+        <p class="eyebrow">Silicon Valley's Saddest Casino</p>
+        <h1>Token Furnace</h1>
+        <p class="intro">
+          Feed your hard-earned tokens into the machine and pray for premium AI
+          nonsense: "synergy," "disruption," or the legendary "hallucination
+          jackpot."
+        </p>
+      </section>
+
+      <section class="machine" aria-label="slot machine">
+        <div class="machine-top">
+          <div class="bank">
+            <span class="bank-label">Token Wallet</span>
+            <strong id="token-count">120</strong>
+          </div>
+          <div class="bank">
+            <span class="bank-label">Spin Cost</span>
+            <strong>15</strong>
+          </div>
+        </div>
+
+        <div class="reels" role="group" aria-label="slot reels">
+          <div class="reel-window"><span id="reel-1">PROMPT</span></div>
+          <div class="reel-window"><span id="reel-2">SLIDE DECK</span></div>
+          <div class="reel-window"><span id="reel-3">TOKEN BURN</span></div>
+        </div>
+
+        <div class="machine-controls">
+          <button id="spin-button" class="spin-button" type="button">
+            Spin For Questionable Value
+          </button>
+          <button id="share-button" class="secondary-button" type="button">
+            Share Brag
+          </button>
+        </div>
+
+        <p id="status-line" class="status-line" aria-live="polite">
+          Welcome back. The machine senses venture capital nearby.
+        </p>
+
+        <div class="payouts">
+          <article class="payout-card">
+            <h2>Payout Lore</h2>
+            <ul>
+              <li>3 matches: +60 tokens and a wave of fake confidence</li>
+              <li>2 matches: +25 tokens and a suspicious KPI deck</li>
+              <li>No matches: your tokens become "compute"</li>
+            </ul>
+          </article>
+          <article class="payout-card">
+            <h2>Recent AI Achievements</h2>
+            <ul id="event-log" class="event-log"></ul>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <template id="log-item-template">
+      <li></li>
+    </template>
+
+    <script src="script.js"></script>
+  </body>
+</html>

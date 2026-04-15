@@ -12,6 +12,6 @@
 | Lines of code          | 777                                                                                                                     |
 | Runs in browser?       | yes                                                                                                                     |
 | App Quality Notes      | 4 - runs smoothly and there is nice UI, humor is good with "beg VC for credits", but I can beg for unlimited vc credits |
-| Code Quality Notes     | 5 - logic is easy to follow with clear rules                                                                            |
+| Code Quality Notes     | 5 - logic is easy to follow with clear rules and tehre is a payout map with alright naming                              |
 
 

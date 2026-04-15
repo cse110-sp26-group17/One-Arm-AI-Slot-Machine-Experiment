@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Token Burn Casino</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Space+Grotesk:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="marquee">
+        <p>Token Burn Casino</p>
+        <span>Prompt harder. Pay louder. Maybe win enough tokens to ask the AI for one more paragraph.</span>
+      </section>
+
+      <section class="machine">
+        <header class="machine__header">
+          <div>
+            <p class="eyebrow">Model Incentive Simulator</p>
+            <h1>Pull the lever, feed the model.</h1>
+          </div>
+          <div class="status-card">
+            <p>Token Wallet</p>
+            <strong id="token-count">120</strong>
+          </div>
+        </header>
+
+        <section class="dashboard">
+          <div class="reels-panel" aria-label="Slot machine reels">
+            <div class="reel" data-reel="0">404</div>
+            <div class="reel" data-reel="1">404</div>
+            <div class="reel" data-reel="2">404</div>
+          </div>
+
+          <aside class="control-panel">
+            <div class="meter">
+              <span>Spin Cost</span>
+              <strong>15 tokens</strong>
+            </div>
+            <div class="meter">
+              <span>Jackpot</span>
+              <strong>250 tokens</strong>
+            </div>
+            <div class="meter">
+              <span>System Mood</span>
+              <strong id="system-mood">Smug but solvent</strong>
+            </div>
+            <button id="spin-button" type="button">Spend Tokens</button>
+            <button id="reset-button" type="button" class="secondary">Reboot Wallet</button>
+          </aside>
+        </section>
+
+        <section class="message-board" aria-live="polite">
+          <p id="result-message">
+            Welcome, valued compute donor. Every spin funds another beautifully overconfident answer.
+          </p>
+        </section>
+
+        <section class="payouts">
+          <h2>Payout Table</h2>
+          <ul>
+            <li><span>3 x `GPT`</span><strong>250 tokens</strong></li>
+            <li><span>3 x `TOKEN`</span><strong>120 tokens</strong></li>
+            <li><span>3 x any symbol</span><strong>80 tokens</strong></li>
+            <li><span>2 x matching symbols</span><strong>35 tokens</strong></li>
+            <li><span>`404` appears 3 times</span><strong>0 tokens, only vibes</strong></li>
+          </ul>
+        </section>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>

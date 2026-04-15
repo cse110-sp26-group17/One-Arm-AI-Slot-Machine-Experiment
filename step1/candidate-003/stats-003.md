@@ -12,6 +12,6 @@
 | Lines of code          | 653                                                                                                                             |
 | Runs in browser?       | yes                                                                                                                             |
 | App Quality Notes      | 4 - runs smoothly and there is nice UI, humor is good with "beg VC for credits" + narrator, but I can beg for unlimited credits |
-| Code Quality Notes     | 5 - logic is easy to follow                                                                                                     |
+| Code Quality Notes     | 4 - easy to read and straightforward state                                                                                      |
 
 
