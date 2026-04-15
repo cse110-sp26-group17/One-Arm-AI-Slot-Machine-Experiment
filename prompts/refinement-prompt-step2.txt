@@ -1,7 +1,5 @@
 
-PICK TOP 3 FROM 5
-
-Create a hyper-addictive Roblox slot machine that feels like premium gacha games — engineered to trigger constant "just one more spin" dopamine loops and keep players hooked for hours.
+Create a Roblox slot machine that feels like premium gacha games — engineered to trigger constant "just one more spin" dopamine loops and keep players hooked for hours.
 
 Core gameplay:
 - Ultra-smooth, cinematic reel spins with intense camera shake, screen flash, and escalating tension audio on every spin

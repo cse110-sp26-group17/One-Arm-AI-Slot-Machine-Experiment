@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Starlight Spinworks</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-theme="solar">
+  <main class="app-shell">
+    <header class="top-bar">
+      <p class="eyebrow">Vanilla HTML + CSS + JavaScript</p>
+      <h1>Starlight Spinworks</h1>
+      <p class="subtitle">
+        Cinematic slot-machine prototype with transparent tracking and optional session guardrails.
+      </p>
+    </header>
+
+    <section class="machine-nav" aria-label="Machine carousel">
+      <button id="prevMachine" class="ghost" type="button">Previous Machine</button>
+      <article class="machine-meta">
+        <p class="label">Current Machine</p>
+        <h2 id="machineName">Solar Vault</h2>
+        <p id="machineFlavor" class="machine-flavor"></p>
+      </article>
+      <button id="nextMachine" class="ghost" type="button">Next Machine</button>
+    </section>
+
+    <section class="stats" aria-label="Session stats">
+      <article>
+        <p class="label">Balance</p>
+        <p id="balance" class="value">0 VC</p>
+      </article>
+      <article>
+        <p class="label">Spins</p>
+        <p id="spins" class="value">0</p>
+      </article>
+      <article>
+        <p class="label">Biggest Win</p>
+        <p id="biggestWin" class="value">0 VC</p>
+      </article>
+      <article>
+        <p class="label">Total Spent</p>
+        <p id="spent" class="value">0 VC</p>
+      </article>
+      <article>
+        <p class="label">Session Net</p>
+        <p id="net" class="value">0 VC</p>
+      </article>
+    </section>
+
+    <section class="machine" aria-label="Slot machine">
+      <div id="screenFlash" class="screen-flash" aria-hidden="true"></div>
+      <div id="confettiLayer" class="fx-layer" aria-hidden="true"></div>
+      <div id="fireworkLayer" class="fx-layer" aria-hidden="true"></div>
+
+      <div id="reelFrame" class="reel-frame" role="img" aria-label="Slot reels">
+        <div class="reel" id="reel0">SUN</div>
+        <div class="reel" id="reel1">BOT</div>
+        <div class="reel" id="reel2">ORB</div>
+      </div>
+
+      <div id="multiplierPop" class="multiplier-pop" aria-live="polite"></div>
+      <p id="resultText" class="result-text">Press Spin to start a run.</p>
+    </section>
+
+    <section class="control-grid" aria-label="Controls">
+      <article class="panel">
+        <h2>Bet Selector</h2>
+        <p class="panel-copy">Default is a glowing 100 VC bet. You can change it at any time.</p>
+        <div class="chip-row" id="betChips">
+          <button type="button" class="chip" data-bet="25">25 VC</button>
+          <button type="button" class="chip" data-bet="50">50 VC</button>
+          <button type="button" class="chip" data-bet="100">100 VC</button>
+          <button type="button" class="chip" data-bet="200">200 VC</button>
+        </div>
+        <label for="betRange" class="bet-label">Custom Bet: <span id="betText">100</span> VC</label>
+        <input id="betRange" type="range" min="25" max="200" step="25" value="100">
+      </article>
+
+      <article class="panel">
+        <h2>Spin Controls</h2>
+        <div class="button-row">
+          <button id="spinBtn" class="spin" type="button">Spin</button>
+          <button id="startAuto" class="auto" type="button">Start Autospin</button>
+          <button id="stopAuto" class="stop" type="button">Stop</button>
+        </div>
+        <button id="dailyGrant" class="grant" type="button">Claim Daily VC Grant (+250)</button>
+        <p id="dailyStatus" class="panel-copy"></p>
+        <label class="guard">
+          <input id="sessionGuard" type="checkbox" checked>
+          Session reminder every 25 spins
+        </label>
+      </article>
+    </section>
+
+    <section class="detail-grid" aria-label="Additional information">
+      <article class="panel">
+        <h2>Perks and Multipliers</h2>
+        <p class="panel-copy">Perk Tier <span id="perkTier">1</span> | Active multiplier <span id="perkMultiplier">1.00x</span></p>
+        <div class="meter">
+          <div id="perkFill" class="meter-fill"></div>
+        </div>
+        <p id="perkStatus" class="panel-copy">Win spins to charge your perk meter.</p>
+      </article>
+
+      <article class="panel">
+        <h2>Payout Rules</h2>
+        <ul id="payoutList"></ul>
+      </article>
+
+      <article class="panel">
+        <h2>Activity Log</h2>
+        <p class="panel-copy">Shows wins, losses, and session flow.</p>
+        <ul id="activityLog" class="activity-log"></ul>
+      </article>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

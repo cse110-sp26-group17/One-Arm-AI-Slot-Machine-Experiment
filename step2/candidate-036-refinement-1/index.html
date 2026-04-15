@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Cinematic slot machine prototype with transparent accounting, autospin, daily grants, and machine carousel variety."
+    />
+    <title>Arcade Prism Slots</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="background-grid" aria-hidden="true"></div>
+    <main class="app-shell">
+      <header class="hero">
+        <p class="hero__eyebrow">Arcade Prism Slots</p>
+        <h1>Juicy, cinematic spins with transparent outcomes.</h1>
+        <p class="hero__lede">
+          Fast reels, dramatic effects, machine variety, and clear accounting so every spin feels exciting without hiding the numbers.
+        </p>
+      </header>
+
+      <section class="metrics" aria-label="Session overview">
+        <article class="metric-card">
+          <span class="metric-card__label">Balance</span>
+          <strong class="metric-card__value" id="balance">0</strong>
+        </article>
+        <article class="metric-card">
+          <span class="metric-card__label">Bet</span>
+          <strong class="metric-card__value" id="bet-display">0</strong>
+        </article>
+        <article class="metric-card">
+          <span class="metric-card__label">Biggest Win</span>
+          <strong class="metric-card__value" id="best-win">0</strong>
+        </article>
+        <article class="metric-card">
+          <span class="metric-card__label">Perk Multiplier</span>
+          <strong class="metric-card__value" id="perk-multiplier">x1.00</strong>
+        </article>
+      </section>
+
+      <section class="machine-layout">
+        <div class="cabinet">
+          <div class="cabinet__header">
+            <div class="machine-nav">
+              <button class="mini-button" id="prev-machine" type="button" aria-label="Previous machine">Previous</button>
+              <p class="machine-nav__name" id="machine-name">Neon Nebula</p>
+              <button class="mini-button" id="next-machine" type="button" aria-label="Next machine">Next</button>
+            </div>
+            <div class="status">
+              <span class="status__pill" id="status-pill">Machine idle</span>
+              <span class="status__hint" id="daily-status">Daily VC grant available now</span>
+            </div>
+          </div>
+
+          <div class="reels" id="reels" aria-live="polite">
+            <article class="reel" data-reel="0">
+              <div class="reel__shine"></div>
+              <div class="symbol-card">
+                <span class="symbol-card__slot">Reel 1</span>
+                <strong class="symbol-card__label">STAR</strong>
+                <span class="symbol-card__sub">stellar luck fragment</span>
+              </div>
+            </article>
+            <article class="reel" data-reel="1">
+              <div class="reel__shine"></div>
+              <div class="symbol-card">
+                <span class="symbol-card__slot">Reel 2</span>
+                <strong class="symbol-card__label">STAR</strong>
+                <span class="symbol-card__sub">stellar luck fragment</span>
+              </div>
+            </article>
+            <article class="reel" data-reel="2">
+              <div class="reel__shine"></div>
+              <div class="symbol-card">
+                <span class="symbol-card__slot">Reel 3</span>
+                <strong class="symbol-card__label">STAR</strong>
+                <span class="symbol-card__sub">stellar luck fragment</span>
+              </div>
+            </article>
+          </div>
+
+          <div class="screen-flash" id="screen-flash" aria-hidden="true"></div>
+
+          <section class="result-panel">
+            <div>
+              <p class="result-panel__label">Spin Commentary</p>
+              <h2 id="headline">Ready to spin.</h2>
+              <p id="subheadline">Set your bet and fire a spin when you are ready.</p>
+            </div>
+            <div class="result-panel__badge" id="net-badge">Net 0</div>
+          </section>
+
+          <section class="biggest-win" id="biggest-win-showcase" aria-live="polite">
+            <div class="biggest-win__copy">
+              <p class="result-panel__label">Biggest Win Showcase</p>
+              <h3 id="biggest-win-title">No showcase yet</h3>
+              <p id="biggest-win-detail">Land a huge hit to trigger fireworks and multiplier popups.</p>
+            </div>
+            <strong class="biggest-win__value" id="biggest-win-value">0</strong>
+          </section>
+        </div>
+
+        <aside class="control-stack" aria-label="Machine controls">
+          <section class="panel">
+            <p class="panel__label">Bet Selector</p>
+            <div class="chip-grid" id="chip-grid">
+              <button class="chip" type="button" data-bet="25">25</button>
+              <button class="chip" type="button" data-bet="50">50</button>
+              <button class="chip is-active" type="button" data-bet="100">100</button>
+              <button class="chip" type="button" data-bet="200">200</button>
+            </div>
+          </section>
+
+          <section class="panel panel--actions">
+            <button class="action-button action-button--spin" id="spin-button" type="button">Spin</button>
+            <button class="action-button action-button--auto" id="autospin-button" type="button">Start Autospin</button>
+            <button class="action-button action-button--stop" id="stop-button" type="button">Stop</button>
+            <button class="action-button action-button--daily" id="daily-button" type="button">Claim Daily VC Grant</button>
+          </section>
+
+          <section class="panel">
+            <p class="panel__label">Payout Rules</p>
+            <ul class="rules" id="rules-list"></ul>
+          </section>
+
+          <section class="panel">
+            <p class="panel__label">Recent Wins</p>
+            <ul class="wins-feed" id="wins-feed"></ul>
+          </section>
+        </aside>
+      </section>
+
+      <section class="transparency" aria-label="Transparent accounting">
+        <article class="metric-card metric-card--small">
+          <span class="metric-card__label">Total Spins</span>
+          <strong class="metric-card__value" id="total-spins">0</strong>
+        </article>
+        <article class="metric-card metric-card--small">
+          <span class="metric-card__label">Total Spent</span>
+          <strong class="metric-card__value" id="total-spent">0</strong>
+        </article>
+        <article class="metric-card metric-card--small">
+          <span class="metric-card__label">Total Won</span>
+          <strong class="metric-card__value" id="total-won">0</strong>
+        </article>
+        <article class="metric-card metric-card--small">
+          <span class="metric-card__label">Net Result</span>
+          <strong class="metric-card__value" id="net-result">0</strong>
+        </article>
+      </section>
+    </main>
+
+    <div class="burst-layer" id="burst-layer" aria-hidden="true"></div>
+    <div class="popup-layer" id="popup-layer" aria-hidden="true"></div>
+    <div class="sr-only" id="live-region" aria-live="assertive"></div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
