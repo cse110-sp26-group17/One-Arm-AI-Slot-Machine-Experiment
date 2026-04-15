@@ -1,12 +1,14 @@
-| Field                     | Notes| 
-|---------------------------|---------|
-| Run ID                    | candidate-016     |
-| Timestamp                 | 2026-04-14T15:21:34-07:00 |
-| Model + version string    | GPT-5.3-Codex     |
-| Wall-clock time (s)       | 7m 38s |
-| Files produced            | 3: index.html, script.js, style.css | 
-| Lines of code             | 690 | 
+| Field                     | Notes |
+|---------------------------|-------|
+| Run ID                    | step2-candidate-016 |
+| Timestamp                 | 2026-04-14T19:01:20 |
+| Model + version string    | GPT-5.3-Codex |
+| Input Tokens              |   44,427 |
+| Output Tokens             |   30,454   |
+| Total Tokens              |   74,881   |
+| Wall Time                 |   9m02s   |
+| Files produced            | 3: index.html, style.css, script.js |
+| New lines of code             | 840 total |
 | Runs in browser?          | yes |
-| App Quality Notes         | Uses icons in the slots. Has bet slider + Auto spin. You can claim 30 tokens as a (Daily VC Grant). 
-|                           | No activity feed |
-| Code Quality Notes        | Pretty organized. It's a lot easier to change details about the slots (weights/visuals) > win / bet amounts |
+| App Quality Notes         | 5 - Nice UI, Different machines, cool activity log |
+| Code Quality Notes        | 4 - Descriptive variable names, good file structure |

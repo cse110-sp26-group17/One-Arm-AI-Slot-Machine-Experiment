@@ -3,23 +3,33 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Token Grinder</title>
+  <title>Starlight Spinworks</title>
   <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body data-theme="solar">
   <main class="app-shell">
     <header class="top-bar">
       <p class="eyebrow">Vanilla HTML + CSS + JavaScript</p>
-      <h1>AI Token Grinder</h1>
+      <h1>Starlight Spinworks</h1>
       <p class="subtitle">
-        Feed tokens to the hype machine. Sometimes it hallucinates profits.
+        Cinematic slot-machine prototype with transparent tracking and optional session guardrails.
       </p>
     </header>
 
-    <section class="stats" aria-label="Game stats">
+    <section class="machine-nav" aria-label="Machine carousel">
+      <button id="prevMachine" class="ghost" type="button">Previous Machine</button>
+      <article class="machine-meta">
+        <p class="label">Current Machine</p>
+        <h2 id="machineName">Solar Vault</h2>
+        <p id="machineFlavor" class="machine-flavor"></p>
+      </article>
+      <button id="nextMachine" class="ghost" type="button">Next Machine</button>
+    </section>
+
+    <section class="stats" aria-label="Session stats">
       <article>
-        <p class="label">Token Balance</p>
-        <p id="balance" class="value">0</p>
+        <p class="label">Balance</p>
+        <p id="balance" class="value">0 VC</p>
       </article>
       <article>
         <p class="label">Spins</p>
@@ -27,39 +37,83 @@
       </article>
       <article>
         <p class="label">Biggest Win</p>
-        <p id="biggestWin" class="value">0</p>
+        <p id="biggestWin" class="value">0 VC</p>
+      </article>
+      <article>
+        <p class="label">Total Spent</p>
+        <p id="spent" class="value">0 VC</p>
+      </article>
+      <article>
+        <p class="label">Session Net</p>
+        <p id="net" class="value">0 VC</p>
       </article>
     </section>
 
     <section class="machine" aria-label="Slot machine">
-      <div class="reel-frame" role="img" aria-label="Slot result reels">
-        <div class="reel" id="reel0">🤖</div>
-        <div class="reel" id="reel1">📉</div>
-        <div class="reel" id="reel2">🧯</div>
+      <div id="screenFlash" class="screen-flash" aria-hidden="true"></div>
+      <div id="confettiLayer" class="fx-layer" aria-hidden="true"></div>
+      <div id="fireworkLayer" class="fx-layer" aria-hidden="true"></div>
+
+      <div id="reelFrame" class="reel-frame" role="img" aria-label="Slot reels">
+        <div class="reel" id="reel0">SUN</div>
+        <div class="reel" id="reel1">BOT</div>
+        <div class="reel" id="reel2">ORB</div>
       </div>
-      <p id="resultText" class="result-text">Insert tokens and roast the robots.</p>
+
+      <div id="multiplierPop" class="multiplier-pop" aria-live="polite"></div>
+      <p id="resultText" class="result-text">Press Spin to start a run.</p>
     </section>
 
-    <section class="controls" aria-label="Game controls">
-      <label for="betRange" class="bet-label">Bet: <span id="betText">5</span> tokens</label>
-      <input id="betRange" type="range" min="1" max="50" step="1" value="5">
-      <div class="button-row">
-        <button id="minusBet" type="button">-1 Bet</button>
-        <button id="plusBet" type="button">+1 Bet</button>
-        <button id="spinBtn" class="spin" type="button">Spin</button>
-      </div>
-      <div class="button-row secondary">
-        <label class="autospin">
-          <input id="autoSpin" type="checkbox">
-          Auto-spin while you still have money
+    <section class="control-grid" aria-label="Controls">
+      <article class="panel">
+        <h2>Bet Selector</h2>
+        <p class="panel-copy">Default is a glowing 100 VC bet. You can change it at any time.</p>
+        <div class="chip-row" id="betChips">
+          <button type="button" class="chip" data-bet="25">25 VC</button>
+          <button type="button" class="chip" data-bet="50">50 VC</button>
+          <button type="button" class="chip" data-bet="100">100 VC</button>
+          <button type="button" class="chip" data-bet="200">200 VC</button>
+        </div>
+        <label for="betRange" class="bet-label">Custom Bet: <span id="betText">100</span> VC</label>
+        <input id="betRange" type="range" min="25" max="200" step="25" value="100">
+      </article>
+
+      <article class="panel">
+        <h2>Spin Controls</h2>
+        <div class="button-row">
+          <button id="spinBtn" class="spin" type="button">Spin</button>
+          <button id="startAuto" class="auto" type="button">Start Autospin</button>
+          <button id="stopAuto" class="stop" type="button">Stop</button>
+        </div>
+        <button id="dailyGrant" class="grant" type="button">Claim Daily VC Grant (+250)</button>
+        <p id="dailyStatus" class="panel-copy"></p>
+        <label class="guard">
+          <input id="sessionGuard" type="checkbox" checked>
+          Session reminder every 25 spins
         </label>
-        <button id="dailyBonus" type="button">Claim Daily VC Grant (+30)</button>
-      </div>
+      </article>
     </section>
 
-    <section class="payouts" aria-label="Payout information">
-      <h2>AI Payout Table</h2>
-      <ul id="payoutList"></ul>
+    <section class="detail-grid" aria-label="Additional information">
+      <article class="panel">
+        <h2>Perks and Multipliers</h2>
+        <p class="panel-copy">Perk Tier <span id="perkTier">1</span> | Active multiplier <span id="perkMultiplier">1.00x</span></p>
+        <div class="meter">
+          <div id="perkFill" class="meter-fill"></div>
+        </div>
+        <p id="perkStatus" class="panel-copy">Win spins to charge your perk meter.</p>
+      </article>
+
+      <article class="panel">
+        <h2>Payout Rules</h2>
+        <ul id="payoutList"></ul>
+      </article>
+
+      <article class="panel">
+        <h2>Activity Log</h2>
+        <p class="panel-copy">Shows wins, losses, and session flow.</p>
+        <ul id="activityLog" class="activity-log"></ul>
+      </article>
     </section>
   </main>
 
