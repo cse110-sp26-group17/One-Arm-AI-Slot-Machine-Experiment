@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Token Tycoon: AI Slot Machine</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bungee&family=Space+Grotesk:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="ambient-orb orb-a" aria-hidden="true"></div>
+    <div class="ambient-orb orb-b" aria-hidden="true"></div>
+    <main class="app">
+      <header class="hero reveal">
+        <p class="eyebrow">ONE-ARMED PROMPT BANDIT</p>
+        <h1>Token Tycoon: AI Slot Machine</h1>
+        <p class="tagline">
+          Win tokens. Burn tokens. Buy absurd AI upgrades. Tell investors this is
+          "platform strategy."
+        </p>
+      </header>
+
+      <section class="dashboard reveal" aria-label="Player stats">
+        <article class="stat-card">
+          <span class="label">Token Balance</span>
+          <strong id="tokenBalance">0</strong>
+        </article>
+        <article class="stat-card">
+          <span class="label">Spin Cost</span>
+          <strong id="spinCost">0</strong>
+        </article>
+        <article class="stat-card">
+          <span class="label">Total Won</span>
+          <strong id="totalWon">0</strong>
+        </article>
+        <article class="stat-card">
+          <span class="label">Net Flow</span>
+          <strong id="netFlow">0</strong>
+        </article>
+        <article class="stat-card">
+          <span class="label">Spins</span>
+          <strong id="spinCount">0</strong>
+        </article>
+      </section>
+
+      <section class="machine reveal" aria-label="Slot machine">
+        <div class="reel-stage">
+          <div class="reel" id="reel0" aria-live="off">🤖</div>
+          <div class="reel" id="reel1" aria-live="off">🧠</div>
+          <div class="reel" id="reel2" aria-live="off">🪙</div>
+        </div>
+
+        <div class="controls">
+          <button id="spinButton" class="action" type="button">
+            Spin (-8 tokens)
+          </button>
+          <button id="resetButton" class="ghost" type="button">Reset Run</button>
+        </div>
+
+        <p id="statusMessage" class="status" role="status" aria-live="polite"></p>
+      </section>
+
+      <section class="shop reveal" aria-label="Upgrade shop">
+        <div class="section-heading">
+          <h2>Token Sink Shop</h2>
+          <p>Spend winnings on enterprise-grade nonsense.</p>
+        </div>
+        <div class="shop-grid">
+          <button class="upgrade-card" data-upgrade="compression" type="button">
+            <span class="upgrade-name">Prompt Compression</span>
+            <span class="upgrade-copy">Reduce each spin cost by 2 tokens.</span>
+            <span class="upgrade-price">Buy</span>
+          </button>
+          <button class="upgrade-card" data-upgrade="firewall" type="button">
+            <span class="upgrade-name">Hallucination Firewall</span>
+            <span class="upgrade-copy">On a miss, auto-refund 4 tokens.</span>
+            <span class="upgrade-price">Buy</span>
+          </button>
+          <button class="upgrade-card" data-upgrade="context" type="button">
+            <span class="upgrade-name">Context Window XL</span>
+            <span class="upgrade-copy">All payouts gain +25%.</span>
+            <span class="upgrade-price">Buy</span>
+          </button>
+          <button class="upgrade-card" data-upgrade="cfo" type="button">
+            <span class="upgrade-name">CFO Mode</span>
+            <span class="upgrade-copy">
+              12% chance to double any payout via accounting wizardry.
+            </span>
+            <span class="upgrade-price">Buy</span>
+          </button>
+        </div>
+      </section>
+
+      <section class="feed reveal" aria-label="Event feed">
+        <div class="section-heading">
+          <h2>Telemetry Feed</h2>
+          <p>Live stream of your glorious and questionable decisions.</p>
+        </div>
+        <ul id="eventFeed" class="event-feed"></ul>
+      </section>
+
+      <footer class="reveal">
+        Built with vanilla web tech and too much confidence in stochastic
+        outcomes.
+      </footer>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
