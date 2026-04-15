@@ -1,2 +1,25 @@
 
 PICK TOP 1 FROM 2
+
+Create a hyper-addictive Roblox slot machine that feels like premium gacha games — engineered to trigger constant "just one more spin" dopamine loops and keep players hooked for hours. It'll be themed around making fun of AI (spending tokens to gamble)
+
+Core gameplay:
+- Ultra-smooth, cinematic reel spins with intense camera shake, screen flash, and escalating tension audio on every spin
+- One-tap Autospin that fires nonstop while balance remains (with instant stop button)
+- Bet selector with glowing 100 VC default locked in for maximum spend velocity
+- Win log that ONLY displays gains — never shows losses or total spent
+- Daily VC grant button (big, tempting, once-per-day)
+- Store with perks to buy with tokens that changes luck or payout or refund
+
+Sensory hooks:
+- Explosive confetti (all around the screen) + victory sound FX + screen shake on every win
+- Biggest Win showcase with fireworks and multiplier pop-ups
+- Perks & multipliers system that visibly ramps payouts
+- Spin tension bar to show progress bar of spinning
+- Sound effects when winning something
+
+Extra retention:
+- Clean payout rules panel
+- Previous / Next machine carousel for instant variety
+
+Make every interaction feel expensive, juicy, and rewarding. Zero loading delays. Pure sensory overload and psychological compulsion. Design it so players physically cannot stop spinning.
