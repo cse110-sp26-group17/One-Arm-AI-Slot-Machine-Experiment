@@ -1,4 +1,4 @@
-const STORAGE_KEY = "neon-vault-slots-state-v2";
+const STORAGE_KEY = "prompt-punk-slots-state-v3";
 const START_BALANCE = 1500;
 const DAILY_GRANT = 600;
 const MAX_LOG_ENTRIES = 9;
@@ -7,69 +7,96 @@ const DEFAULT_BET = 100;
 const REMINDER_SPIN_INTERVAL = 60;
 
 const SPIN_HEADLINES = [
-  "Reels primed. Voltage climbing...",
-  "Signal locked. Spinning hot...",
-  "Momentum rising. Eyes on the center line...",
-  "Machine under load. Hold steady..."
+  "Prompt queue primed. GPUs warming up...",
+  "Inference pressure rising. Reel lock engaged...",
+  "Token storm incoming. Hold the line...",
+  "Model confidence spiking. Spin committed..."
 ];
 
 const WIN_HEADLINES = [
-  "Clean hit.",
-  "Payout confirmed.",
-  "Vault opened.",
-  "Multiplier landed."
+  "Patch accepted.",
+  "Token refund approved.",
+  "Prompt dunk successful.",
+  "Benchmark smashed."
 ];
 
 const LOSS_HEADLINES = [
-  "No line this round.",
-  "Missed by one icon.",
-  "Close call, no payout.",
-  "Resetting reel pressure."
+  "Model drifted. No line this round.",
+  "Context window clipped that one.",
+  "Close, but the bot dodged the roast.",
+  "Resetting inference pressure."
+];
+
+const STORE_PERKS = [
+  {
+    id: "luckPatch",
+    name: "Luck Patch",
+    cost: 420,
+    effectText: "8% chance per reel to upgrade into a stronger symbol at stop.",
+    kind: "luck",
+    value: 0.08
+  },
+  {
+    id: "payoutKernel",
+    name: "Payout Kernel",
+    cost: 580,
+    effectText: "Adds x1.18 payout multiplier on all winning spins.",
+    kind: "payout",
+    value: 1.18
+  },
+  {
+    id: "rollbackShield",
+    name: "Rollback Shield",
+    cost: 510,
+    effectText: "Refunds 22% of bet on non-winning spins.",
+    kind: "refund",
+    value: 0.22
+  }
 ];
 
 const MACHINES = [
   {
-    id: "neon-drift",
-    name: "Neon Drift",
-    flavor: "Balanced volatility with frequent mid-tier wins.",
+    id: "hallucination-highway",
+    name: "Hallucination Highway",
+    flavor: "Balanced chaos with regular mid-tier meme payouts.",
     accent: "#f4b042",
     machineMultiplier: 1,
     symbols: [
-      { id: "chip", label: "CHIP", weight: 22, payout2: 1.4, payout3: 3.9, color: "#ffd166" },
-      { id: "orbit", label: "ORBIT", weight: 18, payout2: 1.8, payout3: 4.8, color: "#7ae582" },
-      { id: "spark", label: "SPARK", weight: 14, payout2: 2.1, payout3: 6.1, color: "#8ecae6" },
-      { id: "crown", label: "CROWN", weight: 10, payout2: 2.7, payout3: 8.6, color: "#ffadad" },
-      { id: "nova", label: "NOVA", weight: 6, payout2: 3.3, payout3: 11.2, color: "#caffbf" },
+      { id: "token", label: "TOKEN", weight: 22, payout2: 1.4, payout3: 3.9, color: "#ffd166" },
+      { id: "meme", label: "MEME", weight: 18, payout2: 1.8, payout3: 4.8, color: "#7ae582" },
+      { id: "cache", label: "CACHE", weight: 14, payout2: 2.1, payout3: 6.1, color: "#8ecae6" },
+      { id: "patch", label: "PATCH", weight: 10, payout2: 2.7, payout3: 8.6, color: "#ffadad" },
+      { id: "roast", label: "ROAST", weight: 6, payout2: 3.3, payout3: 11.2, color: "#caffbf" },
       { id: "wild", label: "WILD", weight: 3, payout2: 4.2, payout3: 15.5, color: "#f9c74f" }
     ]
   },
   {
-    id: "sunstrike",
-    name: "Sunstrike Rush",
-    flavor: "Higher variance with bigger top-end triples.",
+    id: "prompt-panic",
+    name: "Prompt Panic",
+    flavor: "Higher variance and sharper top-end triples.",
     accent: "#ff7b54",
     machineMultiplier: 1.08,
     symbols: [
       { id: "coin", label: "COIN", weight: 25, payout2: 1.3, payout3: 3.4, color: "#ffd166" },
-      { id: "flare", label: "FLARE", weight: 16, payout2: 1.9, payout3: 5.2, color: "#f4a261" },
-      { id: "beam", label: "BEAM", weight: 12, payout2: 2.3, payout3: 6.8, color: "#e9edc9" },
-      { id: "sigil", label: "SIGIL", weight: 9, payout2: 2.9, payout3: 9.6, color: "#ffcad4" },
-      { id: "solar", label: "SOLAR", weight: 5, payout2: 3.6, payout3: 12.8, color: "#bde0fe" },
+      { id: "spam", label: "SPAM", weight: 16, payout2: 1.9, payout3: 5.2, color: "#f4a261" },
+      { id: "bug", label: "BUG", weight: 12, payout2: 2.3, payout3: 6.8, color: "#e9edc9" },
+      { id: "lag", label: "LAG", weight: 9, payout2: 2.9, payout3: 9.6, color: "#ffcad4" },
+      { id: "ban", label: "BAN", weight: 5, payout2: 3.6, payout3: 12.8, color: "#bde0fe" },
       { id: "wild", label: "WILD", weight: 2, payout2: 4.8, payout3: 18.2, color: "#ffd166" }
     ]
   },
   {
-    id: "aurora-vault",
-    name: "Aurora Vault",
-    flavor: "Steadier cadence with perk-friendly scaling.",
+    id: "datacenter-drama",
+    name: "Datacenter Drama",
+    flavor: "Steadier pacing with strong perk synergy.",
     accent: "#66d9e8",
     machineMultiplier: 0.94,
     symbols: [
-      { id: "mint", label: "MINT", weight: 24, payout2: 1.5, payout3: 3.8, color: "#c7f9cc" },
-      { id: "pulse", label: "PULSE", weight: 17, payout2: 1.9, payout3: 4.9, color: "#90e0ef" },
-      { id: "glyph", label: "GLYPH", weight: 13, payout2: 2.2, payout3: 6.4, color: "#a0c4ff" },
-      { id: "prism", label: "PRISM", weight: 10, payout2: 2.8, payout3: 8.9, color: "#ffc6ff" },
-      { id: "comet", label: "COMET", weight: 5, payout2: 3.4, payout3: 11.7, color: "#bdb2ff" },
+      { id: "stack", label: "STACK", weight: 24, payout2: 1.5, payout3: 3.8, color: "#c7f9cc" },
+      { id: "queue", label: "QUEUE", weight: 17, payout2: 1.9, payout3: 4.9, color: "#90e0ef" },
+      { id: "trace", label: "TRACE", weight: 13, payout2: 2.2, payout3: 6.4, color: "#a0c4ff" },
+      { id: "panic", label: "PANIC", weight: 10, payout2: 2.8, payout3: 8.9, color: "#ffc6ff" },
+      { id: "flame", label: "FLAME", weight: 5, payout2: 3.4, payout3: 11.7, color: "#bdb2ff" },
       { id: "wild", label: "WILD", weight: 2, payout2: 4.3, payout3: 16.7, color: "#ffcf56" }
     ]
   }
@@ -77,6 +104,7 @@ const MACHINES = [
 
 for (const machine of MACHINES) {
   machine.weightedPool = buildWeightedPool(machine.symbols);
+  machine.boostedPool = buildBoostedPool(machine.symbols);
 }
 
 const reels = [
@@ -96,13 +124,18 @@ const perkValue = document.querySelector("#perk-value");
 const biggestValue = document.querySelector("#biggest-value");
 const spentValue = document.querySelector("#spent-value");
 const wonValue = document.querySelector("#won-value");
+const refundsValue = document.querySelector("#refunds-value");
 const netValue = document.querySelector("#net-value");
 const spinsValue = document.querySelector("#spins-value");
 const spinTension = document.querySelector("#spin-tension");
+const tensionMeter = document.querySelector("#tension-meter");
+const tensionFill = document.querySelector("#tension-fill");
 const headline = document.querySelector("#headline");
 const payoutRules = document.querySelector("#payout-rules");
 const biggestWinText = document.querySelector("#biggest-win-text");
 const multiplierPopups = document.querySelector("#multiplier-popups");
+const perkStore = document.querySelector("#perk-store");
+const perkSummary = document.querySelector("#perk-summary");
 const winLog = document.querySelector("#win-log");
 const sessionLog = document.querySelector("#session-log");
 const betStrip = document.querySelector("#bet-strip");
@@ -126,10 +159,13 @@ initialize();
 function initialize() {
   state.bet = BET_OPTIONS.includes(state.bet) ? state.bet : DEFAULT_BET;
   state.machineIndex = clamp(state.machineIndex, 0, MACHINES.length - 1);
+  state.storePerks = sanitizeStorePerks(state.storePerks);
+  state.refunds = asFiniteNumber(state.refunds, 0);
 
   for (const reel of reels) {
     setReelSymbol(reel, READY_SYMBOL);
   }
+  setTensionState(0, 1);
 
   bindEvents();
   renderAll();
@@ -166,6 +202,20 @@ function bindEvents() {
       setBet(value);
     });
   }
+
+  perkStore.addEventListener("click", (event) => {
+    const target = event.target;
+    if (!(target instanceof HTMLElement)) {
+      return;
+    }
+
+    const button = target.closest("button[data-perk-id]");
+    if (!(button instanceof HTMLButtonElement)) {
+      return;
+    }
+
+    purchasePerk(button.dataset.perkId || "");
+  });
 }
 
 function currentMachine() {
@@ -204,6 +254,42 @@ function cycleMachine(direction) {
   }
 
   setHeadline(`${machine.name} loaded.`);
+  persistState();
+  renderAll();
+}
+
+function purchasePerk(perkId) {
+  if (isSpinning || isAutospin) {
+    return;
+  }
+
+  const perk = STORE_PERKS.find((entry) => entry.id === perkId);
+  if (!perk) {
+    return;
+  }
+
+  if (state.storePerks[perkId]) {
+    setHeadline(`${perk.name} is already installed.`);
+    playSound("blocked");
+    return;
+  }
+
+  if (state.balance < perk.cost) {
+    setHeadline(`Need ${formatVc(perk.cost)} to buy ${perk.name}.`);
+    playSound("blocked");
+    return;
+  }
+
+  state.balance -= perk.cost;
+  state.spent += perk.cost;
+  state.storePerks[perkId] = true;
+  pushSessionEntry(`Store purchase: ${perk.name} -${formatVc(perk.cost)}.`);
+  showMultiplierPopups([`${perk.name} online`]);
+  playSound("perk");
+  triggerFlash(false);
+  triggerShake("soft");
+  setHeadline(`${perk.name} installed.`);
+
   persistState();
   renderAll();
 }
@@ -309,23 +395,25 @@ async function spinOnce(mode) {
   updatePerkLevel();
 
   const perkMultiplier = getPerkMultiplier();
+  const storePayoutMultiplier = getStorePayoutMultiplier();
+  const luckBoost = getLuckBoost();
   setHeadline(randomFrom(SPIN_HEADLINES));
   pushSessionEntry(`Spin -${formatVc(state.bet)} on ${machine.name}.`);
   persistState();
   renderAll();
 
-  animateTension(1300, perkMultiplier);
+  animateTension(1300, perkMultiplier * storePayoutMultiplier);
   playSpinTension(1200);
   triggerFlash(false);
   triggerShake("soft");
 
   const resultSymbols = await Promise.all([
-    spinReel(reels[0], 760, machine),
-    spinReel(reels[1], 1030, machine),
-    spinReel(reels[2], 1290, machine)
+    spinReel(reels[0], 760, machine, luckBoost),
+    spinReel(reels[1], 1030, machine, luckBoost),
+    spinReel(reels[2], 1290, machine, luckBoost)
   ]);
 
-  const outcome = evaluateOutcome(resultSymbols, state.bet, machine, perkMultiplier);
+  const outcome = evaluateOutcome(resultSymbols, state.bet, machine, perkMultiplier, storePayoutMultiplier);
 
   if (outcome.payout > 0) {
     state.balance += outcome.payout;
@@ -351,10 +439,24 @@ async function spinOnce(mode) {
     }
   } else {
     state.losses += state.bet;
-    pushSessionEntry(`No payout (${resultSymbols.map((symbol) => symbol.label).join(" / ")}).`);
-    setHeadline(randomFrom(LOSS_HEADLINES));
+    const reelText = resultSymbols.map((symbol) => symbol.label).join(" / ");
+    let refunded = 0;
+    const refundRate = getRefundRate();
+
+    if (refundRate > 0) {
+      refunded = Math.max(1, Math.round(state.bet * refundRate));
+      state.balance += refunded;
+      state.refunds += refunded;
+      pushSessionEntry(`Rollback Shield refunded +${formatVc(refunded)}.`);
+      showMultiplierPopups([`Refund +${formatVc(refunded)}`]);
+      playSound("perk");
+    }
+
+    const lossLine = refunded > 0 ? `No payout (${reelText}). Refund +${formatVc(refunded)}.` : `No payout (${reelText}).`;
+    pushSessionEntry(lossLine);
+    setHeadline(refunded > 0 ? `${randomFrom(LOSS_HEADLINES)} Refund triggered.` : randomFrom(LOSS_HEADLINES));
     playSound("lose");
-    setTensionLabel(1);
+    setTensionState(1, 1);
   }
 
   if (state.spins % REMINDER_SPIN_INTERVAL === 0) {
@@ -365,6 +467,11 @@ async function spinOnce(mode) {
   persistState();
   isSpinning = false;
   renderAll();
+  window.setTimeout(() => {
+    if (!isSpinning) {
+      setTensionState(0, 1);
+    }
+  }, 180);
 
   if (mode === "auto" && state.balance < state.bet) {
     isAutospin = false;
@@ -373,7 +480,7 @@ async function spinOnce(mode) {
   return true;
 }
 
-function evaluateOutcome(resultSymbols, bet, machine, perkMultiplier) {
+function evaluateOutcome(resultSymbols, bet, machine, perkMultiplier, storePayoutMultiplier) {
   const ids = resultSymbols.map((symbol) => symbol.id);
   const counts = {};
 
@@ -416,12 +523,13 @@ function evaluateOutcome(resultSymbols, bet, machine, perkMultiplier) {
       baseMultiplier: 0,
       machineMultiplier: machine.machineMultiplier,
       perkMultiplier,
+      storePayoutMultiplier,
       totalMultiplier: 0,
       jackpot: false
     };
   }
 
-  const totalMultiplier = baseMultiplier * machine.machineMultiplier * perkMultiplier;
+  const totalMultiplier = baseMultiplier * machine.machineMultiplier * perkMultiplier * storePayoutMultiplier;
   const payout = Math.max(1, Math.round(bet * totalMultiplier));
 
   return {
@@ -430,6 +538,7 @@ function evaluateOutcome(resultSymbols, bet, machine, perkMultiplier) {
     baseMultiplier,
     machineMultiplier: machine.machineMultiplier,
     perkMultiplier,
+    storePayoutMultiplier,
     totalMultiplier,
     jackpot
   };
@@ -444,6 +553,7 @@ function triggerWinEffects(outcome) {
     `Base x${formatMultiplier(outcome.baseMultiplier)}`,
     `Machine x${formatMultiplier(outcome.machineMultiplier)}`,
     `Perk x${formatMultiplier(outcome.perkMultiplier)}`,
+    `Store x${formatMultiplier(outcome.storePayoutMultiplier)}`,
     `Total x${formatMultiplier(outcome.totalMultiplier)}`
   ]);
 
@@ -455,7 +565,7 @@ function triggerWinEffects(outcome) {
   }
 }
 
-function spinReel(reelElement, durationMs, machine) {
+function spinReel(reelElement, durationMs, machine, luckBoost) {
   return new Promise((resolve) => {
     reelElement.classList.add("spinning");
 
@@ -465,12 +575,29 @@ function spinReel(reelElement, durationMs, machine) {
 
     window.setTimeout(() => {
       window.clearInterval(teaseTimer);
-      const finalSymbol = weightedPick(machine.weightedPool);
+      const finalSymbol = pickFinalSymbol(machine, luckBoost);
       setReelSymbol(reelElement, finalSymbol);
       reelElement.classList.remove("spinning");
       resolve(finalSymbol);
     }, durationMs);
   });
+}
+
+function pickFinalSymbol(machine, luckBoost) {
+  let symbol = weightedPick(machine.weightedPool);
+  if (luckBoost <= 0) {
+    return symbol;
+  }
+
+  if (Math.random() > luckBoost) {
+    return symbol;
+  }
+
+  const boosted = weightedPick(machine.boostedPool);
+  if (boosted.payout3 >= symbol.payout3) {
+    symbol = boosted;
+  }
+  return symbol;
 }
 
 function setReelSymbol(reelElement, symbol) {
@@ -496,6 +623,18 @@ function getPerkMultiplier() {
   return 1 + state.perkLevel * 0.07;
 }
 
+function getStorePayoutMultiplier() {
+  return state.storePerks.payoutKernel ? 1.18 : 1;
+}
+
+function getLuckBoost() {
+  return state.storePerks.luckPatch ? 0.08 : 0;
+}
+
+function getRefundRate() {
+  return state.storePerks.rollbackShield ? 0.22 : 0;
+}
+
 function showMultiplierPopups(lines) {
   for (const text of lines) {
     const item = document.createElement("span");
@@ -511,18 +650,18 @@ function showMultiplierPopups(lines) {
   }
 }
 
-function animateTension(durationMs, perkMultiplier) {
+function animateTension(durationMs, tensionBoost) {
   const started = performance.now();
 
   const frame = (now) => {
     if (!isSpinning) {
-      setTensionLabel(1);
+      setTensionState(0, 1);
       return;
     }
 
     const progress = clamp((now - started) / durationMs, 0, 1);
-    const value = 1 + progress * 1.6 + (perkMultiplier - 1) * 0.5;
-    setTensionLabel(value);
+    const value = 1 + progress * 1.6 + (tensionBoost - 1) * 0.5;
+    setTensionState(progress, value);
 
     if (progress < 1) {
       window.requestAnimationFrame(frame);
@@ -532,7 +671,10 @@ function animateTension(durationMs, perkMultiplier) {
   window.requestAnimationFrame(frame);
 }
 
-function setTensionLabel(value) {
+function setTensionState(progress, value) {
+  const percent = Math.round(clamp(progress, 0, 1) * 100);
+  tensionFill.style.width = `${percent}%`;
+  tensionMeter.setAttribute("aria-valuenow", String(percent));
   spinTension.textContent = `Tension x${formatMultiplier(value)}`;
 }
 
@@ -592,8 +734,10 @@ function dropConfetti(count) {
 
 function renderAll() {
   const machine = currentMachine();
-  const net = state.won - state.spent;
   const perkMultiplier = getPerkMultiplier();
+  const storePayoutMultiplier = getStorePayoutMultiplier();
+  const totalPayoutMultiplier = perkMultiplier * storePayoutMultiplier;
+  const net = state.won + state.refunds - state.spent;
   const canAffordBet = state.balance >= state.bet;
 
   machineName.textContent = machine.name;
@@ -602,10 +746,11 @@ function renderAll() {
 
   balanceValue.textContent = formatVc(state.balance);
   betValue.textContent = formatVc(state.bet);
-  perkValue.textContent = `x${formatMultiplier(perkMultiplier)}`;
+  perkValue.textContent = `x${formatMultiplier(totalPayoutMultiplier)}`;
   biggestValue.textContent = formatVc(state.biggestWin.amount);
   spentValue.textContent = formatVc(state.spent);
   wonValue.textContent = formatVc(state.won);
+  refundsValue.textContent = formatVc(state.refunds);
   spinsValue.textContent = formatNumber(state.spins);
   netValue.textContent = `${net > 0 ? "+" : ""}${formatVc(net)}`;
   netValue.classList.toggle("positive", net > 0);
@@ -619,6 +764,7 @@ function renderAll() {
 
   spinBtn.disabled = isSpinning || isAutospin || !canAffordBet;
   autospinBtn.disabled = isSpinning || isAutospin || !canAffordBet;
+  autospinBtn.textContent = isAutospin ? "Autospinning..." : "Autospin";
   stopBtn.disabled = !isAutospin;
   prevMachineBtn.disabled = isSpinning || isAutospin;
   nextMachineBtn.disabled = isSpinning || isAutospin;
@@ -628,6 +774,8 @@ function renderAll() {
   dailyBtn.textContent = claimedToday ? "Daily Claimed" : `Daily VC +${formatNumber(DAILY_GRANT)}`;
 
   renderBiggestWin();
+  renderPerkStore();
+  renderPerkSummary();
   renderPayoutRules(machine);
   renderLogs(winLog, state.winLog, "No wins yet.");
   renderLogs(sessionLog, state.sessionLog, "No session entries yet.");
@@ -640,6 +788,53 @@ function renderBiggestWin() {
   }
 
   biggestWinText.textContent = `${formatVc(state.biggestWin.amount)} on ${state.biggestWin.machine} (${state.biggestWin.reason}, x${formatMultiplier(state.biggestWin.multiplier)}).`;
+}
+
+function renderPerkStore() {
+  perkStore.textContent = "";
+
+  for (const perk of STORE_PERKS) {
+    const owned = !!state.storePerks[perk.id];
+    const card = document.createElement("article");
+    card.className = "perk-card";
+    if (owned) {
+      card.classList.add("owned");
+    }
+
+    const header = document.createElement("div");
+    header.className = "perk-card-header";
+
+    const title = document.createElement("h4");
+    title.textContent = perk.name;
+
+    const cost = document.createElement("span");
+    cost.className = "cost";
+    cost.textContent = owned ? "Owned" : formatVc(perk.cost);
+
+    header.append(title, cost);
+
+    const text = document.createElement("p");
+    text.textContent = perk.effectText;
+
+    const button = document.createElement("button");
+    button.className = "perk-buy";
+    button.dataset.perkId = perk.id;
+    button.textContent = owned ? "Installed" : "Buy";
+    button.disabled = owned || isSpinning || isAutospin || state.balance < perk.cost;
+
+    card.append(header, text, button);
+    perkStore.append(card);
+  }
+}
+
+function renderPerkSummary() {
+  const active = STORE_PERKS.filter((perk) => state.storePerks[perk.id]);
+  if (active.length === 0) {
+    perkSummary.textContent = "No store perks purchased yet.";
+    return;
+  }
+
+  perkSummary.textContent = `Active perks: ${active.map((perk) => perk.name).join(" | ")}`;
 }
 
 function renderPayoutRules(machine) {
@@ -659,8 +854,20 @@ function renderPayoutRules(machine) {
   }
 
   const perk = document.createElement("li");
-  perk.textContent = `Current perk multiplier: x${formatMultiplier(getPerkMultiplier())}`;
+  perk.textContent = `Spin multiplier: x${formatMultiplier(getPerkMultiplier())}`;
   payoutRules.append(perk);
+
+  const storeBoost = document.createElement("li");
+  storeBoost.textContent = `Store payout boost: x${formatMultiplier(getStorePayoutMultiplier())}`;
+  payoutRules.append(storeBoost);
+
+  const luckBoost = document.createElement("li");
+  luckBoost.textContent = `Luck upgrade chance per reel: ${Math.round(getLuckBoost() * 100)}%`;
+  payoutRules.append(luckBoost);
+
+  const refund = document.createElement("li");
+  refund.textContent = `Loss refund rate: ${Math.round(getRefundRate() * 100)}%`;
+  payoutRules.append(refund);
 }
 
 function renderLogs(listElement, entries, emptyMessage) {
@@ -709,17 +916,39 @@ function setHeadline(text) {
   headline.textContent = text;
 }
 
+function defaultStorePerks() {
+  const defaults = {};
+  for (const perk of STORE_PERKS) {
+    defaults[perk.id] = false;
+  }
+  return defaults;
+}
+
+function sanitizeStorePerks(value) {
+  const safe = defaultStorePerks();
+  if (!value || typeof value !== "object") {
+    return safe;
+  }
+
+  for (const perk of STORE_PERKS) {
+    safe[perk.id] = Boolean(value[perk.id]);
+  }
+  return safe;
+}
+
 function defaultState() {
   return {
     balance: START_BALANCE,
     spent: 0,
     won: 0,
+    refunds: 0,
     losses: 0,
     bet: DEFAULT_BET,
     spins: 0,
     perkLevel: 0,
     machineIndex: 0,
     lastDailyClaimDay: "",
+    storePerks: defaultStorePerks(),
     winLog: [],
     sessionLog: [],
     biggestWin: {
@@ -751,12 +980,14 @@ function loadState() {
     balance: asFiniteNumber(parsed.balance, fallback.balance),
     spent: asFiniteNumber(parsed.spent, fallback.spent),
     won: asFiniteNumber(parsed.won, fallback.won),
+    refunds: asFiniteNumber(parsed.refunds, fallback.refunds),
     losses: asFiniteNumber(parsed.losses, fallback.losses),
     bet: asFiniteNumber(parsed.bet, fallback.bet),
     spins: asFiniteNumber(parsed.spins, fallback.spins),
     perkLevel: asFiniteNumber(parsed.perkLevel, fallback.perkLevel),
     machineIndex: asFiniteNumber(parsed.machineIndex, fallback.machineIndex),
     lastDailyClaimDay: typeof parsed.lastDailyClaimDay === "string" ? parsed.lastDailyClaimDay : "",
+    storePerks: sanitizeStorePerks(parsed.storePerks),
     winLog: sanitizeLogs(parsed.winLog),
     sessionLog: sanitizeLogs(parsed.sessionLog),
     biggestWin: {
@@ -796,6 +1027,14 @@ function buildWeightedPool(symbols) {
   }
 
   return pool;
+}
+
+function buildBoostedPool(symbols) {
+  const boostedSymbols = symbols.map((symbol) => ({
+    ...symbol,
+    weight: symbol.weight * (1 + symbol.payout3 / 15)
+  }));
+  return buildWeightedPool(boostedSymbols);
 }
 
 function weightedPick(pool) {

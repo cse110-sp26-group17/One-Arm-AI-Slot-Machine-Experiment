@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Neon Vault Slots</title>
+    <title>Prompt Punk Slots</title>
     <link rel="stylesheet" href="style.css" />
     <script defer src="script.js"></script>
   </head>
@@ -14,15 +14,15 @@
     <main class="app-shell">
       <header class="hero">
         <p class="eyebrow">One-Armed AI Slot Machine</p>
-        <h1>Neon Vault Slots</h1>
+        <h1>Prompt Punk Slots</h1>
         <p class="tagline">
-          Cinematic reels, rapid rounds, and high-energy feedback with transparent session stats.
+          Roast the bots, spin token reels, and chase flashy payouts with transparent session stats.
         </p>
         <div class="machine-carousel" aria-label="Machine carousel">
           <button id="prev-machine" class="nav-btn" aria-label="Previous machine">Prev</button>
           <div>
             <p class="machine-label">Current Machine</p>
-            <h2 id="machine-name">Neon Drift</h2>
+            <h2 id="machine-name">Hallucination Highway</h2>
             <p id="machine-flavor" class="machine-flavor"></p>
           </div>
           <button id="next-machine" class="nav-btn" aria-label="Next machine">Next</button>
@@ -40,7 +40,7 @@
             <strong id="bet-value">100 VC</strong>
           </article>
           <article class="stat-card">
-            <span class="stat-label">Perk Multiplier</span>
+            <span class="stat-label">Total Multiplier</span>
             <strong id="perk-value">x1.00</strong>
           </article>
           <article class="stat-card">
@@ -54,6 +54,10 @@
           <article class="stat-card">
             <span class="stat-label">Won</span>
             <strong id="won-value">0 VC</strong>
+          </article>
+          <article class="stat-card">
+            <span class="stat-label">Refunds</span>
+            <strong id="refunds-value">0 VC</strong>
           </article>
           <article class="stat-card">
             <span class="stat-label">Net</span>
@@ -70,6 +74,17 @@
             <div class="reel" id="reel-0" data-symbol="ready"><span>READY</span></div>
             <div class="reel" id="reel-1" data-symbol="ready"><span>READY</span></div>
             <div class="reel" id="reel-2" data-symbol="ready"><span>READY</span></div>
+          </div>
+          <div
+            id="tension-meter"
+            class="tension-meter"
+            role="progressbar"
+            aria-label="Spin tension progress"
+            aria-valuemin="0"
+            aria-valuemax="100"
+            aria-valuenow="0"
+          >
+            <span id="tension-fill" class="tension-fill"></span>
           </div>
           <p id="spin-tension" class="spin-tension">Tension x1.00</p>
         </div>
@@ -100,6 +115,13 @@
             <div id="multiplier-popups" class="multiplier-popups" aria-live="polite"></div>
           </article>
 
+          <article class="panel store-panel">
+            <h3>Token Store</h3>
+            <p class="rules-note">Buy modifiers with VC. All effects are listed and always visible.</p>
+            <div id="perk-store" class="perk-store" aria-label="Perk store"></div>
+            <p id="perk-summary" class="rules-note">No store perks purchased yet.</p>
+          </article>
+
           <article class="panel payout-panel">
             <h3>Payout Rules</h3>
             <ul id="payout-rules" class="rules-list"></ul>
@@ -109,12 +131,12 @@
 
         <section class="logs-grid">
           <article class="panel">
-            <h3>Win Feed</h3>
+            <h3>Win Feed (Gains Only)</h3>
             <ul id="win-log" class="event-log" aria-label="Wins"></ul>
           </article>
 
           <article class="panel">
-            <h3>Session Ledger</h3>
+            <h3>Session Ledger (Full)</h3>
             <ul id="session-log" class="event-log" aria-label="Session ledger"></ul>
           </article>
         </section>
