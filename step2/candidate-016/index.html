@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Token Grinder</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="app-shell">
+    <header class="top-bar">
+      <p class="eyebrow">Vanilla HTML + CSS + JavaScript</p>
+      <h1>AI Token Grinder</h1>
+      <p class="subtitle">
+        Feed tokens to the hype machine. Sometimes it hallucinates profits.
+      </p>
+    </header>
+
+    <section class="stats" aria-label="Game stats">
+      <article>
+        <p class="label">Token Balance</p>
+        <p id="balance" class="value">0</p>
+      </article>
+      <article>
+        <p class="label">Spins</p>
+        <p id="spins" class="value">0</p>
+      </article>
+      <article>
+        <p class="label">Biggest Win</p>
+        <p id="biggestWin" class="value">0</p>
+      </article>
+    </section>
+
+    <section class="machine" aria-label="Slot machine">
+      <div class="reel-frame" role="img" aria-label="Slot result reels">
+        <div class="reel" id="reel0">🤖</div>
+        <div class="reel" id="reel1">📉</div>
+        <div class="reel" id="reel2">🧯</div>
+      </div>
+      <p id="resultText" class="result-text">Insert tokens and roast the robots.</p>
+    </section>
+
+    <section class="controls" aria-label="Game controls">
+      <label for="betRange" class="bet-label">Bet: <span id="betText">5</span> tokens</label>
+      <input id="betRange" type="range" min="1" max="50" step="1" value="5">
+      <div class="button-row">
+        <button id="minusBet" type="button">-1 Bet</button>
+        <button id="plusBet" type="button">+1 Bet</button>
+        <button id="spinBtn" class="spin" type="button">Spin</button>
+      </div>
+      <div class="button-row secondary">
+        <label class="autospin">
+          <input id="autoSpin" type="checkbox">
+          Auto-spin while you still have money
+        </label>
+        <button id="dailyBonus" type="button">Claim Daily VC Grant (+30)</button>
+      </div>
+    </section>
+
+    <section class="payouts" aria-label="Payout information">
+      <h2>AI Payout Table</h2>
+      <ul id="payoutList"></ul>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

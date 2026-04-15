@@ -11,6 +11,4 @@
 | App Quality Notes	        | 2 - colorful, able to change the amount we're betting, can't hard reset after spinning sometimes, and can't spin even though credits are available |
 | Code Quality Notes        | 5 | 
 
-
-
  ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆
