@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Token Burner 9000</title>
+    <link rel="stylesheet" href="style.css" />
+    <script defer src="script.js"></script>
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="hero">
+        <p class="eyebrow">One-Armed AI Slot Machine</p>
+        <h1>Token Burner 9000</h1>
+        <p class="tagline">
+          Spend context tokens, win context tokens, and pretend this is innovation.
+        </p>
+      </header>
+
+      <section class="machine" aria-live="polite">
+        <div class="status-grid">
+          <article class="stat-card">
+            <span class="stat-label">Wallet</span>
+            <strong id="balance-value">0</strong>
+          </article>
+          <article class="stat-card">
+            <span class="stat-label">Spent</span>
+            <strong id="spent-value">0</strong>
+          </article>
+          <article class="stat-card">
+            <span class="stat-label">Won</span>
+            <strong id="won-value">0</strong>
+          </article>
+          <article class="stat-card">
+            <span class="stat-label">Net</span>
+            <strong id="net-value">0</strong>
+          </article>
+        </div>
+
+        <div class="reel-frame" role="img" aria-label="Slot reels">
+          <div class="reel" id="reel-0" data-symbol="ready"><span>READY</span></div>
+          <div class="reel" id="reel-1" data-symbol="ready"><span>READY</span></div>
+          <div class="reel" id="reel-2" data-symbol="ready"><span>READY</span></div>
+        </div>
+
+        <div class="controls">
+          <label class="bet-label" for="bet-range">
+            Bet per prompt:
+            <span id="bet-display">10</span>
+            tokens
+          </label>
+          <input id="bet-range" type="range" min="1" max="40" value="10" />
+          <div class="button-row">
+            <button id="spin-btn" class="primary">Spin</button>
+            <button id="max-btn">Max Bet</button>
+            <button id="bailout-btn">Ask VC For Seed Round</button>
+            <button id="reset-btn" class="ghost">Factory Reset</button>
+          </div>
+        </div>
+
+        <p id="headline" class="headline">
+          Pull the lever and outsource your finances to probability.
+        </p>
+        <ul id="event-log" class="event-log" aria-label="Recent events"></ul>
+      </section>
+    </main>
+  </body>
+</html>
