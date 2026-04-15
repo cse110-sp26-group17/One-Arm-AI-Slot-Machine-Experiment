@@ -15,3 +15,4 @@
 | Code Quality Notes     | The code seems a mix of the two before, having if statements for special cases and having more code for visuals. |
 
 
+☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆
