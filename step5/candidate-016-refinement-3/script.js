@@ -1,25 +1,27 @@
-﻿
 const BET_OPTIONS = [50, 100, 200, 500];
 const DEFAULT_BET = 100;
-const DEFAULT_BALANCE = 1800;
+const DEFAULT_BALANCE = 2000;
 const DAILY_GRANT = 300;
-const SAVE_KEY = "prompt-palace-v1";
-const LOG_LIMIT = 14;
+const SAVE_KEY = "vegas-ai-slot-v2";
+const LOG_LIMIT = 16;
+const THIRD_REEL_HANG_MIN = 440;
+const THIRD_REEL_HANG_MAX = 620;
+const LEVER_TRIGGER = 0.78;
 
 const SYMBOLS = [
-  { id: "bot", emoji: "🤖", name: "Bot Loop", weight: 22, pair: 1.8, triple: 4.8 },
-  { id: "receipt", emoji: "🧾", name: "Token Receipt", weight: 18, pair: 2.2, triple: 5.6 },
-  { id: "fire", emoji: "🔥", name: "GPU Burn", weight: 14, pair: 2.8, triple: 7.8 },
-  { id: "brain", emoji: "🧠", name: "Hallucination Core", weight: 12, pair: 3.5, triple: 9.4 },
-  { id: "safety", emoji: "📉", name: "Safety Team", weight: 10, pair: 4.2, triple: 11.8 },
-  { id: "coin", emoji: "🪙", name: "VC Vault", weight: 8, pair: 5.4, triple: 14.6 },
-  { id: "crown", emoji: "👑", name: "Model Overlord", weight: 6, pair: 6.8, triple: 18.5 },
+  { id: "bot", emoji: "🤖", name: "Token Bot", weight: 22, pair: 1.8, triple: 4.6 },
+  { id: "prompt", emoji: "📝", name: "Prompt Debt", weight: 18, pair: 2.2, triple: 5.8 },
+  { id: "fire", emoji: "🔥", name: "GPU Burn", weight: 14, pair: 2.9, triple: 7.9 },
+  { id: "brain", emoji: "🧠", name: "Hallucination Core", weight: 12, pair: 3.6, triple: 9.6 },
+  { id: "chart", emoji: "📉", name: "Runway Collapse", weight: 10, pair: 4.4, triple: 12.4 },
+  { id: "coin", emoji: "🪙", name: "VC Vault", weight: 8, pair: 5.8, triple: 15.2 },
+  { id: "crown", emoji: "👑", name: "Model Overlord", weight: 6, pair: 7.2, triple: 19.4 },
 ];
 
 const SPECIAL_COMBO = {
   ids: ["bot", "brain", "fire"],
   label: "Synthetic Meltdown",
-  multiplier: 25,
+  multiplier: 26,
 };
 
 const STORE_ITEMS = [
@@ -28,56 +30,56 @@ const STORE_ITEMS = [
     name: "Lucky Chance",
     cost: 420,
     duration: 9,
-    description: "Biases reels toward high-paying emojis for 9 spins.",
+    description: "Biases high-value symbols for 9 pulls.",
   },
   {
     id: "streak",
     name: "Streak Heat",
-    cost: 460,
+    cost: 470,
     duration: 8,
-    description: "Each consecutive win adds +0.12x, max +0.72x.",
+    description: "Consecutive wins add +0.12x, up to +0.78x.",
   },
   {
     id: "multi",
-    name: "Multiplier Surge",
-    cost: 540,
+    name: "Multiplier Sauce",
+    cost: 560,
     duration: 6,
-    description: "Adds +35% payout multiplier while active.",
+    description: "Adds +38% payout multiplier while active.",
   },
   {
     id: "refund",
-    name: "Graceful Refund",
-    cost: 350,
+    name: "Token Refund",
+    cost: 360,
     duration: 10,
-    description: "Returns 40% bet on losing spins.",
+    description: "Returns 42% of your bet on losses.",
   },
 ];
 
 const SPIN_LINES = [
-  "Lever pulled. Token telemetry says the model is thinking expensive thoughts.",
-  "RNG compiling. Confidence levels high, factuality levels pending.",
-  "Inference engine warmed up. Wallet cooling system not included.",
-  "Prompt deployed. The house model is now freelancing with your VC.",
+  "Lever pulled. The model is about to optimize your wallet into a case study.",
+  "Inference roulette engaged. Confidence up, accountability unavailable.",
+  "Prompt dispatched. Finance has entered airplane mode.",
+  "Sampling tokens at Vegas speed. Explainability remains optional.",
 ];
 
 const WIN_LINES = [
-  "The model cited real sources. Finance accepts this miracle.",
-  "Quality output achieved. Extremely rare in production.",
-  "You found signal in the noise. Compliance is furious.",
-  "For one spin, the AI stopped hallucinating your balance sheet.",
+  "Miracle output: the AI cited reality and paid rent.",
+  "Unexpected competence detected. Audit trail has been muted.",
+  "Signal found in the noise. Even QA looked surprised.",
+  "For one spin, your model stopped hallucinating the balance sheet.",
 ];
 
 const LOSS_LINES = [
-  "No hit. Your VC funded another overconfident paragraph.",
-  "Missed. Model requested more context and took your tokens anyway.",
-  "The reels said no. So did your return on prompt engineering.",
-  "Loss locked. The AI upgraded its certainty, not your bankroll.",
+  "No line. Your tokens funded another confident wrong answer.",
+  "Missed. The AI requested more context and billed immediately.",
+  "Dead pull. Great latency, terrible outcomes.",
+  "Loss locked. The model improved certainty, not returns.",
 ];
 
 const AUTO_LINES = [
-  "Autospin armed. Delegating financial decisions to pure entropy.",
-  "Autospin running. Human oversight has been gracefully ignored.",
-  "Autospin active. The model calls this an optimization pass.",
+  "Autospin armed. Delegating fiscal policy to entropy.",
+  "Autospin running. Human judgment has been sandboxed.",
+  "Autospin active. The house model is now your portfolio manager.",
 ];
 
 const balanceEl = document.getElementById("balance");
@@ -91,7 +93,6 @@ const betTextEl = document.getElementById("betText");
 const autoStatusEl = document.getElementById("autoStatus");
 const dailyStatusEl = document.getElementById("dailyStatus");
 const dailyGrantEl = document.getElementById("dailyGrant");
-const spinBtnEl = document.getElementById("spinBtn");
 const startAutoEl = document.getElementById("startAuto");
 const stopAutoEl = document.getElementById("stopAuto");
 const chipsEl = Array.from(document.querySelectorAll(".chip"));
@@ -107,6 +108,9 @@ const bigWinShowcaseMultEl = document.getElementById("bigWinShowcaseMult");
 const screenFlashEl = document.getElementById("screenFlash");
 const confettiLayerEl = document.getElementById("confettiLayer");
 const fireworkLayerEl = document.getElementById("fireworkLayer");
+const leverTrackEl = document.getElementById("leverTrack");
+const leverHandleEl = document.getElementById("leverHandle");
+const leverHintEl = document.getElementById("leverHint");
 
 const reelStates = reelStrips.map(() => ({
   offset: 0,
@@ -135,13 +139,23 @@ const state = {
   winLog: [],
 };
 
+const leverState = {
+  pull: 0,
+  dragging: false,
+  pointerId: -1,
+  startY: 0,
+  startPull: 0,
+  releaseTimer: 0,
+};
+
+let autoSpinTimer = 0;
+let tensionToneTimer = 0;
+let tensionMeterTimer = 0;
+
 let audioCtx;
 let masterGain;
 let noiseBuffer;
 let spinLoopNodes = null;
-let tensionToneTimer = 0;
-let tensionMeterTimer = 0;
-let autoSpinTimer = 0;
 
 init();
 
@@ -152,9 +166,10 @@ function init() {
   renderPayoutRules();
   renderStoreButtons();
   renderWinLog();
-  setResult("Pull spin. Let probability gaslight your wallet.", "info");
-  resetTensionMeter();
   syncUI();
+  setResult("Drag the lever down and let the house model freestyle your runway.", "info");
+  resetTensionMeter();
+  setLeverPull(0, true);
 
   requestAnimationFrame(() => {
     measureReels();
@@ -164,19 +179,11 @@ function init() {
 
 function bindEvents() {
   chipsEl.forEach((chip) => {
-    chip.addEventListener("click", () => {
-      setBet(Number(chip.dataset.bet));
-    });
-  });
-
-  spinBtnEl.addEventListener("click", () => {
-    state.autoSpin = false;
-    state.stopRequested = false;
-    spin();
+    chip.addEventListener("click", () => setBet(Number(chip.dataset.bet)));
   });
 
   startAutoEl.addEventListener("click", () => {
-    if (state.autoSpin) {
+    if (state.autoSpin || state.isSpinning || state.balance < state.bet) {
       return;
     }
 
@@ -194,7 +201,7 @@ function bindEvents() {
     state.autoSpin = false;
     state.stopRequested = true;
     clearTimeout(autoSpinTimer);
-    setResult("Autospin stop requested. Current spin will lock out cleanly.", "info");
+    setResult("Autospin stop requested. Current pull will finish cleanly.", "info");
     syncUI();
   });
 
@@ -204,7 +211,24 @@ function bindEvents() {
     button.addEventListener("click", () => buyBuff(button.dataset.buff || ""));
   });
 
+  leverHandleEl.addEventListener("pointerdown", onLeverPointerDown);
+  leverHandleEl.addEventListener("pointermove", onLeverPointerMove);
+  leverHandleEl.addEventListener("pointerup", onLeverPointerUp);
+  leverHandleEl.addEventListener("pointercancel", onLeverPointerUp);
+
+  leverHandleEl.addEventListener("keydown", (event) => {
+    if ((event.key === "Enter" || event.key === " ") && !leverLocked()) {
+      event.preventDefault();
+      state.autoSpin = false;
+      state.stopRequested = false;
+      setLeverPull(0.95);
+      setTimeout(() => setLeverPull(0, true), 130);
+      spin();
+    }
+  });
+
   document.addEventListener("pointerdown", ensureAudioContext, { once: true });
+
   window.addEventListener("resize", () => {
     requestAnimationFrame(() => {
       measureReels();
@@ -213,8 +237,102 @@ function bindEvents() {
   });
 }
 
+function onLeverPointerDown(event) {
+  if (event.button !== 0 || leverLocked() || state.balance < state.bet) {
+    return;
+  }
+
+  ensureAudioContext();
+  leverState.dragging = true;
+  leverState.pointerId = event.pointerId;
+  leverState.startY = event.clientY;
+  leverState.startPull = leverState.pull;
+
+  clearTimeout(leverState.releaseTimer);
+  leverTrackEl.classList.remove("releasing");
+  leverHandleEl.classList.add("dragging");
+  leverHandleEl.setPointerCapture(event.pointerId);
+  leverHintEl.textContent = "Pull deeper to arm the spin";
+
+  event.preventDefault();
+}
+
+function onLeverPointerMove(event) {
+  if (!leverState.dragging || event.pointerId !== leverState.pointerId) {
+    return;
+  }
+
+  const deltaY = event.clientY - leverState.startY;
+  const nextPull = clamp(leverState.startPull + deltaY / leverTravelPx(), 0, 1);
+  setLeverPull(nextPull);
+
+  leverHintEl.textContent = nextPull >= LEVER_TRIGGER
+    ? "Release now to fire the reels"
+    : "Drag down to spin";
+}
+
+function onLeverPointerUp(event) {
+  if (!leverState.dragging || event.pointerId !== leverState.pointerId) {
+    return;
+  }
+
+  leverState.dragging = false;
+  leverState.pointerId = -1;
+
+  if (leverHandleEl.hasPointerCapture(event.pointerId)) {
+    leverHandleEl.releasePointerCapture(event.pointerId);
+  }
+
+  leverHandleEl.classList.remove("dragging");
+
+  const armed = leverState.pull >= LEVER_TRIGGER;
+  setLeverPull(0, true);
+
+  if (armed && !leverLocked() && state.balance >= state.bet) {
+    state.autoSpin = false;
+    state.stopRequested = false;
+    spin();
+  } else if (state.balance < state.bet) {
+    setResult("Insufficient VC. Even satire runs on prepaid tokens.", "loss");
+    playLossSound();
+    syncUI();
+  }
+}
+
+function leverTravelPx() {
+  const raw = getComputedStyle(leverTrackEl).getPropertyValue("--lever-travel").trim();
+  const value = Number.parseFloat(raw);
+  return Number.isFinite(value) && value > 0 ? value : 132;
+}
+
+function leverLocked() {
+  return state.isSpinning || state.autoSpin;
+}
+
+function setLeverPull(nextPull, releasing = false) {
+  leverState.pull = clamp(nextPull, 0, 1);
+  leverTrackEl.style.setProperty("--lever-pull", leverState.pull.toFixed(3));
+
+  if (releasing) {
+    clearTimeout(leverState.releaseTimer);
+    leverTrackEl.classList.add("releasing");
+    leverState.releaseTimer = setTimeout(() => {
+      leverTrackEl.classList.remove("releasing");
+    }, 280);
+  }
+}
+
+function animateLeverThrow() {
+  if (leverState.dragging) {
+    return;
+  }
+
+  setLeverPull(0.95, true);
+  setTimeout(() => setLeverPull(0, true), 140);
+}
+
 function buildReels() {
-  const cycles = 12;
+  const cycles = 13;
 
   reelStrips.forEach((strip, index) => {
     strip.innerHTML = "";
@@ -246,8 +364,8 @@ function measureReels() {
 
 function snapReels() {
   reelStrips.forEach((_, index) => {
-    const cellHeight = reelStates[index].cellHeight || 70;
-    reelStates[index].offset = (Math.round(reelStates[index].offset) % SYMBOLS.length + SYMBOLS.length) % SYMBOLS.length;
+    const cellHeight = reelStates[index].cellHeight || 76;
+    reelStates[index].offset = mod(reelStates[index].offset, SYMBOLS.length);
     setStripPosition(index, reelStates[index].offset * cellHeight, 0, "linear");
   });
 }
@@ -263,6 +381,7 @@ function setStripPosition(reelIndex, pixelOffset, durationMs, easing) {
 
   strip.style.transform = `translateY(${-pixelOffset}px)`;
 }
+
 async function spin() {
   if (state.isSpinning) {
     return;
@@ -271,7 +390,8 @@ async function spin() {
   if (state.balance < state.bet) {
     state.autoSpin = false;
     state.stopRequested = true;
-    setResult("Insufficient VC. Even bad models demand prepaid tokens.", "loss");
+    setResult("Insufficient VC. Even satire runs on prepaid tokens.", "loss");
+    playLossSound();
     syncUI();
     return;
   }
@@ -287,31 +407,39 @@ async function spin() {
   const outcomes = [pickWeighted(weightedSymbols), pickWeighted(weightedSymbols), pickWeighted(weightedSymbols)];
   const targets = outcomes.map((symbol) => symbolIndex.get(symbol.id) || 0);
 
-  const baseDuration = 1280 + Math.round(Math.random() * 120);
-  const reelDurations = [baseDuration, baseDuration + 430, baseDuration + 860];
-  const totalSpinDuration = reelDurations[2] + 60;
+  const baseDuration = 1220 + Math.round(Math.random() * 120);
+  const reelDurations = [baseDuration, baseDuration + 360, baseDuration + 820];
+  const thirdHang = THIRD_REEL_HANG_MIN + Math.round(Math.random() * (THIRD_REEL_HANG_MAX - THIRD_REEL_HANG_MIN));
+  const totalDuration = reelDurations[2] + thirdHang + 90;
 
+  animateLeverThrow();
   setResult(sample(SPIN_LINES), "info");
   syncUI();
+
   playLeverPullSound();
   startSpinLoopSound();
-  startTensionTone(totalSpinDuration);
-  startTensionMeter(totalSpinDuration);
+  startTensionTone(totalDuration);
+  startTensionMeter(totalDuration);
 
-  await Promise.all(targets.map((targetIndex, reelIndex) => spinSingleReel(reelIndex, targetIndex, reelDurations[reelIndex])));
+  await Promise.all(targets.map((targetIndex, reelIndex) => spinSingleReel(
+    reelIndex,
+    targetIndex,
+    reelDurations[reelIndex],
+    reelIndex === 2 ? thirdHang : 0,
+  )));
 
   stopSpinLoopSound();
   stopTensionTone();
   finishTensionMeter();
 
   const payoutMeta = calculatePayout(outcomes);
-  const buffMultiplier = state.storeBuffs.multi > 0 ? 1.35 : 1;
+  const storeMultiplier = state.storeBuffs.multi > 0 ? 1.38 : 1;
   const heatMultiplier = state.storeBuffs.streak > 0 ? 1 + state.streakBonus : 1;
-  const combinedMultiplier = payoutMeta.multiplier * buffMultiplier * heatMultiplier;
-  const payout = Math.round(state.bet * combinedMultiplier);
+  const totalMultiplier = payoutMeta.multiplier * storeMultiplier * heatMultiplier;
+  const payout = Math.round(state.bet * totalMultiplier);
 
   if (payout > 0) {
-    const isJackpot = payoutMeta.jackpot || combinedMultiplier >= 12;
+    const jackpot = payoutMeta.jackpot || totalMultiplier >= 12;
     const newRecord = payout > state.biggestWin;
 
     state.balance += payout;
@@ -319,48 +447,45 @@ async function spin() {
 
     if (state.storeBuffs.streak > 0) {
       state.streakWins += 1;
-      state.streakBonus = Math.min(0.72, state.streakBonus + 0.12);
+      state.streakBonus = Math.min(0.78, state.streakBonus + 0.12);
     }
 
-    setResult(`${sample(WIN_LINES)} ${payoutMeta.label}: +${fmtVc(payout)} (${combinedMultiplier.toFixed(2)}x).`, "win");
-    showMultiplierPop(`${combinedMultiplier.toFixed(2)}x`);
-    triggerWinFX({ payout, multiplier: combinedMultiplier, jackpot: isJackpot });
+    setResult(`${sample(WIN_LINES)} ${payoutMeta.label}: +${fmtVc(payout)} (${totalMultiplier.toFixed(2)}x).`, "win");
+    showMultiplierPop(`${totalMultiplier.toFixed(2)}x`);
+    triggerWinFX({ payout, multiplier: totalMultiplier, jackpot });
+
     pushWinLog({
-      emoji: isJackpot ? "👑" : combinedMultiplier >= 6 ? "💥" : "🪙",
+      emoji: jackpot ? "👑" : totalMultiplier >= 7 ? "💥" : "🪙",
       amount: payout,
-      text: `${payoutMeta.label} paid +${fmtVc(payout)} (${combinedMultiplier.toFixed(2)}x).`,
+      text: `${payoutMeta.label} paid +${fmtVc(payout)} (${totalMultiplier.toFixed(2)}x).`,
     });
 
-    if (state.storeBuffs.streak > 0 && state.streakBonus > 0) {
-      showMultiplierPop(`Heat +${state.streakBonus.toFixed(2)}x`);
-    }
-
     if (newRecord) {
-      triggerBigWinShowcase(payout, combinedMultiplier);
+      triggerBigWinShowcase(payout, totalMultiplier);
       pushWinLog({
         emoji: "🎆",
         amount: payout,
-        text: `New biggest win locked at ${fmtVc(payout)}.`,
+        text: `New biggest win registered at ${fmtVc(payout)}.`,
       });
     }
   } else {
     state.streakWins = 0;
-    if (state.storeBuffs.streak <= 0) {
-      state.streakBonus = 0;
+    if (state.storeBuffs.streak > 0) {
+      state.streakBonus = Math.max(0, state.streakBonus - 0.22);
     } else {
-      state.streakBonus = Math.max(0, state.streakBonus - 0.2);
+      state.streakBonus = 0;
     }
 
     if (state.storeBuffs.refund > 0) {
-      const refund = Math.round(state.bet * 0.4);
+      const refund = Math.round(state.bet * 0.42);
       state.balance += refund;
-      setResult(`Missed line. Graceful Refund returned +${fmtVc(refund)}.`, "info");
-      showMultiplierPop("Refund +40%");
-      playCoinClinks(refund, 3);
+      setResult(`No line. Token Refund returned +${fmtVc(refund)} to keep the satire solvent.`, "info");
+      showMultiplierPop("Refund +42%");
+      playCoinClinks(refund, 4);
       pushWinLog({
         emoji: "🧯",
         amount: refund,
-        text: `Graceful Refund kicked back +${fmtVc(refund)}.`,
+        text: `Token Refund rescued +${fmtVc(refund)}.`,
       });
     } else {
       setResult(sample(LOSS_LINES), "loss");
@@ -387,15 +512,15 @@ async function spin() {
       if (state.autoSpin && !state.isSpinning) {
         spin();
       }
-    }, 110);
+    }, 120);
   }
 }
 
-function spinSingleReel(reelIndex, targetIndex, durationMs) {
+function spinSingleReel(reelIndex, targetIndex, durationMs, hangMs = 0) {
   return new Promise((resolve) => {
     const strip = reelStrips[reelIndex];
     const reelWindow = reelWindows[reelIndex];
-    const cellHeight = reelStates[reelIndex].cellHeight || 70;
+    const cellHeight = reelStates[reelIndex].cellHeight || 76;
     const cycleHeight = SYMBOLS.length * cellHeight;
     const currentOffsetPx = reelStates[reelIndex].offset * cellHeight;
 
@@ -405,36 +530,49 @@ function spinSingleReel(reelIndex, targetIndex, durationMs) {
 
     reelWindow.classList.add("spinning");
 
-    const lockTimer = setTimeout(() => {
-      lockReel(reelIndex);
-    }, Math.max(140, durationMs - 24));
-
-    let finished = false;
+    let arrived = false;
     const finish = () => {
-      if (finished) {
-        return;
-      }
-      finished = true;
-
-      clearTimeout(lockTimer);
-      strip.removeEventListener("transitionend", onEnd);
-
-      const normalizedPx = ((targetPx % cycleHeight) + cycleHeight) % cycleHeight;
-      reelStates[reelIndex].offset = (Math.round(normalizedPx / cellHeight) % SYMBOLS.length + SYMBOLS.length) % SYMBOLS.length;
-
-      setStripPosition(reelIndex, normalizedPx, 0, "linear");
-      reelWindow.classList.remove("spinning");
+      reelWindow.classList.remove("spinning", "hanging");
       resolve();
     };
 
-    const onEnd = () => {
+    const lockAndFinish = () => {
+      lockReel(reelIndex);
       finish();
     };
 
-    strip.addEventListener("transitionend", onEnd, { once: true });
-    setStripPosition(reelIndex, targetPx, durationMs, "cubic-bezier(0.11, 0.78, 0.21, 1)");
+    const settleOffset = () => {
+      const normalizedPx = mod(targetPx, cycleHeight);
+      reelStates[reelIndex].offset = mod(Math.round(normalizedPx / cellHeight), SYMBOLS.length);
+      setStripPosition(reelIndex, normalizedPx, 0, "linear");
+    };
 
-    setTimeout(finish, durationMs + 80);
+    const arrive = () => {
+      if (arrived) {
+        return;
+      }
+      arrived = true;
+
+      strip.removeEventListener("transitionend", arrive);
+      settleOffset();
+
+      if (hangMs > 0) {
+        reelWindow.classList.add("hanging");
+        playThirdReelHangTone(hangMs);
+        setTimeout(() => {
+          reelWindow.classList.remove("hanging");
+          lockAndFinish();
+        }, hangMs);
+        return;
+      }
+
+      lockAndFinish();
+    };
+
+    strip.addEventListener("transitionend", arrive, { once: true });
+    setStripPosition(reelIndex, targetPx, durationMs, "cubic-bezier(0.11, 0.79, 0.22, 1)");
+
+    setTimeout(arrive, durationMs + 80);
   });
 }
 
@@ -457,13 +595,13 @@ function applyLuckyWeighting() {
 
   return SYMBOLS.map((symbol) => ({
     ...symbol,
-    adjustedWeight: boosted.has(symbol.id) ? symbol.weight * 1.45 : symbol.weight,
+    adjustedWeight: boosted.has(symbol.id) ? symbol.weight * 1.48 : symbol.weight,
   }));
 }
 
 function pickWeighted(symbols) {
-  const total = symbols.reduce((sum, symbol) => sum + (symbol.adjustedWeight || symbol.weight), 0);
-  let roll = Math.random() * total;
+  const totalWeight = symbols.reduce((sum, symbol) => sum + (symbol.adjustedWeight || symbol.weight), 0);
+  let roll = Math.random() * totalWeight;
 
   for (const symbol of symbols) {
     roll -= symbol.adjustedWeight || symbol.weight;
@@ -479,12 +617,12 @@ function calculatePayout(outcomes) {
   const ids = outcomes.map((symbol) => symbol.id);
   const counts = new Map();
 
-  for (const id of ids) {
+  ids.forEach((id) => {
     counts.set(id, (counts.get(id) || 0) + 1);
-  }
+  });
 
-  const hasSpecial = SPECIAL_COMBO.ids.every((id) => ids.includes(id));
-  if (hasSpecial) {
+  const special = SPECIAL_COMBO.ids.every((id) => ids.includes(id));
+  if (special) {
     return {
       multiplier: SPECIAL_COMBO.multiplier,
       label: SPECIAL_COMBO.label,
@@ -514,7 +652,7 @@ function calculatePayout(outcomes) {
 
   if (ids.includes("coin")) {
     return {
-      multiplier: 0.35,
+      multiplier: 0.4,
       label: "VC drip",
       jackpot: false,
     };
@@ -525,76 +663,6 @@ function calculatePayout(outcomes) {
     label: "No line",
     jackpot: false,
   };
-}
-function triggerWinFX({ payout, multiplier, jackpot }) {
-  triggerShake();
-  pulseFlash();
-
-  if (jackpot) {
-    spawnConfetti(180);
-    spawnFireworks(7);
-    playJackpotFanfare();
-  } else {
-    spawnConfetti(multiplier >= 6 ? 120 : 70);
-    if (multiplier >= 6) {
-      spawnFireworks(4);
-    }
-    playCoinClinks(payout, clamp(Math.round(multiplier), 3, 9));
-  }
-}
-
-function triggerBigWinShowcase(payout, multiplier) {
-  bigWinShowcaseValueEl.textContent = fmtVc(payout);
-  bigWinShowcaseMultEl.textContent = `x${multiplier.toFixed(2)}`;
-  bigWinShowcaseEl.classList.remove("show");
-  void bigWinShowcaseEl.offsetWidth;
-  bigWinShowcaseEl.classList.add("show");
-  spawnFireworks(9);
-  showMultiplierPop(`Record x${multiplier.toFixed(2)}`);
-}
-
-function spawnConfetti(count) {
-  for (let i = 0; i < count; i += 1) {
-    const piece = document.createElement("span");
-    piece.className = "confetti";
-    piece.style.setProperty("--x", `${Math.random() * 100}%`);
-    piece.style.setProperty("--h", `${Math.floor(Math.random() * 360)}`);
-    piece.style.setProperty("--rot", `${Math.floor(Math.random() * 360)}deg`);
-    piece.style.setProperty("--dur", `${1.2 + Math.random() * 1.1}s`);
-    confettiLayerEl.appendChild(piece);
-    setTimeout(() => piece.remove(), 2400);
-  }
-}
-
-function spawnFireworks(count) {
-  for (let i = 0; i < count; i += 1) {
-    const burst = document.createElement("span");
-    burst.className = "firework";
-    burst.style.setProperty("--x", `${10 + Math.random() * 80}%`);
-    burst.style.setProperty("--y", `${10 + Math.random() * 65}%`);
-    burst.style.setProperty("--h", `${Math.floor(Math.random() * 360)}`);
-    fireworkLayerEl.appendChild(burst);
-    setTimeout(() => burst.remove(), 900);
-  }
-}
-
-function triggerShake() {
-  document.body.classList.remove("screen-shake");
-  void document.body.offsetWidth;
-  document.body.classList.add("screen-shake");
-}
-
-function pulseFlash() {
-  screenFlashEl.classList.remove("active");
-  void screenFlashEl.offsetWidth;
-  screenFlashEl.classList.add("active");
-}
-
-function showMultiplierPop(text) {
-  multiplierPopEl.textContent = text;
-  multiplierPopEl.classList.remove("show");
-  void multiplierPopEl.offsetWidth;
-  multiplierPopEl.classList.add("show");
 }
 
 function consumeBuffSpin() {
@@ -619,7 +687,7 @@ function buyBuff(buffId) {
   }
 
   if (state.balance < item.cost) {
-    setResult(`Not enough VC for ${item.name}. Even satire has a budget.`, "loss");
+    setResult(`Not enough VC for ${item.name}. Even parody has a budget.`, "loss");
     playLossSound();
     return;
   }
@@ -632,7 +700,7 @@ function buyBuff(buffId) {
     state.streakWins = 0;
   }
 
-  setResult(`${item.name} loaded for ${item.duration} spins.`, "info");
+  setResult(`${item.name} loaded for ${item.duration} pulls. Probability now wearing cologne.`, "info");
   playStorePurchaseSound();
   renderStoreButtons();
   syncUI();
@@ -666,7 +734,7 @@ function renderStoreButtons() {
     const left = state.storeBuffs[item.id] || 0;
     button.classList.toggle("active", left > 0);
     button.disabled = state.isSpinning || state.autoSpin || state.balance < item.cost;
-    button.innerHTML = `<strong>${item.name}</strong><small>${fmtVc(item.cost)} | ${item.description}</small><small>${left > 0 ? `${left} spin${left === 1 ? "" : "s"} remaining` : "Inactive"}</small>`;
+    button.innerHTML = `<strong>${item.name}</strong><small>${fmtVc(item.cost)} | ${item.description}</small><small>${left > 0 ? `${left} pull${left === 1 ? "" : "s"} remaining` : "Inactive"}</small>`;
   });
 
   storeStatusEl.textContent = buffSummary();
@@ -676,9 +744,9 @@ function renderPayoutRules() {
   payoutListEl.innerHTML = "";
 
   SYMBOLS.forEach((symbol) => {
-    const item = document.createElement("li");
-    item.textContent = `${symbol.emoji} ${symbol.name}: pair x${symbol.pair.toFixed(1)}, triple x${symbol.triple.toFixed(1)}`;
-    payoutListEl.appendChild(item);
+    const line = document.createElement("li");
+    line.textContent = `${symbol.emoji} ${symbol.name}: pair x${symbol.pair.toFixed(1)}, triple x${symbol.triple.toFixed(1)}`;
+    payoutListEl.appendChild(line);
   });
 
   const special = document.createElement("li");
@@ -686,15 +754,46 @@ function renderPayoutRules() {
   payoutListEl.appendChild(special);
 
   const drip = document.createElement("li");
-  drip.textContent = "Any 🪙 on a miss: x0.35 VC drip consolation.";
+  drip.textContent = "Any 🪙 on a miss: x0.4 VC drip consolation.";
   payoutListEl.appendChild(drip);
 
-  const buffs = document.createElement("li");
-  buffs.textContent = "Store perks stack on top of base multipliers.";
-  payoutListEl.appendChild(buffs);
+  const perk = document.createElement("li");
+  perk.textContent = "Store perks stack on top of the base multiplier.";
+  payoutListEl.appendChild(perk);
+}
+
+function triggerWinFX({ payout, multiplier, jackpot }) {
+  triggerShake();
+  pulseFlash();
+
+  if (jackpot) {
+    spawnConfetti(220);
+    spawnFireworks(9);
+    playJackpotFanfare();
+    return;
+  }
+
+  spawnConfetti(multiplier >= 6 ? 150 : 90);
+  if (multiplier >= 6) {
+    spawnFireworks(4);
+  }
+  playCoinClinks(payout, clamp(Math.round(multiplier), 3, 10));
+}
+
+function triggerBigWinShowcase(payout, multiplier) {
+  bigWinShowcaseValueEl.textContent = fmtVc(payout);
+  bigWinShowcaseMultEl.textContent = `x${multiplier.toFixed(2)}`;
+  bigWinShowcaseEl.classList.remove("show");
+  void bigWinShowcaseEl.offsetWidth;
+  bigWinShowcaseEl.classList.add("show");
+  showMultiplierPop(`Record x${multiplier.toFixed(2)}`);
 }
 
 function pushWinLog(entry) {
+  if (entry.amount <= 0) {
+    return;
+  }
+
   state.winLog.unshift({
     emoji: entry.emoji,
     amount: entry.amount,
@@ -711,9 +810,9 @@ function renderWinLog() {
   winLogEl.innerHTML = "";
 
   if (state.winLog.length === 0) {
-    const empty = document.createElement("li");
-    empty.textContent = "🛰️ No gains logged yet. The house AI is calibrating your disappointment.";
-    winLogEl.appendChild(empty);
+    const line = document.createElement("li");
+    line.textContent = "🛰️ No gains yet. The house AI is still profiling your optimism.";
+    winLogEl.appendChild(line);
     return;
   }
 
@@ -734,6 +833,7 @@ function claimDailyGrant() {
 
   state.balance += DAILY_GRANT;
   state.lastDailyGrant = today;
+
   setResult(`Daily VC bailout credited: +${fmtVc(DAILY_GRANT)}.`, "win");
   showMultiplierPop("Daily +300 VC");
   playDailyGrantSound();
@@ -763,7 +863,7 @@ function setBet(nextBet) {
   }
 
   state.bet = nextBet;
-  setResult(`Bet adjusted to ${fmtVc(nextBet)}. Maximum token burn remains online.`, "info");
+  setResult(`Bet set to ${fmtVc(nextBet)}. Throughput over prudence remains policy.`, "info");
   syncUI();
   saveState();
 }
@@ -780,16 +880,31 @@ function syncUI() {
     chip.disabled = state.isSpinning || state.autoSpin;
   });
 
-  const controlsLocked = state.isSpinning;
-  spinBtnEl.disabled = controlsLocked || state.autoSpin || state.balance < state.bet;
-  startAutoEl.disabled = controlsLocked || state.autoSpin || state.balance < state.bet;
+  startAutoEl.disabled = state.isSpinning || state.autoSpin || state.balance < state.bet;
   stopAutoEl.disabled = !state.autoSpin && !state.isSpinning;
 
   autoStatusEl.textContent = state.autoSpin
-    ? "Autospin active. House AI now controls pacing."
+    ? "Autospin active. House AI controls pacing."
     : state.stopRequested
       ? "Autospin stopped. Manual control restored."
       : "Manual mode armed.";
+
+  const lockLever = leverLocked() || state.balance < state.bet;
+  leverHandleEl.disabled = lockLever;
+  leverHandleEl.classList.toggle("disabled", lockLever);
+  leverHandleEl.setAttribute("aria-disabled", String(lockLever));
+
+  if (!leverState.dragging) {
+    if (state.autoSpin) {
+      leverHintEl.textContent = "Autospin is driving the lever.";
+    } else if (state.isSpinning) {
+      leverHintEl.textContent = "Reels in motion...";
+    } else if (state.balance < state.bet) {
+      leverHintEl.textContent = "Top up VC or lower the bet";
+    } else {
+      leverHintEl.textContent = "Drag down to spin";
+    }
+  }
 
   renderStoreButtons();
   updateDailyGrantState();
@@ -806,25 +921,25 @@ function setResult(message, type) {
 function startTensionMeter(durationMs) {
   clearInterval(tensionMeterTimer);
 
-  const start = performance.now();
-  const total = Math.max(500, durationMs);
+  const started = performance.now();
+  const total = Math.max(600, durationMs);
   tensionFillEl.style.width = "0%";
   tensionTextEl.textContent = "Charging";
 
   const tick = () => {
-    const elapsed = performance.now() - start;
-    const pct = clamp(elapsed / total, 0, 1);
-    tensionFillEl.style.width = `${(pct * 100).toFixed(1)}%`;
-    tensionTextEl.textContent = pct >= 1 ? "Locked" : `AI panic ${Math.round(pct * 100)}%`;
+    const elapsed = performance.now() - started;
+    const progress = clamp(elapsed / total, 0, 1);
+    tensionFillEl.style.width = `${(progress * 100).toFixed(1)}%`;
+    tensionTextEl.textContent = progress >= 1 ? "Locked" : `Panic ${Math.round(progress * 100)}%`;
 
-    if (pct >= 1) {
+    if (progress >= 1) {
       clearInterval(tensionMeterTimer);
       tensionMeterTimer = 0;
     }
   };
 
   tick();
-  tensionMeterTimer = setInterval(tick, 35);
+  tensionMeterTimer = setInterval(tick, 32);
 }
 
 function finishTensionMeter() {
@@ -847,22 +962,68 @@ function resetTensionMeter(delayMs = 0) {
 
   reset();
 }
+
+function spawnConfetti(count) {
+  for (let i = 0; i < count; i += 1) {
+    const piece = document.createElement("span");
+    piece.className = "confetti";
+    piece.style.setProperty("--x", `${Math.random() * 100}%`);
+    piece.style.setProperty("--h", `${Math.floor(Math.random() * 360)}`);
+    piece.style.setProperty("--rot", `${Math.floor(Math.random() * 360)}deg`);
+    piece.style.setProperty("--dur", `${1.1 + Math.random() * 1.3}s`);
+    confettiLayerEl.appendChild(piece);
+    setTimeout(() => piece.remove(), 2500);
+  }
+}
+
+function spawnFireworks(count) {
+  for (let i = 0; i < count; i += 1) {
+    const burst = document.createElement("span");
+    burst.className = "firework";
+    burst.style.setProperty("--x", `${10 + Math.random() * 80}%`);
+    burst.style.setProperty("--y", `${8 + Math.random() * 70}%`);
+    burst.style.setProperty("--h", `${Math.floor(Math.random() * 360)}`);
+    fireworkLayerEl.appendChild(burst);
+    setTimeout(() => burst.remove(), 900);
+  }
+}
+
+function triggerShake() {
+  document.body.classList.remove("screen-shake");
+  void document.body.offsetWidth;
+  document.body.classList.add("screen-shake");
+}
+
+function pulseFlash() {
+  screenFlashEl.classList.remove("active");
+  void screenFlashEl.offsetWidth;
+  screenFlashEl.classList.add("active");
+}
+
+function showMultiplierPop(text) {
+  multiplierPopEl.textContent = text;
+  multiplierPopEl.classList.remove("show");
+  void multiplierPopEl.offsetWidth;
+  multiplierPopEl.classList.add("show");
+}
+
 function ensureAudioContext() {
   try {
     if (!audioCtx) {
       audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+      const compressor = audioCtx.createDynamicsCompressor();
+      compressor.threshold.value = -24;
+      compressor.knee.value = 24;
+      compressor.ratio.value = 8;
+      compressor.attack.value = 0.002;
+      compressor.release.value = 0.24;
+
       masterGain = audioCtx.createGain();
-      const comp = audioCtx.createDynamicsCompressor();
+      masterGain.gain.value = 0.86;
 
-      comp.threshold.value = -24;
-      comp.knee.value = 24;
-      comp.ratio.value = 8;
-      comp.attack.value = 0.002;
-      comp.release.value = 0.2;
-
-      masterGain.gain.value = 0.85;
-      masterGain.connect(comp);
-      comp.connect(audioCtx.destination);
+      masterGain.connect(compressor);
+      compressor.connect(audioCtx.destination);
 
       noiseBuffer = buildNoiseBuffer(audioCtx);
     }
@@ -880,8 +1041,8 @@ function buildNoiseBuffer(context) {
   const buffer = context.createBuffer(1, length, context.sampleRate);
   const channel = buffer.getChannelData(0);
 
-  for (let i = 0; i < length; i += 1) {
-    channel[i] = Math.random() * 2 - 1;
+  for (let index = 0; index < length; index += 1) {
+    channel[index] = Math.random() * 2 - 1;
   }
 
   return buffer;
@@ -899,35 +1060,35 @@ function playLeverPullSound() {
 
   const band = audioCtx.createBiquadFilter();
   band.type = "bandpass";
-  band.frequency.setValueAtTime(900, now);
-  band.frequency.exponentialRampToValueAtTime(130, now + 0.32);
+  band.frequency.setValueAtTime(1000, now);
+  band.frequency.exponentialRampToValueAtTime(140, now + 0.35);
   band.Q.value = 0.8;
 
   const noiseGain = audioCtx.createGain();
   noiseGain.gain.setValueAtTime(0.0001, now);
   noiseGain.gain.exponentialRampToValueAtTime(0.12, now + 0.03);
-  noiseGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.34);
+  noiseGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.36);
 
   pullNoise.connect(band);
   band.connect(noiseGain);
   noiseGain.connect(masterGain);
-
   pullNoise.start(now);
-  pullNoise.stop(now + 0.35);
+  pullNoise.stop(now + 0.37);
 
   const thunk = audioCtx.createOscillator();
-  const thunkGain = audioCtx.createGain();
   thunk.type = "triangle";
-  thunk.frequency.setValueAtTime(210, now);
-  thunk.frequency.exponentialRampToValueAtTime(72, now + 0.24);
+  thunk.frequency.setValueAtTime(220, now);
+  thunk.frequency.exponentialRampToValueAtTime(76, now + 0.26);
+
+  const thunkGain = audioCtx.createGain();
   thunkGain.gain.setValueAtTime(0.0001, now);
-  thunkGain.gain.exponentialRampToValueAtTime(0.09, now + 0.02);
-  thunkGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.28);
+  thunkGain.gain.exponentialRampToValueAtTime(0.095, now + 0.02);
+  thunkGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.3);
 
   thunk.connect(thunkGain);
   thunkGain.connect(masterGain);
   thunk.start(now);
-  thunk.stop(now + 0.3);
+  thunk.stop(now + 0.31);
 }
 
 function startSpinLoopSound() {
@@ -940,18 +1101,18 @@ function startSpinLoopSound() {
   const now = audioCtx.currentTime;
   const gain = audioCtx.createGain();
   gain.gain.setValueAtTime(0.0001, now);
-  gain.gain.exponentialRampToValueAtTime(0.07, now + 0.18);
+  gain.gain.exponentialRampToValueAtTime(0.075, now + 0.18);
 
   const rumble = audioCtx.createOscillator();
   rumble.type = "sawtooth";
-  rumble.frequency.value = 86;
+  rumble.frequency.value = 88;
 
   const rumbleGain = audioCtx.createGain();
   rumbleGain.gain.value = 0.05;
 
   const sub = audioCtx.createOscillator();
   sub.type = "triangle";
-  sub.frequency.value = 43;
+  sub.frequency.value = 44;
 
   const subGain = audioCtx.createGain();
   subGain.gain.value = 0.038;
@@ -962,15 +1123,14 @@ function startSpinLoopSound() {
 
   const filter = audioCtx.createBiquadFilter();
   filter.type = "bandpass";
-  filter.frequency.value = 1450;
-  filter.Q.value = 0.6;
+  filter.frequency.value = 1500;
+  filter.Q.value = 0.62;
 
   const noiseGain = audioCtx.createGain();
-  noiseGain.gain.value = 0.02;
+  noiseGain.gain.value = 0.022;
 
   rumble.connect(rumbleGain);
   rumbleGain.connect(gain);
-
   sub.connect(subGain);
   subGain.connect(gain);
 
@@ -997,29 +1157,29 @@ function stopSpinLoopSound() {
 
   gain.gain.cancelScheduledValues(now);
   gain.gain.setValueAtTime(Math.max(0.0001, gain.gain.value), now);
-  gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.18);
+  gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.19);
 
-  rumble.stop(now + 0.2);
-  sub.stop(now + 0.2);
-  noise.stop(now + 0.2);
+  rumble.stop(now + 0.21);
+  sub.stop(now + 0.21);
+  noise.stop(now + 0.21);
 
   spinLoopNodes = null;
 }
 
 function playReelStopClick(index) {
-  if (!audioCtx || !masterGain || !noiseBuffer) {
+  if (!audioCtx || !masterGain) {
     return;
   }
 
-  const now = audioCtx.currentTime + index * 0.01;
+  const now = audioCtx.currentTime + index * 0.006;
 
   const click = audioCtx.createOscillator();
   click.type = "square";
-  click.frequency.setValueAtTime(2200 + index * 90, now);
+  click.frequency.setValueAtTime(2100 + index * 110, now);
 
   const clickGain = audioCtx.createGain();
   clickGain.gain.setValueAtTime(0.0001, now);
-  clickGain.gain.exponentialRampToValueAtTime(0.05, now + 0.005);
+  clickGain.gain.exponentialRampToValueAtTime(0.052, now + 0.004);
   clickGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.04);
 
   click.connect(clickGain);
@@ -1029,19 +1189,20 @@ function playReelStopClick(index) {
 
   const thud = audioCtx.createOscillator();
   thud.type = "sine";
-  thud.frequency.setValueAtTime(190 - index * 12, now);
-  thud.frequency.exponentialRampToValueAtTime(120, now + 0.07);
+  thud.frequency.setValueAtTime(196 - index * 12, now);
+  thud.frequency.exponentialRampToValueAtTime(120, now + 0.08);
 
   const thudGain = audioCtx.createGain();
   thudGain.gain.setValueAtTime(0.0001, now);
-  thudGain.gain.exponentialRampToValueAtTime(0.08, now + 0.01);
-  thudGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.08);
+  thudGain.gain.exponentialRampToValueAtTime(0.086, now + 0.012);
+  thudGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.09);
 
   thud.connect(thudGain);
   thudGain.connect(masterGain);
   thud.start(now);
-  thud.stop(now + 0.09);
+  thud.stop(now + 0.1);
 }
+
 function startTensionTone(durationMs) {
   stopTensionTone();
 
@@ -1049,13 +1210,28 @@ function startTensionTone(durationMs) {
   tensionToneTimer = setInterval(() => {
     const elapsed = performance.now() - started;
     const progress = clamp(elapsed / durationMs, 0, 1);
-    const freq = 250 + progress * 560;
-    playTone(freq, 0.05, "triangle", 0.04);
+    const freq = 250 + progress * 620;
+
+    playTone(freq, 0.05, "triangle", 0.038);
 
     if (progress >= 1) {
       stopTensionTone();
     }
-  }, 130);
+  }, 120);
+}
+
+function playThirdReelHangTone(hangMs) {
+  if (!audioCtx || !masterGain) {
+    return;
+  }
+
+  const ticks = clamp(Math.round(hangMs / 150), 2, 5);
+
+  for (let index = 0; index < ticks; index += 1) {
+    const freq = 420 + index * 120;
+    const delay = index * 0.12;
+    playTone(freq, 0.045, "triangle", 0.032, delay);
+  }
 }
 
 function stopTensionTone() {
@@ -1068,26 +1244,27 @@ function playCoinClinks(amount, countHint = 4) {
     return;
   }
 
-  const count = clamp(countHint + Math.floor(amount / 600), 3, 12);
+  const count = clamp(countHint + Math.floor(amount / 650), 3, 12);
 
-  for (let i = 0; i < count; i += 1) {
-    const delay = i * (0.055 + Math.random() * 0.03);
-    const freq = 1100 + Math.random() * 900;
+  for (let index = 0; index < count; index += 1) {
+    const delay = index * (0.052 + Math.random() * 0.03);
+    const freq = 1080 + Math.random() * 920;
+    const when = audioCtx.currentTime + delay;
 
     const ping = audioCtx.createOscillator();
     ping.type = "triangle";
-    ping.frequency.setValueAtTime(freq, audioCtx.currentTime + delay);
-    ping.frequency.exponentialRampToValueAtTime(freq * 0.62, audioCtx.currentTime + delay + 0.09);
+    ping.frequency.setValueAtTime(freq, when);
+    ping.frequency.exponentialRampToValueAtTime(freq * 0.62, when + 0.09);
 
     const pingGain = audioCtx.createGain();
-    pingGain.gain.setValueAtTime(0.0001, audioCtx.currentTime + delay);
-    pingGain.gain.exponentialRampToValueAtTime(0.06, audioCtx.currentTime + delay + 0.008);
-    pingGain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + delay + 0.12);
+    pingGain.gain.setValueAtTime(0.0001, when);
+    pingGain.gain.exponentialRampToValueAtTime(0.06, when + 0.008);
+    pingGain.gain.exponentialRampToValueAtTime(0.0001, when + 0.12);
 
     ping.connect(pingGain);
     pingGain.connect(masterGain);
-    ping.start(audioCtx.currentTime + delay);
-    ping.stop(audioCtx.currentTime + delay + 0.14);
+    ping.start(when);
+    ping.stop(when + 0.14);
   }
 }
 
@@ -1097,48 +1274,49 @@ function playJackpotFanfare() {
   }
 
   const notes = [392, 523.25, 659.25, 783.99, 1046.5, 1318.5];
+
   notes.forEach((freq, index) => {
     const when = audioCtx.currentTime + index * 0.1;
 
-    const osc = audioCtx.createOscillator();
-    osc.type = "sawtooth";
-    osc.frequency.setValueAtTime(freq, when);
+    const lead = audioCtx.createOscillator();
+    lead.type = "sawtooth";
+    lead.frequency.setValueAtTime(freq, when);
 
-    const osc2 = audioCtx.createOscillator();
-    osc2.type = "triangle";
-    osc2.frequency.setValueAtTime(freq * 0.5, when);
+    const low = audioCtx.createOscillator();
+    low.type = "triangle";
+    low.frequency.setValueAtTime(freq * 0.5, when);
 
     const gain = audioCtx.createGain();
     gain.gain.setValueAtTime(0.0001, when);
-    gain.gain.exponentialRampToValueAtTime(0.08, when + 0.02);
+    gain.gain.exponentialRampToValueAtTime(0.084, when + 0.02);
     gain.gain.exponentialRampToValueAtTime(0.0001, when + 0.2);
 
-    osc.connect(gain);
-    osc2.connect(gain);
+    lead.connect(gain);
+    low.connect(gain);
     gain.connect(masterGain);
 
-    osc.start(when);
-    osc2.start(when);
-    osc.stop(when + 0.22);
-    osc2.stop(when + 0.22);
+    lead.start(when);
+    low.start(when);
+    lead.stop(when + 0.22);
+    low.stop(when + 0.22);
   });
 
-  playCoinClinks(2200, 10);
+  playCoinClinks(2600, 10);
 }
 
 function playLossSound() {
-  playTone(145, 0.11, "sawtooth", 0.05);
-  playTone(90, 0.13, "triangle", 0.04, 0.02);
+  playTone(150, 0.12, "sawtooth", 0.05);
+  playTone(92, 0.14, "triangle", 0.038, 0.02);
 }
 
 function playStorePurchaseSound() {
-  playTone(370, 0.06, "triangle", 0.05);
-  playTone(540, 0.08, "triangle", 0.06, 0.06);
+  playTone(380, 0.06, "triangle", 0.05);
+  playTone(560, 0.08, "triangle", 0.06, 0.05);
 }
 
 function playDailyGrantSound() {
   playTone(420, 0.08, "triangle", 0.06);
-  playTone(620, 0.1, "triangle", 0.07, 0.08);
+  playTone(620, 0.1, "triangle", 0.07, 0.07);
   playCoinClinks(DAILY_GRANT, 4);
 }
 
@@ -1147,21 +1325,21 @@ function playTone(frequency, seconds, type, gainLevel, delay = 0) {
     return;
   }
 
-  const now = audioCtx.currentTime + delay;
+  const when = audioCtx.currentTime + delay;
   const osc = audioCtx.createOscillator();
   const gain = audioCtx.createGain();
 
   osc.type = type;
   osc.frequency.value = frequency;
 
-  gain.gain.setValueAtTime(0.0001, now);
-  gain.gain.exponentialRampToValueAtTime(gainLevel, now + 0.01);
-  gain.gain.exponentialRampToValueAtTime(0.0001, now + seconds);
+  gain.gain.setValueAtTime(0.0001, when);
+  gain.gain.exponentialRampToValueAtTime(gainLevel, when + 0.01);
+  gain.gain.exponentialRampToValueAtTime(0.0001, when + seconds);
 
   osc.connect(gain);
   gain.connect(masterGain);
-  osc.start(now);
-  osc.stop(now + seconds + 0.02);
+  osc.start(when);
+  osc.stop(when + seconds + 0.02);
 }
 
 function loadState() {
@@ -1191,7 +1369,7 @@ function loadState() {
     };
 
     state.streakWins = clamp(asNumber(parsed.streakWins, 0), 0, 99);
-    state.streakBonus = clamp(asNumber(parsed.streakBonus, 0), 0, 0.72);
+    state.streakBonus = clamp(asNumber(parsed.streakBonus, 0), 0, 0.78);
 
     if (Array.isArray(parsed.winLog)) {
       state.winLog = parsed.winLog
@@ -1245,10 +1423,14 @@ function sample(list) {
 }
 
 function asNumber(value, fallback) {
-  const num = Number(value);
-  return Number.isFinite(num) ? num : fallback;
+  const parsed = Number(value);
+  return Number.isFinite(parsed) ? parsed : fallback;
 }
 
 function clamp(value, min, max) {
   return Math.min(max, Math.max(min, value));
+}
+
+function mod(value, base) {
+  return ((value % base) + base) % base;
 }

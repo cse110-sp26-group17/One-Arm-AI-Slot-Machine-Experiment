@@ -1,40 +1,121 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Prompt Palace: VC Drain Edition</title>
+  <title>One-Arm AI Slot Machine</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div id="confettiLayer" class="fx-layer" aria-hidden="true"></div>
   <div id="fireworkLayer" class="fx-layer" aria-hidden="true"></div>
 
-  <main class="app-shell">
-    <header class="hero">
-      <p class="eyebrow">Vegas-grade token combustion simulator</p>
-      <h1>Prompt Palace: VC Drain Edition</h1>
-      <p class="subtitle">Spend VC. Pull lever. Observe an AI model convert confidence into variance.</p>
-      <div class="top-stats" aria-label="Session summary">
-        <article class="stat-card">
-          <span>Balance</span>
-          <strong id="balance">0 VC</strong>
-        </article>
-        <article class="stat-card">
-          <span>Biggest Win</span>
-          <strong id="biggestWin">0 VC</strong>
-        </article>
-        <article class="stat-card">
-          <span>Heat Stack</span>
-          <strong id="heatView">0.00x</strong>
-        </article>
+  <main class="casino-shell">
+    <section class="panel machine-panel" aria-label="Slot machine hero">
+      <div id="screenFlash" class="screen-flash" aria-hidden="true"></div>
+
+      <header class="hero-head">
+        <p class="eyebrow">Las Vegas Token Casino</p>
+        <h1>One-Arm AI Slot Machine: VC Burner Edition</h1>
+        <p class="subtitle">Drag the lever. Burn tokens. Observe the model convert confidence into variance.</p>
+
+        <div class="top-stats" aria-label="Session stats">
+          <article class="stat-card">
+            <span>Balance</span>
+            <strong id="balance">0 VC</strong>
+          </article>
+          <article class="stat-card">
+            <span>Biggest Win</span>
+            <strong id="biggestWin">0 VC</strong>
+          </article>
+          <article class="stat-card">
+            <span>Heat Stack</span>
+            <strong id="heatView">1.00x</strong>
+          </article>
+        </div>
+      </header>
+
+      <div class="machine-core">
+        <div class="machine-stage">
+          <p id="resultText" class="result-text">Drag the lever down and let the house model freestyle your runway.</p>
+
+          <div class="tension-wrap" aria-label="Spin tension progress">
+            <div class="tension-head">
+              <span>Spin Tension</span>
+              <span id="tensionText">Idle</span>
+            </div>
+            <div class="tension-meter">
+              <div id="tensionFill" class="tension-fill"></div>
+            </div>
+          </div>
+
+          <div class="reel-stage" id="reelStage" role="img" aria-label="Three vertically spinning emoji reels">
+            <div class="reel-window"><div class="reel-strip" id="reel0"></div></div>
+            <div class="reel-window"><div class="reel-strip" id="reel1"></div></div>
+            <div class="reel-window"><div class="reel-strip" id="reel2"></div></div>
+          </div>
+
+          <div id="multiplierPop" class="multiplier-pop" aria-live="polite"></div>
+        </div>
+
+        <aside class="lever-bay" aria-label="One-arm lever">
+          <p class="lever-label">One-Arm Trigger</p>
+          <div id="leverTrack" class="lever-track">
+            <div id="leverRod" class="lever-rod"></div>
+            <button id="leverHandle" class="lever-handle" type="button" aria-label="Drag this handle down to spin">SPIN</button>
+          </div>
+          <p id="leverHint" class="lever-hint">Drag down to spin</p>
+        </aside>
       </div>
-    </header>
+
+      <div id="bigWinShowcase" class="big-win-showcase" aria-live="polite">
+        <span>Biggest Win</span>
+        <strong id="bigWinShowcaseValue">0 VC</strong>
+        <em id="bigWinShowcaseMult">x0.00</em>
+      </div>
+
+      <section class="controls-grid" aria-label="Bet selector and controls">
+        <article class="panel controls-card">
+          <div class="panel-head">
+            <h2>Bet Selector</h2>
+            <p>Default is 100 VC because moderation is bad for throughput.</p>
+          </div>
+          <div id="betChips" class="chip-row">
+            <button class="chip" data-bet="50" type="button">50 VC</button>
+            <button class="chip default-chip" data-bet="100" type="button">100 VC</button>
+            <button class="chip" data-bet="200" type="button">200 VC</button>
+            <button class="chip" data-bet="500" type="button">500 VC</button>
+          </div>
+          <p class="panel-foot">Current burn: <strong id="betText">100 VC</strong> per pull.</p>
+        </article>
+
+        <article class="panel controls-card">
+          <div class="panel-head">
+            <h2>Autospin Bay</h2>
+            <p>Let pure entropy run operations, then hit stop when legal asks questions.</p>
+          </div>
+          <div class="button-stack">
+            <button id="startAuto" class="auto-btn" type="button">Start Autospin</button>
+            <button id="stopAuto" class="stop-btn" type="button">Stop</button>
+          </div>
+          <p id="autoStatus" class="panel-foot">Manual mode armed.</p>
+        </article>
+
+        <article class="panel controls-card">
+          <div class="panel-head">
+            <h2>Daily VC Grant</h2>
+            <p>One bailout per local day. Even casinos have retention workflows.</p>
+          </div>
+          <button id="dailyGrant" class="grant-btn" type="button">Claim Daily VC (+300)</button>
+          <p id="dailyStatus" class="panel-foot">Grant ready.</p>
+        </article>
+      </section>
+    </section>
 
     <section class="panel store-panel" aria-label="Token store">
       <div class="panel-head">
         <h2>Token Store</h2>
-        <p>Buy short-term rigging tools. Ethically questionable. Financially efficient.</p>
+        <p>Buy temporary perks for slightly less honest probability.</p>
       </div>
       <div class="store-grid">
         <button class="store-item" data-buff="lucky" type="button"></button>
@@ -45,81 +126,10 @@
       <p id="storeStatus" class="panel-foot">No perks active. Raw RNG has the mic.</p>
     </section>
 
-    <section class="panel machine" aria-label="Slot machine">
-      <div id="screenFlash" class="screen-flash" aria-hidden="true"></div>
-      <div class="machine-header">
-        <h2>Model Meltdown Reels</h2>
-        <p id="resultText" class="result-text">Pull spin. Let probability gaslight your wallet.</p>
-      </div>
-
-      <div class="tension-wrap" aria-label="Spin tension meter">
-        <div class="tension-head">
-          <span>Spin Tension</span>
-          <span id="tensionText">Idle</span>
-        </div>
-        <div class="tension-meter">
-          <div id="tensionFill" class="tension-fill"></div>
-        </div>
-      </div>
-
-      <div class="reel-stage" id="reelStage" role="img" aria-label="Three slot reels with AI-themed emoji symbols">
-        <div class="reel-window"><div class="reel-strip" id="reel0"></div></div>
-        <div class="reel-window"><div class="reel-strip" id="reel1"></div></div>
-        <div class="reel-window"><div class="reel-strip" id="reel2"></div></div>
-      </div>
-
-      <div id="multiplierPop" class="multiplier-pop" aria-live="polite"></div>
-      <div id="bigWinShowcase" class="big-win-showcase" aria-live="polite">
-        <span>Biggest Win</span>
-        <strong id="bigWinShowcaseValue">0 VC</strong>
-        <em id="bigWinShowcaseMult">x0.00</em>
-      </div>
-    </section>
-
-    <section class="controls-grid" aria-label="Bet and spin controls">
-      <article class="panel">
-        <div class="panel-head">
-          <h2>Bet Selector</h2>
-          <p>100 VC is hot-glued as the default for maximum spend velocity.</p>
-        </div>
-        <div id="betChips" class="chip-row">
-          <button class="chip" data-bet="50" type="button">50 VC</button>
-          <button class="chip default-chip" data-bet="100" type="button">100 VC</button>
-          <button class="chip" data-bet="200" type="button">200 VC</button>
-          <button class="chip" data-bet="500" type="button">500 VC</button>
-        </div>
-        <p class="panel-foot">Current burn rate: <strong id="betText">100 VC</strong> per spin.</p>
-      </article>
-
-      <article class="panel">
-        <div class="panel-head">
-          <h2>Autospin Bay</h2>
-          <p>Automate token sacrifice. Hit stop when your ethics reboot.</p>
-        </div>
-        <div class="button-stack">
-          <button id="spinBtn" class="spin-btn" type="button">Pull Lever</button>
-          <div class="sub-buttons">
-            <button id="startAuto" class="auto-btn" type="button">Start Autospin</button>
-            <button id="stopAuto" class="stop-btn" type="button">Stop</button>
-          </div>
-        </div>
-        <p id="autoStatus" class="panel-foot">Manual mode armed.</p>
-      </article>
-
-      <article class="panel">
-        <div class="panel-head">
-          <h2>Daily VC Grant</h2>
-          <p>One bailout per local day. Even casinos have loyalty drama.</p>
-        </div>
-        <button id="dailyGrant" class="grant-btn" type="button">Claim Daily VC (+300)</button>
-        <p id="dailyStatus" class="panel-foot">Grant ready.</p>
-      </article>
-    </section>
-
     <section class="panel payout-panel" aria-label="Payout rules">
       <div class="panel-head">
         <h2>Payout Rules</h2>
-        <p>All multipliers are applied to your current bet.</p>
+        <p>All multipliers apply to your current bet before perk modifiers.</p>
       </div>
       <ul id="payoutList"></ul>
     </section>
@@ -127,7 +137,7 @@
     <section class="panel log-panel" aria-label="Win log">
       <div class="panel-head">
         <h2>Win Log</h2>
-        <p>Emoji-tagged gains only. Losses stay off the highlight reel.</p>
+        <p>Emoji-tagged gains only. Losses remain internal audit data.</p>
       </div>
       <ul id="winLog" class="win-log"></ul>
     </section>
