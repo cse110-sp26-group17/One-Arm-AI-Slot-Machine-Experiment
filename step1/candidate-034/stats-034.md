@@ -11,7 +11,7 @@
 | Files produced         | 3: index.html, script.js, styles.css                                                                             |
 | Lines of code          | 804                                                                                                              |
 | Runs in browser?       | yes                                                                                                              |
-| App Quality Notes      | The app runs well. It has a different feature of the runway to track progress.                                   |
-| Code Quality Notes     | The code seems a mix of the two before, having if statements for special cases and having more code for visuals. |
+| App Quality Notes      | Pretty simple. Nothing about it stands out and the mockery aspect is not that noticeable. Score: 3                                 |
+| Code Quality Notes     | Noticing a lot of emojis and easier to tell with organization with this. Score: 4 |
 
 
