@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Token Burner 3000</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bungee:wght@400&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="app-shell">
+    <section class="hero">
+      <p class="eyebrow">Vanilla Web Slot Machine</p>
+      <h1>Token Burner 3000</h1>
+      <p class="tagline">
+        Win imaginary AI tokens, immediately spend them on more spins, and experience the future of unprofitable intelligence.
+      </p>
+    </section>
+
+    <section class="machine" aria-label="AI token slot machine">
+      <div class="machine-top">
+        <div class="meter-card">
+          <span class="meter-label">Wallet</span>
+          <strong id="tokenBalance">120</strong>
+          <span class="meter-note">freshly extracted tokens</span>
+        </div>
+        <div class="meter-card">
+          <span class="meter-label">Spin Cost</span>
+          <strong id="spinCost">15</strong>
+          <span class="meter-note">plus your dignity</span>
+        </div>
+        <div class="meter-card">
+          <span class="meter-label">Jackpot</span>
+          <strong id="jackpotPool">300</strong>
+          <span class="meter-note">venture-funded optimism</span>
+        </div>
+      </div>
+
+      <div class="reels-wrap">
+        <div class="reels" role="group" aria-label="slot reels">
+          <div class="reel-window"><div class="reel-symbol" id="reel0">404</div></div>
+          <div class="reel-window"><div class="reel-symbol" id="reel1">BOT</div></div>
+          <div class="reel-window"><div class="reel-symbol" id="reel2">GPU</div></div>
+        </div>
+        <div class="payline" aria-hidden="true"></div>
+      </div>
+
+      <div class="controls">
+        <button id="spinButton" class="spin-button" type="button">Spend Tokens</button>
+        <button id="resetButton" class="ghost-button" type="button">Reset Economy</button>
+      </div>
+
+      <p id="statusLine" class="status-line" aria-live="polite">
+        Your seed round was approved. Please convert it directly into slot pulls.
+      </p>
+    </section>
+
+    <section class="side-panel">
+      <article class="snark-card">
+        <h2>Today's Metrics</h2>
+        <dl class="stats-grid">
+          <div>
+            <dt>Spins</dt>
+            <dd id="totalSpins">0</dd>
+          </div>
+          <div>
+            <dt>Biggest Win</dt>
+            <dd id="biggestWin">0</dd>
+          </div>
+          <div>
+            <dt>Net Tokens</dt>
+            <dd id="netTokens">0</dd>
+          </div>
+          <div>
+            <dt>Hype Level</dt>
+            <dd id="hypeLevel">Measured</dd>
+          </div>
+        </dl>
+      </article>
+
+      <article class="snark-card">
+        <h2>Symbol Lore</h2>
+        <ul class="legend">
+          <li><span>404</span> model output not found</li>
+          <li><span>GPU</span> suspiciously expensive rectangle</li>
+          <li><span>BOT</span> synthetic enthusiasm</li>
+          <li><span>VC</span> fresh token dilution</li>
+          <li><span>HYPE</span> valuation without cargo</li>
+          <li><span>MOON</span> catastrophic confidence</li>
+        </ul>
+      </article>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
