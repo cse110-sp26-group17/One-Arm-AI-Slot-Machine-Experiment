@@ -11,8 +11,8 @@
 | Files produced         | 3: index.html, script.js, styles.css                                                                             |
 | Lines of code          | 875                                                                                                              |
 | Runs in browser?       | yes                                                                                                              |
-| App Quality Notes      | The app runs well. It has a different feature of the runway to track progress.                                   |
-| Code Quality Notes     | The code seems a mix of the two before, having if statements for special cases and having more code for visuals. |
+| App Quality Notes      | Visuals look nice and has pleasant effects. The slot machine also has the best adjustability. Score: 5|
+| Code Quality Notes     | Nothing about the code stands out. Naming is standard and organization is not outstanding Score: 3 |
 
 
 ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆
