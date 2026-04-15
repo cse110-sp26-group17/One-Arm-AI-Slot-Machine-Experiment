@@ -10,5 +10,5 @@
 | Files produced            | 3: index.html, style.css, script.js |
 | New lines of code             | 840 total |
 | Runs in browser?          | yes |
-| App Quality Notes         | 5 - Nice UI, Different machines, cool activity log |
-| Code Quality Notes        | 4 - Descriptive variable names, good file structure |
+| App Quality Notes         | 5 - Nice UI, Different machines, cool activity log, included a bet selector, perks and multipliers, session net, biggest wins, autospin feature, daily vc grant, special effect after each spin |
+| Code Quality Notes        | 4 - Descriptive variable names, good file structure, functions organized well, const variables organized at the top |
