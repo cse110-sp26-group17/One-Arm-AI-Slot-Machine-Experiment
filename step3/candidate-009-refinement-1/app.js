@@ -1,56 +1,87 @@
-const STORAGE_KEY = "velocity-reels-state-v1";
+const STORAGE_KEY = "velocity-reels-state-v2";
 const DAILY_GRANT_AMOUNT = 1200;
 const MAX_LOG_ITEMS = 24;
 const MAX_STREAK_BONUS = 0.36;
 const STREAK_STEP = 0.06;
 const MAX_LUCKY_CHARGE = 0.75;
 const LUCKY_GAIN_PER_LOSS = 0.08;
+const TENSION_COOLDOWN_MS = 320;
+
+const STORE_ITEMS = {
+  luckPatch: {
+    id: "luckPatch",
+    name: "Luck Patch",
+    cost: 450,
+    spins: 12,
+    luckBoost: 0.12,
+    payoutBoost: 0,
+    refundRate: 0,
+  },
+  payoutSurge: {
+    id: "payoutSurge",
+    name: "Payout Surge",
+    cost: 650,
+    spins: 10,
+    luckBoost: 0,
+    payoutBoost: 0.18,
+    refundRate: 0,
+  },
+  refundShield: {
+    id: "refundShield",
+    name: "Refund Shield",
+    cost: 520,
+    spins: 12,
+    luckBoost: 0,
+    payoutBoost: 0,
+    refundRate: 0.35,
+  },
+};
 
 const MACHINES = [
   {
-    name: "Neon Mirage",
-    flavor: "Fast rhythm, medium volatility, bright payouts.",
-    symbols: ["7", "💎", "⚡", "🍒", "🪙", "🌟"],
-    weights: [8, 7, 9, 12, 11, 5],
+    name: "Prompt Panic",
+    flavor: "Fast cadence, medium volatility, and shiny fake-tech jackpots.",
+    symbols: ["🤖", "🪙", "📉", "🧠", "⚠️", "✨"],
+    weights: [10, 13, 11, 8, 9, 4],
     triples: {
-      "7": 12,
-      "💎": 10,
-      "⚡": 8,
-      "🍒": 5,
-      "🪙": 7,
-      "🌟": 14,
+      "🤖": 7,
+      "🪙": 5,
+      "📉": 6,
+      "🧠": 10,
+      "⚠️": 8,
+      "✨": 15,
     },
     pairMultiplier: 1.9,
     machineBonus: 0.04,
   },
   {
-    name: "Dragon Vault",
-    flavor: "High volatility with explosive dragon jackpots.",
-    symbols: ["🐉", "🔥", "💰", "🧧", "💠", "🥇"],
-    weights: [6, 10, 9, 12, 8, 4],
+    name: "Hallucination Deluxe",
+    flavor: "High volatility where fake confidence can still spike huge wins.",
+    symbols: ["🌀", "🧪", "🧾", "🔥", "404", "🏆"],
+    weights: [8, 9, 11, 9, 10, 3],
     triples: {
-      "🐉": 16,
-      "🔥": 11,
-      "💰": 9,
-      "🧧": 6,
-      "💠": 8,
-      "🥇": 18,
+      "🌀": 7,
+      "🧪": 8,
+      "🧾": 6,
+      "🔥": 10,
+      "404": 9,
+      "🏆": 18,
     },
     pairMultiplier: 1.75,
     machineBonus: 0.06,
   },
   {
-    name: "Orbit Royale",
-    flavor: "Balanced machine with frequent mid-size wins.",
-    symbols: ["🪐", "👾", "🌌", "🚀", "🛰️", "✨"],
-    weights: [9, 10, 8, 8, 11, 7],
+    name: "Token Furnace",
+    flavor: "Balanced machine with frequent small hits and occasional overkill multipliers.",
+    symbols: ["💬", "🪫", "📦", "💥", "🧬", "🌈"],
+    weights: [11, 12, 9, 8, 7, 4],
     triples: {
-      "🪐": 9,
-      "👾": 7,
-      "🌌": 10,
-      "🚀": 11,
-      "🛰️": 8,
-      "✨": 13,
+      "💬": 6,
+      "🪫": 5,
+      "📦": 7,
+      "💥": 10,
+      "🧬": 11,
+      "🌈": 14,
     },
     pairMultiplier: 2,
     machineBonus: 0.03,
@@ -71,10 +102,16 @@ const DEFAULT_STATE = {
   luckyCharge: 0,
   lastDailyClaim: "",
   lastResult: "Ready to spin.",
-  lastSymbols: ["7", "💎", "⚡"],
+  lastSymbols: ["🤖", "🪙", "📉"],
   isSpinning: false,
   autoSpin: false,
   autoSpinStopRequested: false,
+  spinProgress: 0,
+  storeBuffs: {
+    luckPatch: 0,
+    payoutSurge: 0,
+    refundShield: 0,
+  },
   log: [],
 };
 
@@ -99,8 +136,11 @@ const elements = {
   streakValue: document.getElementById("streakValue"),
   luckyChargeValue: document.getElementById("luckyChargeValue"),
   totalBonusValue: document.getElementById("totalBonusValue"),
+  storeBuffsValue: document.getElementById("storeBuffsValue"),
   streakBar: document.getElementById("streakBar"),
   luckyBar: document.getElementById("luckyBar"),
+  tensionBar: document.getElementById("tensionBar"),
+  tensionValue: document.getElementById("tensionValue"),
   spinButton: document.getElementById("spinButton"),
   autospinButton: document.getElementById("autospinButton"),
   stopButton: document.getElementById("stopButton"),
@@ -108,11 +148,14 @@ const elements = {
   prevMachineButton: document.getElementById("prevMachineButton"),
   nextMachineButton: document.getElementById("nextMachineButton"),
   betButtons: [...document.querySelectorAll(".bet-button")],
+  storeButtons: [...document.querySelectorAll(".store-button")],
+  storeStatus: document.getElementById("storeStatus"),
   logList: document.getElementById("logList"),
   rulesList: document.getElementById("rulesList"),
   machineShell: document.getElementById("machineShell"),
   flashFx: document.getElementById("flashFx"),
   confettiLayer: document.getElementById("confettiLayer"),
+  globalConfettiLayer: document.getElementById("globalConfettiLayer"),
   fireworksLayer: document.getElementById("fireworksLayer"),
   multiplierLayer: document.getElementById("multiplierLayer"),
   biggestWinBanner: document.getElementById("biggestWinBanner"),
@@ -155,6 +198,15 @@ function bindEvents() {
       persist();
     });
   });
+
+  elements.storeButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      if (state.isSpinning) {
+        return;
+      }
+      purchaseStoreItem(button.dataset.storeItem);
+    });
+  });
 }
 
 function loadState() {
@@ -177,6 +229,19 @@ function loadState() {
 
     if (!Array.isArray(merged.log)) {
       merged.log = [];
+    }
+
+    if (typeof merged.spinProgress !== "number" || Number.isNaN(merged.spinProgress)) {
+      merged.spinProgress = 0;
+    }
+
+    if (!merged.storeBuffs || typeof merged.storeBuffs !== "object") {
+      merged.storeBuffs = { ...DEFAULT_STATE.storeBuffs };
+    } else {
+      merged.storeBuffs = {
+        ...DEFAULT_STATE.storeBuffs,
+        ...merged.storeBuffs,
+      };
     }
 
     if (typeof merged.machineIndex !== "number" || Number.isNaN(merged.machineIndex)) {
@@ -209,11 +274,57 @@ function getActiveMachine() {
   return MACHINES[clampMachineIndex(state.machineIndex)];
 }
 
+function getStoreBuffSpins(itemId) {
+  return Math.max(0, Number(state.storeBuffs[itemId]) || 0);
+}
+
+function getStoreLuckBonus() {
+  return getStoreBuffSpins("luckPatch") > 0 ? STORE_ITEMS.luckPatch.luckBoost : 0;
+}
+
+function getStorePayoutBonus() {
+  return getStoreBuffSpins("payoutSurge") > 0 ? STORE_ITEMS.payoutSurge.payoutBoost : 0;
+}
+
+function getStoreRefundRate() {
+  return getStoreBuffSpins("refundShield") > 0 ? STORE_ITEMS.refundShield.refundRate : 0;
+}
+
+function getActiveStoreBuffSummary() {
+  const summary = [];
+  if (getStoreBuffSpins("luckPatch") > 0) {
+    summary.push(`Luck ${getStoreBuffSpins("luckPatch")}`);
+  }
+  if (getStoreBuffSpins("payoutSurge") > 0) {
+    summary.push(`Payout ${getStoreBuffSpins("payoutSurge")}`);
+  }
+  if (getStoreBuffSpins("refundShield") > 0) {
+    summary.push(`Refund ${getStoreBuffSpins("refundShield")}`);
+  }
+  return summary.length ? summary.join(" • ") : "None";
+}
+
+function consumeStoreBuffSpin() {
+  Object.keys(DEFAULT_STATE.storeBuffs).forEach((id) => {
+    if (getStoreBuffSpins(id) > 0) {
+      state.storeBuffs[id] = getStoreBuffSpins(id) - 1;
+    }
+  });
+}
+
 function getPerkMultiplier() {
   const streakBonus = Math.min(state.winStreak * STREAK_STEP, MAX_STREAK_BONUS);
   const luckyBonus = Math.min(state.luckyCharge, MAX_LUCKY_CHARGE);
   const machineBonus = getActiveMachine().machineBonus;
-  return 1 + streakBonus + luckyBonus + machineBonus;
+  const storeBonus = getStorePayoutBonus();
+  return 1 + streakBonus + luckyBonus + machineBonus + storeBonus;
+}
+
+function setSpinProgress(progress) {
+  const clamped = Math.max(0, Math.min(100, progress));
+  state.spinProgress = clamped;
+  elements.tensionBar.style.width = `${clamped}%`;
+  elements.tensionValue.textContent = `${Math.round(clamped)}%`;
 }
 
 function renderAll() {
@@ -234,8 +345,10 @@ function renderAll() {
   elements.streakValue.textContent = String(state.winStreak);
   elements.luckyChargeValue.textContent = `${Math.round(state.luckyCharge * 100)}%`;
   elements.totalBonusValue.textContent = `x${getPerkMultiplier().toFixed(2)}`;
+  elements.storeBuffsValue.textContent = getActiveStoreBuffSummary();
   elements.streakBar.style.width = `${Math.min((state.winStreak / 6) * 100, 100)}%`;
   elements.luckyBar.style.width = `${Math.min((state.luckyCharge / MAX_LUCKY_CHARGE) * 100, 100)}%`;
+  setSpinProgress(state.spinProgress);
 
   if (!state.isSpinning && Array.isArray(state.lastSymbols) && state.lastSymbols.length === 3) {
     reels.forEach((reel, index) => {
@@ -253,12 +366,61 @@ function renderAll() {
   elements.betButtons.forEach((button) => {
     const isActive = Number(button.dataset.bet) === state.currentBet;
     button.classList.toggle("active", isActive);
-    button.disabled = state.isSpinning;
+    button.disabled = state.isSpinning || state.autoSpin;
   });
+
+  renderStore();
 
   renderDailyGrantState();
   renderLog();
   renderRules(machine);
+}
+
+function renderStore() {
+  elements.storeButtons.forEach((button) => {
+    const item = STORE_ITEMS[button.dataset.storeItem];
+    if (!item) {
+      return;
+    }
+
+    const activeSpins = getStoreBuffSpins(item.id);
+    button.classList.toggle("active-buff", activeSpins > 0);
+    button.disabled = state.isSpinning || state.autoSpin || state.balance < item.cost;
+  });
+
+  const refundRate = Math.round(getStoreRefundRate() * 100);
+  const refundText = refundRate > 0 ? ` • ${refundRate}% refund armed` : "";
+  elements.storeStatus.textContent = `Active buffs: ${getActiveStoreBuffSummary()}${refundText}`;
+}
+
+let tensionAnimationFrame = 0;
+function animateSpinTension(durationMs) {
+  if (tensionAnimationFrame) {
+    cancelAnimationFrame(tensionAnimationFrame);
+    tensionAnimationFrame = 0;
+  }
+
+  const start = performance.now();
+
+  const tick = (now) => {
+    const progress = ((now - start) / durationMs) * 100;
+    setSpinProgress(progress);
+    if (state.isSpinning && progress < 100) {
+      tensionAnimationFrame = requestAnimationFrame(tick);
+    } else {
+      tensionAnimationFrame = 0;
+    }
+  };
+
+  tensionAnimationFrame = requestAnimationFrame(tick);
+
+  return () => {
+    if (tensionAnimationFrame) {
+      cancelAnimationFrame(tensionAnimationFrame);
+      tensionAnimationFrame = 0;
+    }
+    setSpinProgress(100);
+  };
 }
 
 function renderDailyGrantState() {
@@ -285,15 +447,19 @@ function renderLog() {
 
   state.log.forEach((entry) => {
     const item = document.createElement("li");
-    item.classList.add(entry.type === "loss" ? "loss" : "win");
+    const isNegative = entry.type === "loss" || entry.type === "purchase";
+    item.classList.add(isNegative ? "loss" : "win");
 
     const time = new Date(entry.ts).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
     if (entry.type === "grant") {
       item.textContent = `DAILY +${formatNumber(entry.delta)} VC • ${time}`;
+    } else if (entry.type === "purchase") {
+      item.textContent = `STORE ${entry.label} ${formatSignedNumber(entry.delta)} VC • ${time}`;
     } else if (entry.type === "win") {
-      item.textContent = `WIN +${formatNumber(entry.payout)} VC (net ${formatSignedNumber(entry.delta)}) • ${entry.symbols} • ${time}`;
+      item.textContent = `WIN +${formatNumber(entry.basePayout || entry.payout)} VC (net ${formatSignedNumber(entry.delta)}) • ${entry.symbols} • ${time}`;
     } else {
-      item.textContent = `LOSS ${formatSignedNumber(entry.delta)} VC • ${entry.symbols} • ${time}`;
+      const refundText = entry.refund > 0 ? ` (refund +${formatNumber(entry.refund)} VC)` : "";
+      item.textContent = `LOSS ${formatSignedNumber(entry.delta)} VC${refundText} • ${entry.symbols} • ${time}`;
     }
 
     elements.logList.appendChild(item);
@@ -314,6 +480,9 @@ function renderRules(machine) {
     `Streak bonus: +6% per consecutive win (max +36%)`,
     `Lucky Charge: +8% per loss (max +75%)`,
     `Machine bonus: +${Math.round(machine.machineBonus * 100)}%`,
+    `Store • Luck Patch: +12% symbol luck for 12 spins`,
+    `Store • Payout Surge: +18% payout multiplier for 10 spins`,
+    `Store • Refund Shield: 35% bet refund on losses for 12 spins`,
   ];
 
   rows.forEach((text) => {
@@ -336,27 +505,37 @@ async function spinOnce() {
   }
 
   state.isSpinning = true;
+  state.spinProgress = 0;
   state.totalSpent += state.currentBet;
   state.balance -= state.currentBet;
   state.spins += 1;
   state.lastResult = "Reels spinning...";
+  elements.machineShell.classList.add("spinning");
   renderAll();
   persist();
 
   const machine = getActiveMachine();
-  screenShake(5, 220);
-  const stopTension = playTensionRamp(1300);
+  const reelDurations = reels.map((_, index) => 560 + index * 220);
+  const totalSpinDuration = reelDurations[reelDurations.length - 1] + 260;
+
+  triggerFlash();
+  screenShake(6, 240);
+  const stopTensionAudio = playTensionRamp(totalSpinDuration + 320);
+  const stopTensionBar = animateSpinTension(totalSpinDuration + 140);
 
   const finalSymbols = [];
   for (let index = 0; index < reels.length; index += 1) {
-    const symbol = await animateReel(reels[index], machine, 560 + index * 220);
+    const symbol = await animateReel(reels[index], machine, reelDurations[index]);
     finalSymbols.push(symbol);
     playReelStopTone(index);
+    screenShake(4 + index, 130);
   }
-  stopTension();
+  stopTensionAudio();
+  stopTensionBar();
 
   const outcome = scoreSpin(finalSymbols, machine);
   state.lastSymbols = finalSymbols;
+  let refund = 0;
 
   if (outcome.payout > 0) {
     state.balance += outcome.payout;
@@ -377,20 +556,40 @@ async function spinOnce() {
     state.losses += 1;
     state.winStreak = 0;
     state.luckyCharge = Math.min(MAX_LUCKY_CHARGE, state.luckyCharge + LUCKY_GAIN_PER_LOSS);
-    state.lastResult = `${outcome.label} -${formatNumber(state.currentBet)} VC. Lucky Charge increased.`;
+    const refundRate = getStoreRefundRate();
+    if (refundRate > 0) {
+      refund = Math.floor(state.currentBet * refundRate);
+      state.balance += refund;
+      state.totalWon += refund;
+    }
+    const netLoss = state.currentBet - refund;
+    state.lastResult = refund > 0
+      ? `${outcome.label} -${formatNumber(netLoss)} VC after ${formatNumber(refund)} VC refund.`
+      : `${outcome.label} -${formatNumber(state.currentBet)} VC. Lucky Charge increased.`;
     triggerLossFx();
   }
 
+  consumeStoreBuffSpin();
+
   addLogEntry({
     type: outcome.payout > 0 ? "win" : "loss",
-    delta: outcome.payout - state.currentBet,
-    payout: outcome.payout,
+    delta: outcome.payout + refund - state.currentBet,
+    payout: outcome.payout + refund,
+    basePayout: outcome.payout,
+    refund,
     bet: state.currentBet,
     symbols: finalSymbols.join(" "),
     ts: Date.now(),
   });
 
   state.isSpinning = false;
+  elements.machineShell.classList.remove("spinning");
+  setTimeout(() => {
+    if (!state.isSpinning) {
+      state.spinProgress = 0;
+      renderAll();
+    }
+  }, TENSION_COOLDOWN_MS);
 
   if (state.autoSpinStopRequested) {
     state.autoSpin = false;
@@ -497,6 +696,42 @@ function claimDailyGrant() {
   persist();
 }
 
+function purchaseStoreItem(itemId) {
+  const item = STORE_ITEMS[itemId];
+  if (!item) {
+    return;
+  }
+
+  if (state.balance < item.cost) {
+    state.lastResult = `Not enough VC for ${item.name}.`;
+    renderAll();
+    persist();
+    return;
+  }
+
+  state.balance -= item.cost;
+  state.totalSpent += item.cost;
+  state.storeBuffs[item.id] = getStoreBuffSpins(item.id) + item.spins;
+  state.lastResult = `${item.name} purchased for ${formatNumber(item.cost)} VC. ${item.spins} spins loaded.`;
+
+  addLogEntry({
+    type: "purchase",
+    label: item.name,
+    delta: -item.cost,
+    payout: 0,
+    basePayout: 0,
+    refund: 0,
+    bet: 0,
+    symbols: "Store",
+    ts: Date.now(),
+  });
+
+  triggerFlash();
+  playStorePurchaseTone();
+  renderAll();
+  persist();
+}
+
 function canClaimDaily() {
   return state.lastDailyClaim !== getTodayKey();
 }
@@ -576,11 +811,21 @@ async function animateReel(reel, machine, durationMs) {
 }
 
 function sampleWeightedSymbol(machine) {
-  const totalWeight = machine.weights.reduce((sum, weight) => sum + weight, 0);
+  const luckBoost = getStoreLuckBonus();
+  const boostedWeights = machine.weights.map((weight, index) => {
+    if (luckBoost <= 0) {
+      return weight;
+    }
+
+    const isHighTier = index >= machine.weights.length - 2;
+    return isHighTier ? weight * (1 + luckBoost * 1.8) : weight;
+  });
+
+  const totalWeight = boostedWeights.reduce((sum, weight) => sum + weight, 0);
   let roll = Math.random() * totalWeight;
 
   for (let index = 0; index < machine.symbols.length; index += 1) {
-    roll -= machine.weights[index];
+    roll -= boostedWeights[index];
     if (roll <= 0) {
       return machine.symbols[index];
     }
@@ -591,7 +836,17 @@ function sampleWeightedSymbol(machine) {
 
 function triggerWinFx(multiplier) {
   triggerFlash();
-  burstConfetti(28);
+  burstConfetti(30);
+  burstConfetti(96, {
+    layer: elements.globalConfettiLayer,
+    leftMin: 2,
+    leftRange: 96,
+    topMin: 0,
+    topRange: 20,
+    drift: 340,
+    drop: Math.max(window.innerHeight * 0.92, 420),
+    lifetime: 1150,
+  });
   burstMultiplier(multiplier);
   screenShake(8, 320);
   playWinStinger();
@@ -608,19 +863,31 @@ function triggerFlash() {
   elements.flashFx.classList.add("active");
 }
 
-function burstConfetti(count) {
+function burstConfetti(count, options = {}) {
+  const {
+    layer = elements.confettiLayer,
+    leftMin = 10,
+    leftRange = 80,
+    topMin = 2,
+    topRange = 18,
+    drift = 280,
+    drop = 220,
+    lifetime = 950,
+  } = options;
+
   for (let index = 0; index < count; index += 1) {
     const particle = document.createElement("span");
     particle.className = "confetti";
-    particle.style.left = `${10 + Math.random() * 80}%`;
-    particle.style.top = `${2 + Math.random() * 18}%`;
+    particle.style.left = `${leftMin + Math.random() * leftRange}%`;
+    particle.style.top = `${topMin + Math.random() * topRange}%`;
     particle.style.background = `hsl(${Math.floor(Math.random() * 360)} 98% 66%)`;
-    particle.style.setProperty("--x", `${(Math.random() - 0.5) * 280}px`);
-    elements.confettiLayer.appendChild(particle);
+    particle.style.setProperty("--x", `${(Math.random() - 0.5) * drift}px`);
+    particle.style.setProperty("--drop", `${drop}px`);
+    layer.appendChild(particle);
 
     setTimeout(() => {
       particle.remove();
-    }, 950);
+    }, lifetime);
   }
 }
 
@@ -789,6 +1056,11 @@ function playLossTone() {
 function playGrantTone() {
   playTone(480, 0.08, "triangle", 0.05, 0);
   playTone(720, 0.1, "sine", 0.05, 0.06);
+}
+
+function playStorePurchaseTone() {
+  playTone(360, 0.08, "triangle", 0.045, 0);
+  playTone(540, 0.11, "sine", 0.05, 0.06);
 }
 
 function playTone(frequency, duration, type, peak, delay = 0) {

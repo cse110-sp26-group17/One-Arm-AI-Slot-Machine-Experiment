@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Velocity Reels</title>
+  <title>Token Tilt: AI Roast Slots</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -13,9 +13,9 @@
   <div class="bg-noise" aria-hidden="true"></div>
   <main class="app-shell">
     <header class="hero">
-      <p class="kicker">Premium Arcade Slot Lab</p>
-      <h1>Velocity Reels</h1>
-      <p class="hero-copy">Cinematic reel action with transparent stats, instant controls, and no fake wait states.</p>
+      <p class="kicker">Premium Token Gacha Parody</p>
+      <h1>Token Tilt</h1>
+      <p class="hero-copy">Spend VC to roast the AI hype cycle with cinematic spins, instant feedback, and transparent session stats.</p>
       <div class="hero-stats">
         <article class="stat-card">
           <span>Balance</span>
@@ -37,8 +37,8 @@
         <button id="prevMachineButton" class="ghost-button" type="button" aria-label="Previous machine">◀ Prev</button>
         <div class="machine-meta">
           <p class="label">Active Machine</p>
-          <h2 id="machineName">Neon Mirage</h2>
-          <p id="machineFlavor" class="flavor">Fast rhythm, medium volatility, bright payouts.</p>
+          <h2 id="machineName">Prompt Panic</h2>
+          <p id="machineFlavor" class="flavor">Fast cadence, medium volatility, and shiny fake-tech jackpots.</p>
         </div>
         <button id="nextMachineButton" class="ghost-button" type="button" aria-label="Next machine">Next ▶</button>
       </div>
@@ -68,6 +68,10 @@
             <span>Total Bonus</span>
             <strong id="totalBonusValue">x1.00</strong>
           </div>
+          <div class="perk-row">
+            <span>Store Buffs</span>
+            <strong id="storeBuffsValue">None</strong>
+          </div>
           <div class="meter">
             <p>Streak Heat</p>
             <div class="meter-track">
@@ -90,8 +94,18 @@
         <button id="dailyGrantButton" class="daily-button" type="button">Claim Daily +1200 VC</button>
       </div>
 
+      <div class="tension-row" aria-label="Spin tension meter">
+        <div class="tension-head">
+          <p class="label">Spin Tension</p>
+          <strong id="tensionValue">0%</strong>
+        </div>
+        <div class="meter-track tension-track">
+          <div id="tensionBar" class="meter-fill tension-fill"></div>
+        </div>
+      </div>
+
       <div class="bet-row" id="betRow" aria-label="Bet selector">
-        <p class="label">Bet Size</p>
+        <p class="label">Bet Size (100 VC Default)</p>
         <div class="bet-options">
           <button data-bet="25" class="bet-button" type="button">25 VC</button>
           <button data-bet="50" class="bet-button" type="button">50 VC</button>
@@ -105,6 +119,7 @@
         <article class="feed-card">
           <p class="label">Spin Result</p>
           <p id="resultText" class="result-text">Ready to spin.</p>
+          <p class="label">Session Stats (Transparent)</p>
           <div class="session-stats">
             <div><span>Total Spent</span><strong id="spentValue">0 VC</strong></div>
             <div><span>Total Won</span><strong id="wonValue">0 VC</strong></div>
@@ -113,7 +128,7 @@
         </article>
 
         <article class="feed-card log-card">
-          <p class="label">Spin Log (Wins + Losses)</p>
+          <p class="label">Spin Log (All Results)</p>
           <ul id="logList" class="log-list"></ul>
         </article>
 
@@ -121,9 +136,31 @@
           <p class="label">Payout Rules</p>
           <ul id="rulesList" class="rules-list"></ul>
         </article>
+
+        <article class="feed-card store-card">
+          <p class="label">Token Store</p>
+          <p class="store-copy">Temporary perks that tweak luck, payouts, or loss refunds.</p>
+          <div class="store-grid">
+            <button class="store-button" data-store-item="luckPatch" type="button">
+              <span>Luck Patch</span>
+              <small>450 VC · +12% symbol luck for 12 spins</small>
+            </button>
+            <button class="store-button" data-store-item="payoutSurge" type="button">
+              <span>Payout Surge</span>
+              <small>650 VC · +18% payouts for 10 spins</small>
+            </button>
+            <button class="store-button" data-store-item="refundShield" type="button">
+              <span>Refund Shield</span>
+              <small>520 VC · 35% bet refund on losses for 12 spins</small>
+            </button>
+          </div>
+          <p id="storeStatus" class="store-status">No store buffs active.</p>
+        </article>
       </div>
     </section>
   </main>
+
+  <div class="global-confetti-layer" id="globalConfettiLayer" aria-hidden="true"></div>
 
   <div id="biggestWinBanner" class="biggest-win-banner" aria-live="polite">
     <p class="label">Biggest Win Unlocked</p>
