@@ -10,5 +10,5 @@
 | Files produced            | 3: index.html, script.js, styles.css | 
 | Lines of code	            | 1,050 | 
 | Runs in browser?	        | yes |
-| App Quality Notes	        | |
-| Code Quality Notes        |  | 
+| App Quality Notes	        | 5 - Functioning, shows spinning slot machines, good jokes|
+| Code Quality Notes        | 4 - Clear Functions, mostly clear variable names| 
