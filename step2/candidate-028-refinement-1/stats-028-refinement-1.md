@@ -10,5 +10,5 @@
 | Files produced            | 3: index.html, script.js, styles.css | 
 | Lines of code	            | 863 | 
 | Runs in browser?	        | yes |
-| App Quality Notes	        | 5 - Works well, and even has powerups like trading credits for more luck on the next 3 spins|
-| Code Quality Notes        | 4 - Some variables could be named better, but other than that the code is good| 
+| App Quality Notes	        | 5 - Works well, and even has powerups like trading credits for more luck on the next 3 spins, nice special effects for each spin, daily vc grant, gain feed and spin journal, autospin feature, multiplier, payout rules, different background options |
+| Code Quality Notes        | 4 - Variables need to be named better, not as readable as the other candidates, | 
