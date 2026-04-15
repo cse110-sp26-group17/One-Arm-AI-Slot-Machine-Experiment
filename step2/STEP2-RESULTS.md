@@ -8,4 +8,3 @@ Top 5:
  Candidate 36: We liked the moving text and the big title at the top, we liked the button options for the bet 10, 25, 50, 100. We also liked the house tips and the general UI of the site.
 
  Candidate 35: We think that net gain should be changed to net wins so it makes the user think that they are winning a lot. We also liked the slider but prefer buttons
-
